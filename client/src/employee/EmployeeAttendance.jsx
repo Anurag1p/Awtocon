@@ -41,6 +41,7 @@ const EmployeeAttendance = ({ state }) => {
   const ProjectName = projects;
   const Project_Id = projectids;
 
+  console.log(state[2], "state1")
   console.table(
     latt,
     "_",

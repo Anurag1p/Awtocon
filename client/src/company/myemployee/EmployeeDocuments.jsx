@@ -14,6 +14,8 @@ const EmployeeDocuments = () => {
   const COMPANY_PARENT_ID = filteredEmployee?.state[3];
   const COMPANY_PARENT_USERNAME = filteredEmployee?.state[4];
 
+
+
   return (
     <Box
       style={{
@@ -34,11 +36,6 @@ const EmployeeDocuments = () => {
       <div className="myscreen p-3">
         <>
           <DocReusable
-            createEndpoint="/api/create_document"
-            getDocEndPoint="/api/get_all_document"
-            documentType="Employee Document"
-            deleteApiEndpoint="/api/delete_document"
-            downloadApiEndpoint="/api/download_document"
             DOCUMENT_REF_ID={filterData?.EMPLOYEE_ID}
             DOCUMENT_PARENT_USERNAME={filterData?.EMPLOYEE_USERNAME}
             DOCUMENT_ADMIN_USERNAME={filterData?.EMPLOYEE_MEMBER_PARENT_USERNAME}

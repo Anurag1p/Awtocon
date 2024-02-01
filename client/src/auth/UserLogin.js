@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, Navigate , useLocation} from "react-router-dom";
 import axios from "axios";
-import InputControl from "../components/InputControl";
 import styles from "../assests/css/Login.module.css";
 import SimpleBackdrop from "../components/Backdrop";
 import { useContext } from "react";
 import { MyContext } from "../context/Mycontext";
-import Cookies from "js-cookie";
-import { Alert, Stack } from "@mui/material";
+// import Cookies from "js-cookie";
+// import { Alert, Stack } from "@mui/material";
 import { validateEmail, validatePassword } from "../components/Validation";
 import Logincomp from "./Logincomp";
 import EmployeeLogin from "./EmployeeLogin"
@@ -22,8 +21,6 @@ function UserLogin({ onDataFetched }) {
   const [errorMsg, setErrorMsg] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [loginSuccess, setLoginSuccess] = useState(false);
-  const [showpassword, setShowpassword] = useState(true)
   const [emailError, setEmailError] = useState("");
   const [empty, setEmpty] = useState("");
   const { auth, setAuth } = useContext(MyContext);
@@ -63,14 +60,6 @@ function UserLogin({ onDataFetched }) {
       return;
     }
 
-
-    // if (!isValidPassword) {
-    //   setPasswordError("Invalid Password");
-    //   return;
-    // }
-
-
-
     let config = {
       method: "post",
       maxBodyLength: Infinity,
@@ -88,11 +77,11 @@ function UserLogin({ onDataFetched }) {
         navigate("/admin", { state: data.user })
       })
       .catch((error) => {
-        if (error.response.status == 403) {
+        if (error.response.status === 403) {
           setErrorMsg(error.response.data.error);
-        } else if (error.response.status == 404) {
+        } else if (error.response.status === 404) {
           setErrorMsg(error.response.data.error);
-        } else if (error.response.status == 401) {
+        } else if (error.response.status === 401) {
           setErrorMsg(error.response.data.error);
         }
         else {

@@ -27,7 +27,7 @@ import setOneCompany from "./slices/getOneCompanySlice";
 import getallProjectSlice from "./slice/getallProjectSlice";
 import SingleCompData from "./slice/SingleCompSlice";
 import EmployeeDataSlice from "./slice/EmployeeDataSlice";
-import companyDoc from "./slice/GetCompanyDocSlice";
+import companyDoc from "./slice/GetCompanyDocSlice";        //function for doc
 import AllSubcontractor from "./slice/SubContractorSlice"
 import attendanceData from "./slice/AttendanceSlice";
 import employee_one from "./slice/EmpDashboardSlice";

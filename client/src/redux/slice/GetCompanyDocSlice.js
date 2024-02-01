@@ -46,4 +46,4 @@ const compDocument = createSlice({
 })
 export default compDocument.reducer;
 
-export const { setDocument } = compDocument.actions
+export const { setDocument } = compDocument.actions;

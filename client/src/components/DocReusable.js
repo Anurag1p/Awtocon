@@ -32,10 +32,8 @@ import { RotatingLines } from "react-loader-spinner";
 import Animation from "./Animations";
 
 // import for redux setup 
-import {setDocument} from "../redux/slice/GetCompanyDocSlice";
 import { useDispatch, useSelector } from "react-redux";
-import {getAllDocuments } from "../redux/slice/GetCompanyDocSlice"
-
+import { getAllDocuments, setDocument } from "../redux/slice/GetCompanyDocSlice"
 
 const style = {
     position: "absolute",
@@ -52,26 +50,20 @@ const style = {
 
 const DocReusable = (props) => {
     const { DOCUMENT_REF_ID,
-        createEndpoint,
-        getDocEndPoint,
-        deleteApiEndpoint,
-        downloadApiEndpoint,
         DOCUMENT_PARENT_USERNAME,
         DOCUMENT_ADMIN_USERNAME
     } = props
+    const createEndpoint = "/api/create_document"
+    const deleteApiEndpoint = "/api/delete_document"
+    const downloadApiEndpoint = "/api/download_document"
 
     const documentData = useSelector(state => state?.companyDocuments?.documents);
     console.log("companyDocs", documentData);
 
-    const dispatch =  useDispatch();
+    const dispatch = useDispatch();
 
-    console.log(props, "this is dynamic porps")
-   
-    // const [totalDocuments, setTotalDocuments] = useState(0);
     const [backdrop, setBackdrop] = useState(false);
     const [deleteItem, setDeleteItem] = useState("");
-    const [openNav, setOpenNav] = useState(false);
-    // const { COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_ID, COMPANY_PARENT_USERNAME } = useParams();
     const [resStatus, setResStatus] = useState(false); //adding newline
     const [isLoading, setIsLoading] = useState(false);
     const [open, setOpen] = React.useState(false);
@@ -81,11 +73,16 @@ const DocReusable = (props) => {
         DOCUMENT_EXPIRY_DATE: "",
         DOCUMENT_TYPE: "",
     });
-  
 
-    // useEffect(() => {
-    //     getalldocument();
-    // }, [formData, deleteItem]);
+    //getting the documents data from store
+    useEffect(() => {
+        dispatch(getAllDocuments({
+            DOCUMENT_REF_ID: DOCUMENT_REF_ID,
+            DOCUMENT_PARENT_USERNAME: DOCUMENT_PARENT_USERNAME,
+            DOCUMENT_ADMIN_USERNAME: DOCUMENT_ADMIN_USERNAME
+        }))
+    }, [deleteItem])
+
 
     // function to download the file 
     const downloadFile = (base64Data, fileName) => {
@@ -96,8 +93,6 @@ const DocReusable = (props) => {
         link.click();
         document.body.removeChild(link);
     };
-
-
 
     const MyScreen = styled(Paper)((props) => ({
         height: "calc(100vh - 32px)",
@@ -113,8 +108,6 @@ const DocReusable = (props) => {
         handleOpen();
     };
     const handleOpen = () => setOpen(true);
-
-
 
     // Function to download the uploaded documents 
     const handleDownload = async (documentId, fileName) => {
@@ -142,60 +135,7 @@ const DocReusable = (props) => {
 
     };
 
-    // const handleDelDoc = async (e, documentId) => {
-    //     // setBackdrop(true);
-    //     setResStatus(true);
-    //     // console.log(documentId);
 
-    //     const data = {
-    //         DOCUMENT_ID: documentId,
-    //         DOCUMENT_ADMIN_USERNAME: DOCUMENT_ADMIN_USERNAME,
-    //     };
-    //     // console.log("Data found 1:", data);
-
-    //     try {
-    //         const response = await fetch(`${deleteApiEndpoint}/${documentId}`, {
-    //             method: 'DELETE',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify(data),
-    //         });
-
-    //         if (response.ok) {
-    //             const jsonResponse = await response.json();
-    //             // console.log("Response data found:", jsonResponse);
-    //             setDeleteItem(jsonResponse);
-    //             // setBackdrop(false);
-    //             setResStatus(false);
-
-    //             toast.success("Document Deleted successfully!", {
-    //                 position: toast.POSITION.TOP_CENTER,
-    //                 autoClose: 1000,
-    //             });
-
-    //             // delete documents from redux 
-    //             dispatch(setDocument(jsonResponse))
-              
-    //         } else {
-    //             // Handle the response for non-2xx status codes
-    //             console.error(response.status, response.statusText);
-    //             toast.error('Document not found!', {
-    //                 // Show for 2 seconds
-    //             });
-    //         }
-    //     } catch (error) {
-    //         console.error(error);
-    //         toast.error('An error occurred while deleting the document.', {
-    //             // Show for 2 seconds
-    //         });
-    //     }
-    // };
-
-
-    // function for converting the files into kb and mb 
-    
-    
     const handleDelDoc = async (e, documentId) => {
         // setBackdrop(true);
         setResStatus(true);
@@ -218,15 +158,14 @@ const DocReusable = (props) => {
 
             if (response.ok) {
                 const jsonResponse = await response.json();
-                console.log("Response data found:", jsonResponse);
                 setDeleteItem(jsonResponse);
-                // setBackdrop(false);
                 setResStatus(false);
 
                 toast.success("Document Deleted successfully!", {
                     position: toast.POSITION.TOP_CENTER,
                     autoClose: 1000,
                 });
+
             } else {
                 // Handle the response for non-2xx status codes
                 console.error(response.status, response.statusText);
@@ -239,9 +178,9 @@ const DocReusable = (props) => {
             toast.error('An error occurred while deleting the document.', {
                 // Show for 2 seconds
             });
-}
-};
-    
+        }
+    };
+
     const formatSize = (bytes) => {
         if (bytes >= 1048576) {
             return (bytes / 1048576).toFixed(2) + ' MB';
@@ -382,7 +321,6 @@ const DocReusable = (props) => {
         },
     ];
 
-
     // this is a new function using moment for date conversion 
     const formatDate = (dateString, withTimezone = false) => {
         const userTimeZone = moment.tz.guess();
@@ -394,7 +332,6 @@ const DocReusable = (props) => {
 
         return formattedDate;
     };
-
 
     // after new
     const rows = documentData?.map((item, index) => ({
@@ -415,15 +352,9 @@ const DocReusable = (props) => {
 
     // for create document 
 
-    // const [open, setOpen] = useState(false);
     const [file, setFile] = useState([]);
-    // const [backdrop, setBackdrop] = useState(false);
 
-
-    //   console.log("these are the requested data for api call :=> ", COMPANY_ID, COMPANY_PARENT_USERNAME,COMPANY_USERNAME, update, apiEndpoint)
     const [isSubmitting, setIsSubmitting] = useState(false);
-
-    // const handleOpen = () => setOpen(true);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -455,7 +386,6 @@ const DocReusable = (props) => {
         }
 
         const data = new FormData();
-
         data.append("file", file);
         data.append("DOCUMENT_REF_ID", DOCUMENT_REF_ID);
         data.append("DOCUMENT_ADMIN_USERNAME", DOCUMENT_ADMIN_USERNAME);

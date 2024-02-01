@@ -1,4 +1,5 @@
 // src/Pagination.js
+import { Table } from "@mui/material";
 import React, { useState } from "react";
 
 function Pagination({ data, itemsPerPage }) {

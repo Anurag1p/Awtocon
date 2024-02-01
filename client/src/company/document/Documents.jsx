@@ -57,11 +57,11 @@ export default function Document(props) {
 
 
                 <DocReusable
-                    createEndpoint="/api/create_document"
-                    getDocEndPoint="/api/get_all_document"
-                    documentType="Employee"
-                    deleteApiEndpoint="/api/delete_document"
-                    downloadApiEndpoint="/api/download_document"
+                    // createEndpoint="/api/create_document"
+                    // getDocEndPoint="/api/get_all_document"
+                    // documentType="Employee"
+                    // deleteApiEndpoint="/api/delete_document"
+                    // downloadApiEndpoint="/api/download_document"
                     DOCUMENT_REF_ID={props.COMPANY_ID}
                     DOCUMENT_PARENT_USERNAME={props.COMPANY_USERNAME}
                     DOCUMENT_ADMIN_USERNAME={props.COMPANY_PARENT_USERNAME}
