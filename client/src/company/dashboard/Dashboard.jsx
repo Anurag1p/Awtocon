@@ -60,12 +60,13 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 
+
 const StyledCard = styled(Card)(({ theme }) => ({
   margin: theme.spacing(0.5),
   transition: "background-color 0.3s ease-in-out",
 
   "&:hover": {
-    backgroundColor: theme.palette.primary.main, // Change to your desired hover color
+    backgroundColor: "tan", // Change to your desired hover color (e.g., "tan")
     "& .MuiTypography-root": {
       color: "#fff", // Change to white or your desired hover text color
     },
@@ -108,19 +109,19 @@ export default function CompanyDashboard() {
       contractname: "Attandance",
       counts: allatendance?.length,
       description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
-      url: "Learn More",
+      url: "/company/attendance",
     },
     {
       contractname: "Documents",
       counts: alldocuments?.length,
       description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
-      url: "Learn More",
+      url: "/company/documents",
     },
     {
       contractname: "Sub-Contractors",
       counts: allsubContractor?.length,
       description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
-      url: "Learn More",
+      url: "/company/subcontractors",
     },
     {
       contractname: "Payments",
