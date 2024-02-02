@@ -22,7 +22,7 @@ import { auth } from "./firebase";
 import AdminLogin from "./auth/AdminLogin";
 import Firecreate from "./components/Firecreate";
 import UserLogin from "./auth/UserLogin";
-import Updates from "./auth/Update";
+import Updates from "./auth/RestEmailLink";
 import EmployeeTimeSheet from "./company/myemployee/EmployeeTimeSheet";
 import Sidebar from "./components/Sidebar";
 import Project from "./company/myproject/Project";

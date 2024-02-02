@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate, Navigate , useLocation} from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from "../assests/css/Login.module.css";
 import SimpleBackdrop from "../components/Backdrop";
-import { useContext } from "react";
-import { MyContext } from "../context/Mycontext";
-// import Cookies from "js-cookie";
-// import { Alert, Stack } from "@mui/material";
 import { validateEmail, validatePassword } from "../components/Validation";
 import Logincomp from "./Logincomp";
-import EmployeeLogin from "./EmployeeLogin"
 
-function UserLogin({ onDataFetched }) {
+
+const UserLogin = ({ onDataFetched }) => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [values, setValues] = useState({
     ADMIN_USERNAME: "",
     ADMIN_PASSWORD: "",
@@ -23,7 +18,6 @@ function UserLogin({ onDataFetched }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [empty, setEmpty] = useState("");
-  const { auth, setAuth } = useContext(MyContext);
   const [activeButton, setActiveButton] = useState('Middle');
 
   const handleButtonClick = (buttonName) => {
@@ -39,7 +33,6 @@ function UserLogin({ onDataFetched }) {
     setEmpty("");
     setPasswordError("");
     setEmailError("")
-
 
 
     // Validate phone number, username, and email fields
@@ -95,28 +88,7 @@ function UserLogin({ onDataFetched }) {
     <>
       <div className={styles.container}>
         <div className={styles.innerBox}>
-          <div className="btn-group" role="group" aria-label="Basic example">
-            <button
-              type="button"
-              className={`btn btn-secondary ${activeButton === 'Middle' ? 'active' : ''}`}
-              onClick={() => handleButtonClick('Middle')}
-            >
-              Company
-            </button>
-            <button
-              type="button"
-              className={`btn btn-secondary ${activeButton === 'Right' ? 'active' : ''}`}
-              onClick={() => handleButtonClick('Right')}
-            >
-              Employee
-            </button>
-          </div>
-
-
-         {activeButton === 'Middle' ? <Logincomp message={onDataFetched}   /> : activeButton === 'Right' ? 
-          <EmployeeLogin message={location.state} />
-        : ""}
-
+          <Logincomp message={onDataFetched} />
         </div>
 
         {/* Add the MUI backdrop component here */}

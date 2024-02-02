@@ -6,7 +6,7 @@ import { auth } from "../firebase";
 import styles from "../assests/css/Login.module.css";
 import { Alert, Stack } from "@mui/material";
 import { useDispatch } from "react-redux";
-import {setCompanyuser} from "../redux/slice/CompanyLoginSlice"
+import { setCompanyuser } from "../redux/slice/CompanyLoginSlice"
 
 function Logincomp({ message }) {
   //redux 
@@ -47,8 +47,10 @@ function Logincomp({ message }) {
         setLoading(false);
         const data = res.user.displayName;
         const param = data.split("&&");
-        // console.log(param[4]);
-        if (param[4] === "company") {
+        if (param[4] === "employee") {
+          navigate(`/employee/home`)
+        }
+        else if (param[4] === "company") {
           // Dispatch(setCompanyuser(param))
           navigate(`/company/dashboard`);
         } else {
@@ -66,7 +68,6 @@ function Logincomp({ message }) {
     <>
       {/* <div className={styles.innerBox}> */}
       <h5 className={styles.heading}>Shalbro Constructions</h5>
-      <h5 className="text-center">Login(Company)</h5>
 
       <InputControl
         label="Email"

@@ -150,10 +150,7 @@ const ContractorGenPassword = ({SUBCONTRACTOR_ID, SUBCONTRACTOR_USERNAME, ADMIN_
   const Resetlink = () => {
     sendPasswordResetEmail(auth, values.email)
       .then(() => {
-        // Password reset email sent!
-        // ..
-        // successMsg('Password reset email sent successfully')
-        setpasswordMsg("Password reset link is send to Employee");
+        setpasswordMsg("Password reset link is sent successfully");
       })
       .catch((error) => {
         const errorCode = error.code;

@@ -10,7 +10,6 @@ import Cookies from "js-cookie";
 import { Alert, Stack } from "@mui/material";
 import { validateEmail, validatePassword } from "../components/Validation";
 import Logincomp from "./Logincomp";
-import EmployeeLogin from "./EmployeeLogin"
 
 function AdminLogin({ onDataFetched }) {
   const navigate = useNavigate();
@@ -86,11 +85,11 @@ function AdminLogin({ onDataFetched }) {
         navigate("/admin", { state: data.user })
       })
       .catch((error) => {
-        if (error.response.status == 403) {
+        if (error.response.status === 403) {
           setErrorMsg(error.response.data.error);
-        } else if (error.response.status == 404) {
+        } else if (error.response.status === 404) {
           setErrorMsg(error.response.data.error);
-        } else if (error.response.status == 401) {
+        } else if (error.response.status === 401) {
           setErrorMsg(error.response.data.error);
         }
         else {
