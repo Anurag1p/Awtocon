@@ -10,8 +10,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux";
-import { Link} from "react-router-dom";
-
+import { Link as RouterLink } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -61,21 +60,36 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 
+const StyledCard = styled(Card)(({ theme }) => ({
+  margin: theme.spacing(0.5),
+  transition: "background-color 0.3s ease-in-out",
 
+  "&:hover": {
+    backgroundColor: theme.palette.primary.main, // Change to your desired hover color
+    "& .MuiTypography-root": {
+      color: "#fff", // Change to white or your desired hover text color
+    },
+    "& a": {
+      color: "#fff", // Change to white or your desired hover link color
+    },
+  },
+}));
 
 
 export default function CompanyDashboard() {
 
-  const companyData = useSelector(state => state?.setOneCompany?.user)
-  const projectAllData = useSelector(prev => prev?.allProject?.user)
+  const companyData = useSelector(state => state?.setOneCompany?.user);
+  const projectAllData = useSelector(prev => prev?.allProjectData?.projects);
+  const empdata = useSelector((state) => state?.allEmployee?.employees || []);
+  const allatendance = useSelector((state) => state?.allAttandanceData?.attendance);
+  const alldocuments = useSelector((state) => state?.companyDocuments?.documents);
+  const allsubContractor = useSelector((state) => state?.allsubcontractor?.subcontractor)
+
   const COMPANY_ID = companyData?.[0];
   const COMPANY_USERNAME = companyData?.[1];
   const COMPANY_PARENT_ID = companyData?.[2];
   const COMPANY_PARENT_USERNAME = companyData?.[3];
   const [open, setOpen] = React.useState(false);
-
-  console.log(open, "open");
-
 
   const data = [
     {
@@ -86,19 +100,25 @@ export default function CompanyDashboard() {
     },
     {
       contractname: "Employees",
-      counts: "200",
+      counts: empdata?.length,
+      description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
+      url: "/company/employees",
+    },
+    {
+      contractname: "Attandance",
+      counts: allatendance?.length,
       description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
       url: "Learn More",
     },
     {
-      contractname: "Supplier",
-      counts: "200",
+      contractname: "Documents",
+      counts: alldocuments?.length,
       description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
       url: "Learn More",
     },
     {
       contractname: "Sub-Contractors",
-      counts: "200",
+      counts: allsubContractor?.length,
       description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
       url: "Learn More",
     },
@@ -108,20 +128,9 @@ export default function CompanyDashboard() {
       description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
       url: "Learn More",
     },
-    {
-      contractname: "Reminders",
-      counts: "200",
-      description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
-      url: "Learn More",
-    },
-    {
-      contractname: "Reminders",
-      counts: "200",
-      description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
-      url: "Learn More",
-    },
+
   ];
-  
+
   const data2 = [
     {
       Paymentstatus: "15",
@@ -130,39 +139,39 @@ export default function CompanyDashboard() {
       Approval: "Learn More",
     },
   ];
-  
+
   const card = (
     <>
       {data.map((post) => (
-        <Grid xl={4} xs={12} item spacing={3}>
-          <Card sx={{ m: 0.5 }}>
-            <CardContent>
-              <Typography variant="h5" sx={{ mb: 0 }} color="primary">
-                {post.contractname}
-              </Typography>
-              <Typography
-                sx={{ fontSize: 14 }}
-                color="text.secondary"
-                gutterBottom
-              >
-                Total {post.contractname}: {post.counts}
-              </Typography>
-              <Typography component="div">{post.description}</Typography>
-            </CardContent>
-            <CardActions>
-              <Link to={post.url} size="small">{post.contractname}</Link>
-            </CardActions>
-          </Card>
+        <Grid xl={4} xs={12} item spacing={3} key={post.contractname}>
+          <RouterLink to={post.url} style={{ textDecoration: "none", color: "inherit" }}>
+            <StyledCard>
+              <CardContent>
+                <Typography variant="h6"  color="tan">
+                  {post.contractname}
+                </Typography>
+                <Typography
+                  sx={{ fontSize: 14 }}
+                  color="#3366cc"
+                  gutterBottom
+                >
+                Company {post.contractname}: {post.counts}
+                </Typography>
+                <Typography component="div" color="#808080">
+                  {post.description}
+                </Typography>
+              </CardContent>
+            </StyledCard>
+          </RouterLink>
         </Grid>
       ))}
     </>
   );
-  
   const card2 = (
     <>
       {data2.map((post) => (
-        <Grid xl={12} item spacing={3}>
-          <Card sx={{ m: 0.5 }}>
+        <Grid xl={12} item spacing={3} key={post.Paymentstatus}>
+          <StyledCard>
             <CardContent>
               <Typography
                 variant="h5"
@@ -238,11 +247,12 @@ export default function CompanyDashboard() {
             <CardActions>
               <Button size="small">{post.url}</Button>
             </CardActions>
-          </Card>
+          </StyledCard>
         </Grid>
       ))}
     </>
   );
+
 
   return (
     <>
@@ -274,9 +284,8 @@ export default function CompanyDashboard() {
             </Grid>
           </Grid>
         </Box>
-  
 
-    </Container >
+      </Container >
     </>
   );
 }

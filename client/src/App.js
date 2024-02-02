@@ -138,15 +138,6 @@ function App() {
     }))
   }, [dispatch, COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_USERNAME, COMPANY_PARENT_ID])
 
-  //getting the documents data from store
-  // useEffect(() => {
-  //   dispatch(getAllDocuments({
-  //     DOCUMENT_REF_ID: COMPANY_ID,
-  //     DOCUMENT_PARENT_USERNAME: COMPANY_USERNAME,
-  //     DOCUMENT_ADMIN_USERNAME: COMPANY_PARENT_USERNAME
-  //   }))
-  // }, [dispatch, COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_USERNAME])
-
 
   //getting the documents data from SUBCONTRACTOR
   useEffect(() => {

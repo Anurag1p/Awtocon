@@ -4,14 +4,8 @@ import moment from "moment/moment";
 import { RotatingLines } from "react-loader-spinner";
 import {
   Box,
-  Button,
-  Paper,
-  Skeleton,
   Typography,
-  styled,
 } from "@mui/material";
-import { CSVLink } from "react-csv";
-import { TableRows } from "@mui/icons-material";
 import AttendancePunch from "./AttendancePunch";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import SalaryPDF from "../../Invoices/SalaryPDF";
@@ -39,19 +33,12 @@ const AttendanceAcknowledge = ({
   const [selectDate, setSelectDate] = useState("");
   const [dateArray, setDateArray] = useState([]);
   const [resStatus, setResStatus] = useState(false);
-  // const [selectDate, setSelectDate] = useState("")
 
   let MyDateCurrent = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
+
   const formattedMyDateCurrent = moment(MyDateCurrent)
     .utcOffset(0)
     .format("YYYY-MM-DD");
-
-  const HandlePeriod = (e) => {
-    const extractDate = e?.split(" - ");
-    setSelectDate(e);
-    setStartDate(moment(extractDate[0]));
-    setEndDate(moment(extractDate[1]));
-  };
 
   const generateWeekOptions = () => {
     const options = [];
@@ -81,7 +68,7 @@ const AttendanceAcknowledge = ({
 
   const weeklyDate = generateWeekOptions();
   var Defaultstart = weeklyDate.filter((e, index) => {
-    return index == 0 && e;
+    return index === 0 && e;
   });
   const [startDate, setStartDate] = useState(
     moment(Defaultstart[0].startVal).utcOffset(0)
@@ -105,6 +92,13 @@ const AttendanceAcknowledge = ({
 
     generateDateArray();
   }, [startDate, endDate]);
+
+  const HandlePeriod = (e) => {
+    const extractDate = e?.split(" - ");
+    setSelectDate(e);
+    setStartDate(moment(extractDate[0]));
+    setEndDate(moment(extractDate[1]));
+  };
 
   console.log(dateArray, "dateArray");
 
@@ -152,20 +146,7 @@ const AttendanceAcknowledge = ({
   }, [COMPANY_ID]);
 
   // loader
-  // const Animations = () => {
-  //   return (
-  //     <Box sx={{ width: "100%" }}>
-  //       <Skeleton animation="pulse" height={60} />
-  //       <Skeleton animation="pulse" height={50} />
-  //       <Skeleton animation="pulse" height={50} />
-  //       <Skeleton animation="pulse" height={50} />
-  //       <Skeleton animation="pulse" height={50} />
-  //       <Skeleton animation="pulse" height={50} />
-  //       <Skeleton animation="pulse" height={50} />
-  //       <Skeleton animation="pulse" height={50} />
-  //     </Box>
-  //   );
-  // };
+
 
   // get data
   const Reports = (ADMIN_USERNAME, EMPLOYEE_PARENT_USERNAME) => {
@@ -315,6 +296,7 @@ const AttendanceAcknowledge = ({
   };
 
   const processedData = processingData(foundUsers);
+
   console.log(processedData, "processedData");
 
 
@@ -378,7 +360,7 @@ const AttendanceAcknowledge = ({
               </Typography>
             </button>
           )}
-          {resStatus == true ? (
+          {resStatus === true ? (
             <div className="myscreen p-3">
               <Box
                 style={{

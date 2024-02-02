@@ -4,16 +4,13 @@ import MuiAppBar from "@mui/material/AppBar";
 import Sidebar from "../../components/Sidebar";
 import Navbar from "../../components/Navbar";
 import { Box, Container, Grid } from "@mui/material";
-
-
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux";
-import { Link} from "react-router-dom";
-
+import { Link as RouterLink } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -63,21 +60,67 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 
+// const StyledCard = styled(Card)(({ theme }) => ({
+//   margin: theme.spacing(0.5),
+//   transition: "background-color 0.3s ease-in-out",
+
+//   "&:hover": {
+//     backgroundColor: theme.palette.primary.main, // Change to your desired hover color
+//     "& .MuiTypography-root": {
+//       color: "#fff", // Change to white or your desired hover text color
+//     },
+//     "& a": {
+//       color: "#fff", // Change to white or your desired hover link color
+//     },
+//   },
+// }));
 
 
+const StyledCard = styled(Card)(({ theme }) => ({
+  margin: theme.spacing(0.5),
+  transition: "background-color 0.3s ease-in-out",
 
-export default function Dashboard() {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
 
-  const companyData = useSelector(state => state?.setOneCompany?.user)
-  const projectAllData = useSelector(prev => prev?.allProject?.user)
+  maxWidth: 500,
+  height: 300,
+  padding: 35,
+
+  color: "#fff",
+  border: "1px solid rgba(255, 255, 255, 0.25)",
+  borderRadius: 20,
+  background: `linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.25),
+    rgba(255, 255, 255, 0.75) 70%, 
+    rgba(255, 255, 255, 0.25)
+  )`,
+  boxShadow: "0 0 10px 1px rgba(0, 0, 0, 0.25)",
+  backdropFilter: "blur(15px)",
+
+  "&:hover": {
+    backgroundColor: theme.palette.primary.main,
+  },
+
+  "& .MuiTypography-root": {
+    marginBottom: 0,
+    fontSize: 20,
+  },
+}));
+
+export default function CompanyDashboard() {
+
+  const companyData = useSelector(state => state?.setOneCompany?.user);
+  const projectAllData = useSelector(prev => prev?.allProjectData?.projects);
+  const empdata = useSelector((state) => state?.allEmployee?.employees || []);
+
   const COMPANY_ID = companyData?.[0];
   const COMPANY_USERNAME = companyData?.[1];
   const COMPANY_PARENT_ID = companyData?.[2];
   const COMPANY_PARENT_USERNAME = companyData?.[3];
   const [open, setOpen] = React.useState(false);
-
-  console.log(open, "open");
-
 
   const data = [
     {
@@ -88,12 +131,18 @@ export default function Dashboard() {
     },
     {
       contractname: "Employees",
+      counts: empdata?.length,
+      description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
+      url: "/company/employees",
+    },
+    {
+      contractname: "Attandance",
       counts: "200",
       description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
       url: "Learn More",
     },
     {
-      contractname: "Supplier",
+      contractname: "Documents",
       counts: "200",
       description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
       url: "Learn More",
@@ -110,20 +159,9 @@ export default function Dashboard() {
       description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
       url: "Learn More",
     },
-    {
-      contractname: "Reminders",
-      counts: "200",
-      description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
-      url: "Learn More",
-    },
-    {
-      contractname: "Reminders",
-      counts: "200",
-      description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
-      url: "Learn More",
-    },
+
   ];
-  
+
   const data2 = [
     {
       Paymentstatus: "15",
@@ -132,39 +170,39 @@ export default function Dashboard() {
       Approval: "Learn More",
     },
   ];
-  
+
   const card = (
     <>
       {data.map((post) => (
-        <Grid xl={4} xs={12} item spacing={3}>
-          <Card sx={{ m: 0.5 }}>
-            <CardContent>
-              <Typography variant="h5" sx={{ mb: 0 }} color="primary">
-                {post.contractname}
-              </Typography>
-              <Typography
-                sx={{ fontSize: 14 }}
-                color="text.secondary"
-                gutterBottom
-              >
-                Total {post.contractname}: {post.counts}
-              </Typography>
-              <Typography component="div">{post.description}</Typography>
-            </CardContent>
-            <CardActions>
-              <Link to={post.url} size="small">{post.contractname}</Link>
-            </CardActions>
-          </Card>
+        <Grid xl={4} xs={12} item spacing={3} key={post.contractname}>
+          <RouterLink to={post.url} style={{ textDecoration: "none", color: "inherit" }}>
+            <StyledCard>
+              <CardContent>
+                <Typography variant="h6"  color="tan">
+                  {post.contractname}
+                </Typography>
+                <Typography
+                  sx={{ fontSize: 14 }}
+                  color="#3366cc"
+                  gutterBottom
+                >
+                  Total {post.contractname}: {post.counts}
+                </Typography>
+                <Typography component="div" color="#fff">
+                  {post.description}
+                </Typography>
+              </CardContent>
+            </StyledCard>
+          </RouterLink>
         </Grid>
       ))}
     </>
   );
-  
   const card2 = (
     <>
       {data2.map((post) => (
-        <Grid xl={12} item spacing={3}>
-          <Card sx={{ m: 0.5 }}>
+        <Grid xl={12} item spacing={3} key={post.Paymentstatus}>
+          <StyledCard>
             <CardContent>
               <Typography
                 variant="h5"
@@ -240,11 +278,12 @@ export default function Dashboard() {
             <CardActions>
               <Button size="small">{post.url}</Button>
             </CardActions>
-          </Card>
+          </StyledCard>
         </Grid>
       ))}
     </>
   );
+
 
   return (
     <>
@@ -276,9 +315,8 @@ export default function Dashboard() {
             </Grid>
           </Grid>
         </Box>
-  
 
-    </Container >
+      </Container >
     </>
   );
 }

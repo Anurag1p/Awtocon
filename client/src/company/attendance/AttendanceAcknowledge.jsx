@@ -22,6 +22,7 @@ const AttendanceAcknowledge = ({
   console.log(COMPANY_ID, "COMPANY_ID in attendance")
 
   const [employees, getReport] = useState();
+  console.log(employees, "employees")
   const [foundUsers, setFoundUsers] = useState([]);
   const [filterMethod, setFilterMethod] = useState("By Pay Period");
   const [name, setName] = useState("All");
@@ -35,21 +36,23 @@ const AttendanceAcknowledge = ({
   const [resStatus, setResStatus] = useState(false);
 
   let MyDateCurrent = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
+ // console.log(MyDateCurrent, "MyDateCurrent")
 
   const formattedMyDateCurrent = moment(MyDateCurrent)
     .utcOffset(0)
     .format("YYYY-MM-DD");
+    // console.log(formattedMyDateCurrent, "formattedMyDateCurrent")
 
   const generateWeekOptions = () => {
     const options = [];
     const today = moment().utcOffset(0);
-
     for (let i = 0; i < 5; i++) {
       // Generate options for the current week and the four previous weeks
       const weekStartDate = moment(today)
         .utcOffset(0)
         .subtract(i * 7, "days")
         .startOf("isoWeek");
+
       const weekEndDate = moment(weekStartDate).utcOffset(0).endOf("isoWeek");
       const startVal = `${weekStartDate.format("YYYY-MM-DD")}`;
       const endVal = `${weekEndDate.format("YYYY-MM-DD")}`;
@@ -65,14 +68,17 @@ const AttendanceAcknowledge = ({
 
     return options;
   };
-
   const weeklyDate = generateWeekOptions();
+ 
+
   var Defaultstart = weeklyDate.filter((e, index) => {
     return index === 0 && e;
   });
+
   const [startDate, setStartDate] = useState(
     moment(Defaultstart[0].startVal).utcOffset(0)
   ); // Replace with your start date
+
   const [endDate, setEndDate] = useState(
     moment(Defaultstart[0].endVal).utcOffset(0)
   );
@@ -94,6 +100,7 @@ const AttendanceAcknowledge = ({
   }, [startDate, endDate]);
 
   const HandlePeriod = (e) => {
+   
     const extractDate = e?.split(" - ");
     setSelectDate(e);
     setStartDate(moment(extractDate[0]));
@@ -218,7 +225,6 @@ const AttendanceAcknowledge = ({
         }
       });
 
-      // console.log(result, "filter");
 
       const totalDuration = filterByDate.reduce((acc, attendance) => {
         const timeIn = moment(attendance.ATTENDANCE_IN)
@@ -325,7 +331,7 @@ const AttendanceAcknowledge = ({
       <div className="myscreen p-3">
         <Box className="box" style={{ background: "#277099" }}>
           <Navbar toggle={() => setOpenNav((e) => !e)} />
-          {resStatus == true ? (<button
+          {resStatus === true ? (<button
             size="small"
             variant={show ? "outlined" : "outlined"}
             className={
@@ -436,7 +442,7 @@ const AttendanceAcknowledge = ({
                                         }
                                       >
                                         {weeklyDate?.map((e, index) => (
-                                          <option key={index}>
+                                          <option key={e.startVal}>
                                             {e.startVal} - {e.endVal}
                                           </option>
                                         ))}
@@ -497,7 +503,7 @@ const AttendanceAcknowledge = ({
                                 >
                                   <option selected>All</option>
                                   {employees?.map((e) => (
-                                    <option>{e._doc.EMPLOYEE_NAME}</option>
+                                    <option key={e._doc._id}>{e._doc.EMPLOYEE_NAME}</option>
                                   ))}
                                 </select>
                               </div>
@@ -514,7 +520,7 @@ const AttendanceAcknowledge = ({
                                 >
                                   <option selected>All</option>
                                   {employees?.map((e) => (
-                                    <option>
+                                    <option key={e._doc._id}>
                                       {new Set(e._doc.EMPLOYEE_ROLE)}
                                     </option>
                                   ))}
