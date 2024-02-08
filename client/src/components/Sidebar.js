@@ -34,11 +34,9 @@ const Sidebar = ({
   const companyData = useSelector(state => state?.setOneCompany?.user)
   const companyLogin = useSelector(state => state?.companyLogin?.user)
 
-  const companyName = companyLogin[1]?.split('@');
 
-  console.log(companyName, "control");
-  const company = companyName[0]?.slice(-(companyName[0].length-1))
-  console.log(company, "company")
+  // const company = companyName[0]?.slice(-(companyName[0].length-1))
+  // console.log(company, "company")
   const navigate = useNavigate()
   const [data, setData] = useState([]);
 
@@ -88,8 +86,8 @@ const Sidebar = ({
             className="sidebar-header d-flex p-3 f-20"
             style={{ justifyContent: "space-between" }}
           >
-            {/* <h5 className="pt-2" style={{color:"tan"}}>{companyName[0])}</h5> */}
-            <h5 className="pt-2" style={{ color: "tan" }}>{companyName[0]?.charAt(0).toUpperCase() + company}</h5>
+            <h5 className="pt-2" style={{color:"tan"}}>{COMPANY_USERNAME}</h5>
+            {/* <h5 className="pt-2" style={{ color: "tan" }}>{companyName[0]?.charAt(0).toUpperCase() + company}</h5> */}
 
             <Tooltip title={COMPANY_USERNAME} sx={{zIndex:26}}>
               <Avatar>{filterData?.COMPANY_NAME?.substring(0, 1)}</Avatar>

@@ -190,6 +190,7 @@ export default function ProjectCreate() {
                   value={createProject.PROJECT_USERNAME}
                   name="PROJECT_USERNAME"
                   onChange={handleCreate}
+                  id="project_username"
                 />
                 {usernameErr && (
                   <div className="invalid-feedback">{usernameErr}</div>
@@ -201,7 +202,7 @@ export default function ProjectCreate() {
                   type="text"
                   className={`form-control form-control-2 rounded-0 ${nameError ? "is-invalid" : ""
                     }`}
-                  id="inputname"
+                  id="project_name"
                   placeholder="Project Name"
                   value={createProject.PROJECT_NAME}
                   name="PROJECT_NAME"
@@ -218,7 +219,7 @@ export default function ProjectCreate() {
                   type="number"
                   className={`form-control form-control-2 rounded-0 ${companyaccError ? "is-invalid" : ""
                     }`}
-                  id="inputPassword4"
+                  id="PROJECT_ACCOUNT"
                   placeholder="Enter your Account"
                   name="PROJECT_ACCOUNT"
                   value={createProject.PROJECT_ACCOUNT}
@@ -237,6 +238,7 @@ export default function ProjectCreate() {
                   type="date"
                   value={createProject.PROJECT_START_DATE}
                   name="PROJECT_START_DATE"
+                  id="PROJECT_START_DATE"
                   onChange={handleCreate}
                   className="form-control form-control-2 rounded-0 "
                 />
@@ -249,16 +251,17 @@ export default function ProjectCreate() {
                   value={createProject.PROJECT_END_DATE}
                   name="PROJECT_END_DATE"
                   onChange={handleCreate}
+                  id="PROJECT_END_DATE"
                   className="form-control form-control-2 rounded-0"
                 />
               </div>
               <div className="form-group col-xl-4">
                 <label>Project Type</label>
                 <select
-                  id="inputEnroll"
                   className="form-control form-control-2 border rounded-0"
                   onChange={handleCreate}
                   name="PROJECT_TYPE"
+                  id="PROJECT_TYPE"
                   value={createProject.PROJECT_TYPE}
                 >
                   <option selected>--Choose Project Type--</option>
@@ -290,7 +293,7 @@ export default function ProjectCreate() {
                 <input
                   type="number"
                   className="form-control form-control-2 rounded-0 "
-                  id="inputsupervisor"
+                  id="project_value"
                   name="PROJECT_VALUE"
                   value={createProject.PROJECT_VALUE}
                   onChange={handleCreate}
@@ -300,7 +303,7 @@ export default function ProjectCreate() {
               <div className="form-group col-md-4">
                 <label></label>
                 <select
-                  id="inputEnroll"
+                  id="project_currency"
                   className="form-control form-control-2 border rounded-0"
                   onChange={handleCreate}
                   name="PROJECT_CURRENCY"
@@ -337,6 +340,7 @@ export default function ProjectCreate() {
                   className="form-control form-control-2 border rounded-0"
                   placeholder="Country"
                   name="PROJECT_COUNTRY"
+                  id="project_country"
                   value={createProject.PROJECT_COUNTRY}
                   onChange={handleCreate}
                 >
@@ -357,6 +361,7 @@ export default function ProjectCreate() {
                   className="form-control form-control-2 border rounded-0"
                   placeholder="State"
                   name="PROJECT_STATE"
+                  id="project_state"
                   value={createProject.PROJECT_STATE}
                   onChange={handleCreate}
                 >
@@ -377,6 +382,7 @@ export default function ProjectCreate() {
                   className="form-control form-control-2 border rounded-0"
                   placeholder="City"
                   name="PROJECT_CITY"
+                  id="project_city"
                   value={createProject.PROJECT_CITY}
                   onChange={handleCreate}
                 >

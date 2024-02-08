@@ -53,7 +53,11 @@ function Logincomp({ message }) {
         else if (param[4] === "company") {
           // Dispatch(setCompanyuser(param))
           navigate(`/company/dashboard`);
-        } else {
+        } else if (param[4] === "contractors") {
+          // Dispatch(setCompanyuser(param))
+          navigate(`/subcontractor/dashboard`);
+        }
+        else {
           navigate("/");
           setErrorMsg("Company: Error (auth/invalid-login-credentials).");
         }

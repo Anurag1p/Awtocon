@@ -9,11 +9,14 @@ import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import moment from "moment";
 import ContractorGenPassword from "./ContractorGenPassword";
+import { useSelector } from "react-redux";
+import { getProjectData } from "../../redux/slice/getallProjectSlice";
 
 
 const ContractorDetail = () => {
   const filteredEmployee = useLocation();
   const filterData = filteredEmployee?.state[0];
+  console.log(filterData, "filterData")
   const COMPANY_ID = filteredEmployee?.state[1];
   const COMPANY_USERNAME = filteredEmployee?.state[2];
   const COMPANY_PARENT_ID = filteredEmployee?.state[3];
@@ -30,27 +33,14 @@ const ContractorDetail = () => {
   console.log(projectData, "projectData");
 
   // fatch project
-  const fetchProject = async () => {
-    try {
-      const response = await axios.put("/api/get_projects", {
-        PROJECT_PARENT_ID: COMPANY_ID,
-        PROJECT_PARENT_USERNAME: COMPANY_USERNAME,
-        PROJECT_MEMBER_PARENT_ID: COMPANY_PARENT_ID,
-        PROJECT_MEMBER_PARENT_USERNAME: COMPANY_PARENT_USERNAME,
-      });
-
-      const data = response.data;
-      setProjectData(data.result);
-    } catch (err) {
-      throw err;
-    }
-  };
+  const fetchAllProject = useSelector(state => state?.allProjectData?.projects);
+  console.log(fetchAllProject, "allProjects")
 
   useEffect(() => {
-    fetchProject();
+    getProjectData()
   }, [filterData]);
 
-  const getallparam = projectData?.filter(
+  const getallparam = fetchAllProject?.filter(
     (e) => e?.PROJECT_ID === parseInt(selectedProject)
   );
 
@@ -58,7 +48,7 @@ const ContractorDetail = () => {
   const handleAssignProject = (e) => {
     e.preventDefault();
 
-    // Create a new object that combines the selected project data and employee data
+    // Create a new object that combines the selected project data and subcontractor data
     const mergedData = {
       PROJECT_ID: getallparam[0]?.PROJECT_ID,
       PROJECT_PARENT_ID: getallparam[0]?.PROJECT_PARENT_ID,
@@ -77,14 +67,14 @@ const ContractorDetail = () => {
     // Validate the form data before submission
 
     axios
-      .post("/api/assign_project", mergedData)
+      .post("/api/assign_subcontractor_Project", mergedData)
       .then((response) => {
         setSelectedProject(response.data.result);
         toast.success("Project Assign successfully!", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 1000,
         });
-        fetchProject();
+        getProjectData();
         fetchData();
         if (response.data.result?.employee) {
         } else {
@@ -97,17 +87,18 @@ const ContractorDetail = () => {
       .catch((error) => {
         console.error(error, "ERR");
       });
+
   };
 
-  console.log(projectData, "projectData in employee");
 
   const fetchData = async (e) => {
     try {
-      const response = await axios.put("/api/get_assigned_projects", {
+      const response = await axios.put("/api/get_sub_assigned_projects", {
         SUBCONTRACTOR_ID: filterData?.SUBCONTRACTOR_ID,
         SUBCONTRACTOR_MEMBER_PARENT_USERNAME: filterData?.SUBCONTRACTOR_MEMBER_PARENT_USERNAME,
       });
       const data = response.data;
+      console.log(data.result, "results")
       setResStatus(true);
       setProject(data?.result.assignedProjects);
     } catch (err) {
@@ -119,10 +110,6 @@ const ContractorDetail = () => {
   useEffect(() => {
     fetchData();
   }, [filterData]);
-
-
-
-
 
 
   const columns = [
@@ -167,8 +154,6 @@ const ContractorDetail = () => {
     }
   ];
 
-
-
   return (
     <>
       <Box
@@ -178,7 +163,7 @@ const ContractorDetail = () => {
         }}
         className="box position-absolute"
       >
-        
+
         <ContractorNav
           filterData={filterData}
           active={1}
@@ -246,7 +231,7 @@ const ContractorDetail = () => {
                     </div>
                   </div>
 
-                  {/* <div className="col-12 mt-2">
+                  <div className="col-12 mt-2">
                     <div className="card">
                       <div className="card-body">
                         <h5 className="card-title">Work Details</h5>
@@ -267,7 +252,7 @@ const ContractorDetail = () => {
                         </p>
                       </div>
                     </div>
-                  </div> */}
+                  </div>
                 </div>
               </div>
 
@@ -297,7 +282,7 @@ const ContractorDetail = () => {
                             <option value="Select Project">
                               Select Project
                             </option>
-                            {projectData?.map((project, key) => (
+                            {fetchAllProject?.map((project, key) => (
                               <option value={project?.PROJECT_ID} key={key}>
                                 {project?.PROJECT_NAME}-{project?.PROJECT_ID}
                               </option>
@@ -318,7 +303,7 @@ const ContractorDetail = () => {
                       <div className="card-body">
                         <h5>List of Projects Assigned to Subcontractor:</h5>
                         <DataGrid
-                          sx={{ border: "none", height:"60vh" }}
+                          sx={{ border: "none", height: "60vh" }}
                           rows={project}
                           columns={columns}
                           getRowId={(row) => row?.PROJECT_ID}

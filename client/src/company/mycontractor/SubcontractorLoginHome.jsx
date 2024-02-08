@@ -2,12 +2,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import EmployeeNav from "./EmployeeNav";
+import SubcontractorNav from "./SubcontractorNav";
 
-const EmployeeLoginHome = ({ state }) => {
+const SubcontractorLoginHome = ({ state }) => {
   const navigate = useNavigate();
   const [project, setProject] = useState([]);
   const [empdata, setEmpdata] = useState([]);
@@ -89,7 +89,7 @@ const EmployeeLoginHome = ({ state }) => {
     <>
       <div className="container-fluid g-0">
 
-        <EmployeeNav empdata={empdata} project="My Projects" history="Attendance History" />
+        <SubcontractorNav empdata={empdata} project="My Projects" history="Attendance History" />
 
         {project.length > 0 ? (
           <div className="container">
@@ -141,5 +141,5 @@ const EmployeeLoginHome = ({ state }) => {
   );
 };
 
-export default EmployeeLoginHome;
+export default SubcontractorLoginHome;
 

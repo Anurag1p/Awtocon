@@ -8,14 +8,16 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import moment from "moment";
+import { useSelector } from "react-redux";
 //hi
 const EmployeeDetail = () => {
   const filteredEmployee = useLocation();
   const filterData = filteredEmployee?.state[0];
-  const COMPANY_ID = filteredEmployee?.state[1];
-  const COMPANY_USERNAME = filteredEmployee?.state[2];
-  const COMPANY_PARENT_ID = filteredEmployee?.state[3];
-  const COMPANY_PARENT_USERNAME = filteredEmployee?.state[4];
+  console.log(filteredEmployee, "filteredEmployee")
+  const COMPANY_ID = filteredEmployee?.state[0]?.EMPLOYEE_PARENT_ID;
+  const COMPANY_USERNAME = filteredEmployee?.state[0]?.EMPLOYEE_PARENT_USERNAME;
+  const COMPANY_PARENT_ID = filteredEmployee?.state[0]?.EMPLOYEE_MEMBER_PARENT_ID;
+  const COMPANY_PARENT_USERNAME = filteredEmployee?.state[0]?.EMPLOYEE_MEMBER_PARENT_USERNAME;
 
   const [selectedProject, setSelectedProject] = useState([]);
   const [projectData, setProjectData] = useState([]);
@@ -26,7 +28,8 @@ const EmployeeDetail = () => {
   const [workvalue, setWorkvalue] = useState([]);
 
   console.log(projectData, "projectData");
-
+// const getAllProjects = useSelector(state => state?.allProjectData?.projects)
+// console.log(getAllProjects, "projectData")
   // fatch project
   const fetchProject = async () => {
     try {
@@ -165,26 +168,6 @@ const EmployeeDetail = () => {
       width: 140,
     }
   ];
-
-
-
-
-  // useEffect(() => {
-  //   gettimesheet();
-  // }, [filterData]);
-
-
-  // const Manual = workvalue?.filter(
-  //   (prev) =>
-  //     prev.ATTENDANCE_TYPE_OUT === "manual" ||
-  //     prev.ATTENDANCE_TYPE_IN === "manual"
-  // );
-
-
-  // console.log(Manual.length, "total")
-
-
-
 
   return (
     <>

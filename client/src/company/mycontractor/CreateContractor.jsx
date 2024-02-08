@@ -12,7 +12,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { Button, Grid } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setSubcontractor } from "../../redux/slice/SubContractorSlice";
-
+import {
+  validatePhoneNumber,
+  validateUsername,
+  validateEmail,
+  validatePassword
+} from "../../components/Validation";
 const style = {
   position: "absolute",
   top: "50%",
@@ -31,6 +36,11 @@ export default function CreateContractor(props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [nameError, setNameError] = useState("");
+
+
   const [createSubcontract, setCreatesubcontract] = useState({
     SUBCONTRACTOR_PARENT_ID: props.COMPANY_ID,
     SUBCONTRACTOR_PARENT_USERNAME: props.COMPANY_USERNAME,
@@ -95,6 +105,40 @@ export default function CreateContractor(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+      // Clear previous validation errors
+      setPhoneError("");
+      setEmailError("");
+      setNameError("")
+  
+      // Validate phone number, username, and email fields
+      const isValidPhoneNumber = validatePhoneNumber(createSubcontract.EMPLOYEE_PHONE);
+      // const isValidUsername = validateUsername(createSubcontract.EMPLOYEE_USERNAME);
+      const isValidEmail = validateEmail(createSubcontract.EMPLOYEE_USERNAME);
+      // const isValidPassword = validatePassword(createSubcontract.EMPLOYEE_PASSWORD);
+      const isValidName = createSubcontract.EMPLOYEE_NAME !== "";
+  
+      if (!isValidEmail) {
+        setEmailError("Invalid email address");
+        return;
+      }
+  
+      if (!isValidName) {
+        setNameError("Name should not be empty");
+        return;
+      }
+  
+  
+      if (!isValidPhoneNumber) {
+        setPhoneError("Invalid phone number");
+        return;
+      }
+  
+
+
+
+
+
     const requiredFields = [
       "SUBCONTRACTOR_PARENT_ID",
       "SUBCONTRACTOR_PARENT_USERNAME",
@@ -172,36 +216,48 @@ export default function CreateContractor(props) {
                 <label>Sub contractor Email</label>
                 <input
                   type="text"
-                  className="form-control form-control-2 rounded-0"
+                  className={`form-control form-control-2 rounded-0 ${emailError ? "is-invalid" : ""
+                }`}
                   placeholder="Enter Subcontractor Email"
                   value={createSubcontract.SUBCONTRACTOR_USERNAME}
                   name="SUBCONTRACTOR_USERNAME"
                   onChange={handleCreate}
                 />
+                    {emailError && (
+                    <div className="invalid-feedback">{emailError}</div>
+                  )}
               </div>
               <div className="form-group col-xl-4">
                 <label>Sub contractor Name</label>
                 <input
                   type="text"
-                  className="form-control form-control-2 rounded-0"
+                  className={`form-control form-control-2 rounded-0 ${nameError ? "is-invalid" : ""
+                }`}
                   id="inputname"
                   placeholder="Enter Subcontractor Name"
                   value={createSubcontract.SUBCONTRACTOR_NAME}
                   name="SUBCONTRACTOR_NAME"
                   onChange={handleCreate}
                 />
+                 {nameError && (
+                    <div className="invalid-feedback">{nameError}</div>
+                  )}
               </div>
               <div className="form-group col-xl-4">
                 <label>Contact</label>
                 <input
                   type="number"
-                  className="form-control form-control-2 rounded-0"
+                  className={`form-control form-control-2 rounded-0 ${phoneError ? "is-invalid" : ""
+                      }`}
                   id="inputPassword4"
                   placeholder="Enter Phone Number"
                   name="SUBCONTRACTOR_PHONE"
                   value={createSubcontract.SUBCONTRACTOR_PHONE}
                   onChange={handleCreate}
                 />
+                    {phoneError && (
+                    <div className="invalid-feedback">{phoneError}</div>
+                  )}
               </div>
             </div>
             <div className="row py-2">

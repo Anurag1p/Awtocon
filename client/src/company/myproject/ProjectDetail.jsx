@@ -37,7 +37,7 @@ const ProjectDetail = () => {
         {/* <Navbar toggle={() => setOpenNav((e) => !e)} name={COMPANY_USERNAME} /> */}
 
         <ProjectNav filterData={filterData} active={1}  COMPANY_ID={COMPANY_ID}  COMPANY_USERNAME={COMPANY_USERNAME} COMPANY_PARENT_ID={COMPANY_PARENT_ID} COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME} />
-        {resStatus == true ? ( 
+        {resStatus === true ? ( 
         <div className="myscreen p-3">
           {index === 1 && (
             <div className="container-fluid g-0">

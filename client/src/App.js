@@ -59,13 +59,14 @@ import { getAllDocuments } from "./redux/slice/GetCompanyDocSlice";
 import { getAllSubcontractor } from "./redux/slice/SubContractorSlice";
 import { getAllttendance } from "./redux/slice/AttendanceSlice";
 import { getAllCompany } from "./redux/slice/AllCompanySlice"
+import SubcontractorLoginHome from "./company/mycontractor/SubcontractorLoginHome";
 function App() {
 
   const [userName, setUserName] = useState("");
   const dispatch = useDispatch()
-  console.log(userName[2], "username")
 
   const AdminLoginData = useSelector(state => state?.adminLogin?.user)
+  console.log(AdminLoginData, "Admin")
   const admin_id = userName[2]
   const admin_username = userName[3]
   // console.log(admin_id, admin_username, "hello")
@@ -335,7 +336,10 @@ function App() {
 
             {/* My contractos */}
 
-
+            <Route
+              path="/subcontractor/home"
+              element={<SubcontractorLoginHome state={userName} />}
+            />
             {/* <Route
               path="/company/employees/:COMPANY_ID/:COMPANY_USERNAME/:COMPANY_PARENT_ID/:COMPANY_PARENT_USERNAME"
               element={<EmployeeSrc />}
