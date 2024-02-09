@@ -7,7 +7,7 @@ import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 
 
-const SubcontractorNav = ({ empdata, project, history, empName, ProjectName }) => {
+const SubcontractorNav = ({ subcontractor, project, history, ProjectName }) => {
     const navigate = useNavigate();
     const logout = async () => {
         try {
@@ -30,7 +30,7 @@ const SubcontractorNav = ({ empdata, project, history, empName, ProjectName }) =
                         <span style={{ border: "2px solid tan", borderRadius: "50%", padding: " 2px 5px" }}>
                             <FontAwesomeIcon icon={faUser} style={{ fontSize: "1.3rem", color: "tan" }} />
                         </span>
-                        <span style={{ margin: " 0 10px" }}>{empdata?.EMPLOYEE_NAME} {empName}</span>
+                        <span style={{ margin: " 0 10px" }}>{subcontractor?.SUBCONTRACTOR_NAME}</span>
                     </a>
                     <button
                         className="btn  my-2 my-sm-0 btn-sm"
@@ -50,7 +50,7 @@ const SubcontractorNav = ({ empdata, project, history, empName, ProjectName }) =
                 <div className="container">
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div className="navbar-nav">
-                            <Link className="bg-light text-dark nav-link" to={`/subcontractor/projects`}>{project}</Link>
+                            <Link className="bg-light text-dark nav-link" disabled to={`/subcontractor/home`}>{project}</Link>
 
                             {ProjectName ? <a className="bg-white text-dark nav-link">
                                 Attendance - {ProjectName}

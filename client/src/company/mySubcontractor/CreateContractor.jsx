@@ -102,43 +102,35 @@ export default function CreateContractor(props) {
     }));
   };
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
-
-      // Clear previous validation errors
-      setPhoneError("");
-      setEmailError("");
-      setNameError("")
   
-      // Validate phone number, username, and email fields
-      const isValidPhoneNumber = validatePhoneNumber(createSubcontract.EMPLOYEE_PHONE);
-      // const isValidUsername = validateUsername(createSubcontract.EMPLOYEE_USERNAME);
-      const isValidEmail = validateEmail(createSubcontract.EMPLOYEE_USERNAME);
-      // const isValidPassword = validatePassword(createSubcontract.EMPLOYEE_PASSWORD);
-      const isValidName = createSubcontract.EMPLOYEE_NAME !== "";
+    // Clear previous validation errors
+    setPhoneError("");
+    setEmailError("");
+    setNameError("");
+    setErrorMsg("");
   
-      if (!isValidEmail) {
-        setEmailError("Invalid email address");
-        return;
-      }
+    // Validate phone number, name, and email fields
+    const isValidPhoneNumber = validatePhoneNumber(createSubcontract.SUBCONTRACTOR_PHONE);
+    const isValidEmail = validateEmail(createSubcontract.SUBCONTRACTOR_USERNAME);
+    const isValidName = createSubcontract.SUBCONTRACTOR_NAME !== "";
   
-      if (!isValidName) {
-        setNameError("Name should not be empty");
-        return;
-      }
+    if (!isValidEmail) {
+      setEmailError("Invalid email address");
+      return;
+    }
   
+    if (!isValidName) {
+      setNameError("Name should not be empty");
+      return;
+    }
   
-      if (!isValidPhoneNumber) {
-        setPhoneError("Invalid phone number");
-        return;
-      }
+    if (!isValidPhoneNumber) {
+      setPhoneError("Invalid phone number");
+      return;
+    }
   
-
-
-
-
-
     const requiredFields = [
       "SUBCONTRACTOR_PARENT_ID",
       "SUBCONTRACTOR_PARENT_USERNAME",
@@ -148,11 +140,11 @@ export default function CreateContractor(props) {
       "SUBCONTRACTOR_NAME",
       "SUBCONTRACTOR_PHONE",
     ];
-
+  
     const hasEmptyFields = requiredFields.some(
       (field) => !createSubcontract[field]
     );
-
+  
     if (hasEmptyFields) {
       setErrorMsg("Fill all fields");
       toast.error("Please fill in all fields", {
@@ -161,18 +153,28 @@ export default function CreateContractor(props) {
       });
       return;
     }
-
-    setErrorMsg("");
-
+  
     axios
       .post("/api/create_subcontractor", createSubcontract)
       .then((response) => {
         if (response.data.operation === "failed") {
-          setErrorMsg(response.data.errorMsg);
-          toast.error(response.data.errorMsg, {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 1000,
-          });
+          const errorCode = response.data.errorMsg?.code;
+          if (errorCode === 11000) {
+            setErrorMsg("Subcontractor already exists");
+            handleClose();
+            toast.error("Subcontractor already exists", {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 1000,
+            });
+          } else {
+            const errorMessage = response.data.errorMsg || "An error occurred";
+            setErrorMsg(errorMessage);
+            handleClose();
+            toast.error(errorMessage, {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 1000,
+            });
+          }
         } else if (response.data.operation === "successfull") {
           setResStatus(false);
           handleClose();
@@ -180,15 +182,19 @@ export default function CreateContractor(props) {
           toast.success("Subcontract Created successfully!", {
             position: toast.POSITION.TOP_CENTER,
           });
-          // props.Update();
         }
       })
       .catch((error) => {
         console.error(error, "ERR");
+        const errorMessage = "An error occurred";
+        setErrorMsg(errorMessage);
+        toast.error(errorMessage, {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 1000,
+        });
       });
   };
-
-
+  
 
   return (
     <>
@@ -207,7 +213,7 @@ export default function CreateContractor(props) {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        style={{zIndex:9999999}}
+        style={{ zIndex: 9999999 }}
       >
         <Box sx={style}>
           <form onSubmit={handleSubmit}>
@@ -217,47 +223,47 @@ export default function CreateContractor(props) {
                 <input
                   type="text"
                   className={`form-control form-control-2 rounded-0 ${emailError ? "is-invalid" : ""
-                }`}
+                    }`}
                   placeholder="Enter Subcontractor Email"
                   value={createSubcontract.SUBCONTRACTOR_USERNAME}
                   name="SUBCONTRACTOR_USERNAME"
                   onChange={handleCreate}
                 />
-                    {emailError && (
-                    <div className="invalid-feedback">{emailError}</div>
-                  )}
+                {emailError && (
+                  <div className="invalid-feedback">{emailError}</div>
+                )}
               </div>
               <div className="form-group col-xl-4">
                 <label>Sub contractor Name</label>
                 <input
                   type="text"
                   className={`form-control form-control-2 rounded-0 ${nameError ? "is-invalid" : ""
-                }`}
+                    }`}
                   id="inputname"
                   placeholder="Enter Subcontractor Name"
                   value={createSubcontract.SUBCONTRACTOR_NAME}
                   name="SUBCONTRACTOR_NAME"
                   onChange={handleCreate}
                 />
-                 {nameError && (
-                    <div className="invalid-feedback">{nameError}</div>
-                  )}
+                {nameError && (
+                  <div className="invalid-feedback">{nameError}</div>
+                )}
               </div>
               <div className="form-group col-xl-4">
                 <label>Contact</label>
                 <input
                   type="number"
                   className={`form-control form-control-2 rounded-0 ${phoneError ? "is-invalid" : ""
-                      }`}
+                    }`}
                   id="inputPassword4"
                   placeholder="Enter Phone Number"
                   name="SUBCONTRACTOR_PHONE"
                   value={createSubcontract.SUBCONTRACTOR_PHONE}
                   onChange={handleCreate}
                 />
-                    {phoneError && (
-                    <div className="invalid-feedback">{phoneError}</div>
-                  )}
+                {phoneError && (
+                  <div className="invalid-feedback">{phoneError}</div>
+                )}
               </div>
             </div>
             <div className="row py-2">

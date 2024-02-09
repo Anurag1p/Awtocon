@@ -89,7 +89,27 @@ const ContractorDetail = () => {
       });
 
   };
-
+  // axios
+    // .post("/api/assign_subcontractor_Project", mergedData)
+    // .then((response) => {
+    //   setSelectedProject(response.data.result);
+    //   fetchProject();
+    //   fetchData();
+    //   if (response.data.result && response.data.result.isAssigned) {
+    //     toast.error("Project Already Assign", {
+    //       position: toast.POSITION.TOP_CENTER,
+    //       autoClose: 1000,
+    //     });
+    //   } else {
+    //     toast.success("Project Assign successfully!", {
+    //       position: toast.POSITION.TOP_CENTER,
+    //       autoClose: 1000,
+    //     });
+    //   }
+    // })
+    // .catch((error) => {
+    //   console.error(error, "ERR");
+    // });
 
   const fetchData = async (e) => {
     try {

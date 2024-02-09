@@ -3,8 +3,6 @@ import {
   BrowserRouter,
   Routes,
   Route,
-  Navigate,
-  useNavigate,
 } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -24,9 +22,7 @@ import Firecreate from "./components/Firecreate";
 import UserLogin from "./auth/UserLogin";
 import Updates from "./auth/RestEmailLink";
 import EmployeeTimeSheet from "./company/myemployee/EmployeeTimeSheet";
-import Sidebar from "./components/Sidebar";
 import Project from "./company/myproject/Project";
-import axios from "axios";
 import ProjectDetail from "./company/myproject/ProjectDetail";
 import ProjectAllocate from "./company/myproject/ProjectAllocate";
 import ProjectLoc from "./company/myproject/ProjectLoc";
@@ -37,13 +33,13 @@ import EmployeeManual from "./company/myemployee/EmployeeManual";
 import EmployeeDocuments from "./company/myemployee/EmployeeDocuments";
 import AttendanceAcknowledge from "./company/attendance/AttendanceAcknowledge";
 import Documents from "./company/document/Documents";
-import Contractor from "./company/mycontractor/Contractor";
-import ContractorDetail from "./company/mycontractor/ContractorDetail";
+import Contractor from "./company/mySubcontractor/Contractor";
+import ContractorDetail from "./company/mySubcontractor/ContractorDetail";
 import Dashboard from "./company/dashboard/Dashboard"; //company dashboard
 import { useDispatch, useSelector } from "react-redux";
 import { setCompanyuser } from "./redux/slice/CompanyLoginSlice"
 // import { setOneCompany } from "./redux/slices/getOneCompanySlice"
-import SubContractorDoc from "./company/mycontractor/SubContractorDoc";
+import SubContractorDoc from "./company/mySubcontractor/SubContractorDoc";
 
 // /.......Employees
 import EmployeeLoginHome from "./employee/EmployeeLoginHome";
@@ -55,11 +51,12 @@ import EmployeeHistory from "./employee/EmployeeHistory";
 import { getProjectData } from "./redux/slice/getallProjectSlice";
 import { getSingleCompData } from "./redux/slice/SingleCompSlice";
 import { getEmployeeData } from "./redux/slice/EmployeeDataSlice";
-import { getAllDocuments } from "./redux/slice/GetCompanyDocSlice";
 import { getAllSubcontractor } from "./redux/slice/SubContractorSlice";
 import { getAllttendance } from "./redux/slice/AttendanceSlice";
 import { getAllCompany } from "./redux/slice/AllCompanySlice"
-import SubcontractorLoginHome from "./company/mycontractor/SubcontractorLoginHome";
+import SubcontractorLoginHome from "./company/mySubcontractor/SubcontractorLoginHome";
+import SubcontractorAssigned from "./company/myproject/SubcontractorAssigned";
+import SubcontractorProjectDetail from "./company/mySubcontractor/SubcontractorProjectDetail";
 function App() {
 
   const [userName, setUserName] = useState("");
@@ -217,6 +214,11 @@ function App() {
               path="/company/projects/allocate-employee"
               element={<ProjectAllocate />}
             />
+
+            <Route
+              path="/company/projects/allocated_subcontractor"
+              element={<SubcontractorAssigned />}
+            />
             <Route path="/company/projects/tracking" element={<ProjectLoc />} />
             <Route
               path="/company/projects/documents"
@@ -313,6 +315,7 @@ function App() {
               path="/employee/home"
               element={<EmployeeLoginHome state={userName} />}
             />
+
             <Route
               path="/employee/mark-attendance"
               element={<EmployeeAttendance state={userName} />}
@@ -328,18 +331,31 @@ function App() {
               path="/employee/attendance-history"
               element={<EmployeeTimeSheetUser state={userName} />}
             />
-            
-              <Route
+
+            <Route
               path="/employee/attendance/:latt/:lngi/:areas/:loca/:employees/:projects/:projectids"
               element={<EmployeeAttendance state={userName} />}
             />
 
             {/* My contractos */}
 
+            {/* for subcontractor Login  */}
+
+
             <Route
               path="/subcontractor/home"
               element={<SubcontractorLoginHome state={userName} />}
             />
+
+            <Route
+              path="/subcontractor/projects-details/:employees/:projects"
+              element={<SubcontractorProjectDetail state={userName} />}
+            />
+            {/* 
+            <Route
+              path="/subcontractor/dashboard"
+              element={<EmployeeLoginHome state={userName} />}
+            /> */}
             {/* <Route
               path="/company/employees/:COMPANY_ID/:COMPANY_USERNAME/:COMPANY_PARENT_ID/:COMPANY_PARENT_USERNAME"
               element={<EmployeeSrc />}

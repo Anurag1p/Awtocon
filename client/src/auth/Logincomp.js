@@ -55,7 +55,7 @@ function Logincomp({ message }) {
           navigate(`/company/dashboard`);
         } else if (param[4] === "contractors") {
           // Dispatch(setCompanyuser(param))
-          navigate(`/subcontractor/dashboard`);
+          navigate(`/subcontractor/home`);
         }
         else {
           navigate("/");

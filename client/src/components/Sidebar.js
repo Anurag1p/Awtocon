@@ -34,9 +34,15 @@ const Sidebar = ({
   const companyData = useSelector(state => state?.setOneCompany?.user)
   const companyLogin = useSelector(state => state?.companyLogin?.user)
 
+console.log(companyLogin, "companyLogin")
+const companyEmail = companyLogin[1]
+  // const companyFirst = companyName[0]?.slice(-(companyName[0].length-1))
+  // const companyLast = companyName[0]?.slice((companyName[0].length-1))
 
-  // const company = companyName[0]?.slice(-(companyName[0].length-1))
-  // console.log(company, "company")
+const company = companyEmail.split('@')[0]; // Extract "mukeshsahni8900"
+const companyName = company.charAt(0).toUpperCase() + company.slice(1); // Capitalize first letter and get the rest of the string
+
+
   const navigate = useNavigate()
   const [data, setData] = useState([]);
 
@@ -86,11 +92,11 @@ const Sidebar = ({
             className="sidebar-header d-flex p-3 f-20"
             style={{ justifyContent: "space-between" }}
           >
-            <h5 className="pt-2" style={{color:"tan"}}>{COMPANY_USERNAME}</h5>
+            <h5 className="pt-2" style={{color:"tan"}}>{companyName}</h5>
             {/* <h5 className="pt-2" style={{ color: "tan" }}>{companyName[0]?.charAt(0).toUpperCase() + company}</h5> */}
 
             <Tooltip title={COMPANY_USERNAME} sx={{zIndex:26}}>
-              <Avatar>{filterData?.COMPANY_NAME?.substring(0, 1)}</Avatar>
+              <Avatar>{filterData?.companyName?.substring(0, 1)}</Avatar>
             </Tooltip>
           
           </div>

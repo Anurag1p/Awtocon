@@ -163,6 +163,7 @@ app.put("/api/emp_data_one", (req, res) => {
   sendHttpRequest("PUT", `${process.env.SERVERAPIREQUEST}/emp_data_one`, req, res)
 });
 
+
 app.post("/api/create_emp_attendence", (req, res) => {
   sendHttpRequest("POST", `${process.env.SERVERAPIREQUEST}/create_emp_attendance`, req, res)
 });
@@ -302,9 +303,31 @@ app.put("/api/download_subContractor_document", (req, res) => {
 });
 // --------------------------------
 
-app.post("/api/subContractor_assign_project", (req, res) => {
-  sendHttpRequest("POST", `${process.env.SERVERAPIREQUEST}/subContractor_assign_project`, req, res)
+app.post("/api/assign_subcontractor_Project", (req, res) => {
+  sendHttpRequest("POST", `${process.env.SERVERAPIREQUEST}/assign_subcontractor_Project`, req, res)
 })
+
+app.put("/api/get_sub_assigned_projects", (req, res) => {
+  sendHttpRequest("PUT", `${process.env.SERVERAPIREQUEST}/get_sub_assigned_projects`, req, res)
+});
+//hello
+app.post("/api/assign_project", (req, res) => {
+  sendHttpRequest("POST", `${process.env.SERVERAPIREQUEST}/assign_project`, req, res)
+})
+
+app.put("/api/get_assigned_projects", (req, res) => {
+  sendHttpRequest("PUT", `${process.env.SERVERAPIREQUEST}/get_assigned_projects`, req, res)
+});
+//get assigned subcontractor to projects
+app.put("/api/get_assigned_subcontractor_to_project", (req, res) => {
+  sendHttpRequest("PUT", `${process.env.SERVERAPIREQUEST}/get_assigned_subcontractor_to_project`, req, res)
+});
+
+
+//individual subcontractor data
+app.put("/api/get_subcontractor_indiviual_project", (req, res) => {
+  sendHttpRequest("PUT", `${process.env.SERVERAPIREQUEST}/get_subcontractor_indiviual_project`, req, res)
+});
 
 app.put("/api/editbankdetail", (req, res) => {
   sendHttpRequest("POST", `${process.env.SERVERAPIREQUEST}/editbankdetail`, req, res)
@@ -406,9 +429,7 @@ app.put("/api/editbankdetail", (req, res) => {
 
 
 
-app.post("/api/assign_project", (req, res) => {
-  sendHttpRequest("POST", `${process.env.SERVERAPIREQUEST}/assign_project`, req, res)
-})
+
 
 app.post("/api/subContractor_assign_project", (req, res) => {
   sendHttpRequest("POST", `${process.env.SERVERAPIREQUEST}/subContractor_assign_project`, req, res)

@@ -1,33 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import Box from "@mui/material/Box";
-import { useLocation } from "react-router-dom";
+import { useLocation} from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import ProjectNav from "./ProjectNav";
-import Animations from "../../components/Animations"
+import { RotatingLines } from "react-loader-spinner";
+
 const ProjectDetail = () => {
+  
   const filteredProject = useLocation();
 
-  const filterData = filteredProject?.state[0];
-  const COMPANY_ID = filteredProject?.state[1];
-  const COMPANY_USERNAME = filteredProject?.state[2];
-  const COMPANY_PARENT_ID = filteredProject?.state[3];
-  const COMPANY_PARENT_USERNAME = filteredProject?.state[4];
+  const filterData = filteredProject?.state[0]
+  const COMPANY_ID = filteredProject?.state[1]
+  const COMPANY_USERNAME = filteredProject?.state[2]
+  const COMPANY_PARENT_ID = filteredProject?.state[3]
+  const COMPANY_PARENT_USERNAME = filteredProject?.state[4]
 
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(1);
   const [resStatus, setResStatus] = useState(false);
 
-  useEffect(() => {
-    if (filteredProject) {
-      setResStatus(true);
-    } else {
+  useEffect(()=> {
+    if(filteredProject) {  setResStatus(true) } else {
       setResStatus("error");
     }
-  }, [filteredProject]);
+  },[filteredProject])
+
 
   return (
     <>
-      <Box
+    <Box
         style={{
           display: "block",
           height: "100vh",
@@ -36,18 +37,11 @@ const ProjectDetail = () => {
       >
         {/* <Navbar toggle={() => setOpenNav((e) => !e)} name={COMPANY_USERNAME} /> */}
 
-        <ProjectNav
-          filterData={filterData}
-          active={1}
-          COMPANY_ID={COMPANY_ID}
-          COMPANY_USERNAME={COMPANY_USERNAME}
-          COMPANY_PARENT_ID={COMPANY_PARENT_ID}
-          COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
-        />
-        {resStatus === true ? (
-          <div className="myscreen p-3">
-            {index === 1 && (
-              <div className="container-fluid g-0">
+        <ProjectNav filterData={filterData} active={1}  COMPANY_ID={COMPANY_ID}  COMPANY_USERNAME={COMPANY_USERNAME} COMPANY_PARENT_ID={COMPANY_PARENT_ID} COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME} />
+        {resStatus === true ? ( 
+        <div className="myscreen p-3">
+          {index === 1 && (
+            <div className="container-fluid g-0">
               <div className="row">
                 <div className="col-md-2">
                   <b>Project Name</b>
@@ -159,9 +153,8 @@ const ProjectDetail = () => {
                 </div>
               </div>
             </div>
-            )}
-          </div>
-        ) : resStatus === "error" ? (
+          )}
+        </div>) : resStatus === "error" ? (
           <div
             className="p-3"
             style={{
@@ -183,10 +176,27 @@ const ProjectDetail = () => {
               </center>
             </small>
           </div>
-        ) : (
-         <Animations/>
-        )}
-      </Box>
+      ) : (
+          <div
+            className="p-3"
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%,-50%)",
+            }}
+          >
+            <RotatingLines
+              strokeColor="#2D5169"
+              strokeWidth="5"
+              animationDuration="0.75"
+              width="50"
+              visible={true}
+
+            />
+          </div>
+      )}
+      </Box> 
     </>
   );
 };

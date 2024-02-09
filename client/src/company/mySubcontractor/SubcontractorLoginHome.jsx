@@ -10,21 +10,21 @@ import SubcontractorNav from "./SubcontractorNav";
 const SubcontractorLoginHome = ({ state }) => {
   const navigate = useNavigate();
   const [project, setProject] = useState([]);
-  const [empdata, setEmpdata] = useState([]);
-
-  console.log(state[0], state[3], "hianu")
+  const [subcontractor, setSubcontractor] = useState([]);
+  // const [subcontractor, setSubcontractor] =useState([]);
+  console.log(state[0], state[3], "subsontra")
 
 
   useEffect(() => {
-    const fetchEmployeeData = async () => {
+    const fetchsubcontractorData = async () => {
       try {
         const empDataConfig = {
           method: "put",
           maxBodyLength: Infinity,
-          url: "/api/emp_data_one",
+          url: "/api/get_subcontractor_indiviual_project",
           data: {
             ADMIN_USERNAME: state[3],
-            EMPLOYEE_ID: state[0],
+            SUBCONTRACTOR_ID: state[0],
           },
         };
 
@@ -32,7 +32,7 @@ const SubcontractorLoginHome = ({ state }) => {
         const data = response.data;
 
         if (data.result) {
-          setEmpdata(data.result);
+          setSubcontractor(data.result);
         }
         console.log(data, "Employee data");
       } catch (error) {
@@ -40,13 +40,13 @@ const SubcontractorLoginHome = ({ state }) => {
       }
     };
 
-    fetchEmployeeData();
+    fetchsubcontractorData();
   }, [state[3]]);
 
   useEffect(() => {
     const fetchProjectsData = async () => {
       try {
-        const requests = empdata.EMPLOYEE_ASSIGN.map((item) => {
+        const requests = subcontractor.SUBCONTRACTOR_ASSIGN.map((item) => {
           const {
             PROJECT_ID,
             PROJECT_PARENT_ID,
@@ -78,18 +78,18 @@ const SubcontractorLoginHome = ({ state }) => {
       }
     };
 
-    // Check if empdata.EMPLOYEE_ASSIGN has changed
-    if (empdata.EMPLOYEE_ASSIGN && empdata.EMPLOYEE_ASSIGN.length > 0) {
+    // Check if subcontractor.EMPLOYEE_ASSIGN has changed
+    if (subcontractor.SUBCONTRACTOR_ASSIGN && subcontractor.SUBCONTRACTOR_ASSIGN.length > 0) {
       fetchProjectsData();
     }
-  }, [empdata.EMPLOYEE_ASSIGN]);
+  }, [subcontractor.SUBCONTRACTOR_ASSIGN]);
 
 
   return (
     <>
       <div className="container-fluid g-0">
 
-        <SubcontractorNav empdata={empdata} project="My Projects" history="Attendance History" />
+        <SubcontractorNav subcontractor={subcontractor} project="My Projects" />
 
         {project.length > 0 ? (
           <div className="container">
@@ -102,10 +102,11 @@ const SubcontractorLoginHome = ({ state }) => {
                   <tr>
                     <th scope="col">S No.</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Project Id</th>
+                    <th scope="col">Project Supervisor</th>
                     <th scope="col">Start Date</th>
                     <th scope="col">End Date</th>
-                    <th scope="col">Punch</th>
+                    <th scope="col">Project Value</th>
+                    <th scope="col">Project Details</th>
                   </tr>
                 </thead>
 
@@ -113,18 +114,22 @@ const SubcontractorLoginHome = ({ state }) => {
                   {project.map((item, index) => (
                     <tr key={item?.PROJECT_ID}>
                       <td scope="row">{index + 1}</td>
-                      <td>{item?.PROJECT_NAME}</td>
-                      <td>{item?.PROJECT_ID}</td>
+                      <td> {item?.PROJECT_NAME}</td>
+                      <td>
+                        {item?.PROJECT_SUPERVISOR}
+                      </td>
                       <td>{item?.PROJECT_START_DATE}</td>
                       <td>{item?.PROJECT_END_DATE}</td>
-                      <td>
+                      <td>{item?.PROJECT_VALUE}</td>
+                      {/* <td>
                         <Link
-                          to={`/employee/attendance/${item?.LATITUDE}/${item?.LONGITUDE}/${item?.AREA}/${item?.LOCATION_NAME}/${empdata?.EMPLOYEE_NAME}/${item?.PROJECT_NAME}/${item?.PROJECT_ID}`}
+                          to={`/sub/attendance/${item?.LATITUDE}/${item?.LONGITUDE}/${item?.AREA}/${item?.LOCATION_NAME}/${subcontractor?.EMPLOYEE_NAME}/${item?.PROJECT_NAME}/${item?.PROJECT_ID}`}
                           className="btn btn-sm btn-primary"
                         >
                           Visit
                         </Link>
-                      </td>
+                      </td> */}
+                      <td><Link className="btn btn-sm btn-primary" to={`/subcontractor/projects-details/${subcontractor?.SUBCONTRACTOR_NAME}/${item?.PROJECT_NAME}`}>View</Link></td>
                     </tr>
                   ))}
                 </tbody>

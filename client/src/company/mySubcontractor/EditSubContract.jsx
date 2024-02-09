@@ -281,7 +281,7 @@ export default function EditSubcontract(props) {
                                 </select>
                             </div>
                             <div className="form-group col-md-6">
-                                <label>Sub Contractor</label>
+                                <label>Sub Contractor Role</label>
                                 <input
                                     type="text"
                                     className="form-control form-control-2 rounded-0 "

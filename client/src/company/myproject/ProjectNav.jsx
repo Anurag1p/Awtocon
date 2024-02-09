@@ -50,7 +50,7 @@ const ProjectNav = ({
           }
           variant={1 === active ? "outlined" : "outlined"}
           className={
-            1 == active
+            1 === active
               ? "btn button border-bottom-0 bg-white"
               : "btn rounded-0 border-bottom-0  rounded-0 text-light"
           }
@@ -79,7 +79,7 @@ const ProjectNav = ({
           }
           size="small"
         >
-          Allocate Employees
+          Allocated Employees
         </Button>
 
         <Button
@@ -126,6 +126,29 @@ const ProjectNav = ({
           size="small"
         >
           Documents
+        </Button>
+
+        <Button
+          onClick={(e) =>
+            navigate("/company/projects/allocated_subcontractor", {
+              state: [
+                filterData,
+                COMPANY_ID,
+                COMPANY_USERNAME,
+                COMPANY_PARENT_ID,
+                COMPANY_PARENT_USERNAME,
+              ],
+            })
+          }
+          variant={5 === active ? "outlined" : "outlined"}
+          className={
+            5 === active
+              ? "btn button border-bottom-0 bg-white"
+              : "btn rounded-0 border-0  rounded-0 text-light"
+          }
+          size="small"
+        >
+          Subcontractor Assigned
         </Button>
       </div>
     </>

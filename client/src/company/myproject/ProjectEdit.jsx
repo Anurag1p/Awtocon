@@ -6,6 +6,7 @@ import axios from "axios";
 import country from "../../Api/countriess.json";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import projectList from "../../jsonlist/typeOfProject.json";
 
 import {
   Button,
@@ -258,7 +259,7 @@ export default function FeditProjectEdit(props) {
               </div>
               <div className="form-group col-xl-4">
                 <label>Project Type</label>
-                <select
+                {/* <select
                   id="inputEnroll"
                   className="form-control form-control-2 border rounded-0"
                   onChange={handleEdit}
@@ -267,22 +268,24 @@ export default function FeditProjectEdit(props) {
                 >
                   <option value="">--Choose Project Type--</option>
                   <option value="Architect">Architect</option>
-                  <option value="Civil Engineer">Civil Engineer</option>
-                  <option value="Structural Engineer">
-                    Structural Engineer
-                  </option>
-                  <option value="Mechanical Engineer">
-                    Mechanical Engineer
-                  </option>
-                  <option value="Electrical Engineer">
-                    Electrical Engineer
-                  </option>
-                  <option value="Project Manager">Project Manager</option>
-                  <option value="Quantity Surveyor">Quantity Surveyor</option>
-                  <option value="Interior Designer">Interior Designer</option>
-                  <option value="Landscaper">Landscaper</option>
-                  <option value="Contractor">Contractor</option>
-                  <option value="Scheduler">Scheduler</option>
+                 
+                </select> */}
+
+                <select
+                  className="form-control form-control-2 border rounded-0"
+                  onChange={handleEdit}
+                  name="PROJECT_TYPE"
+                  id="PROJECT_TYPE"
+                  value={EditProject.PROJECT_TYPE}
+                >
+                  <option selected>--Choose Project Type--</option>
+                  {projectList.map((e, key) => {
+                    return (
+                      <option value={e} key={key}>
+                        {e}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
             </div>
