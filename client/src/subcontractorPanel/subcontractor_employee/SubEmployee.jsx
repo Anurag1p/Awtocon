@@ -9,35 +9,45 @@ import EmployeeCreate from "./EmployeeCreate";
 import Sidebar from "../../components/Sidebar";
 import moment from "moment";
 import { RotatingLines } from "react-loader-spinner";
-import { useDispatch, useSelector } from "react-redux";
 
-// import for refetch the data to update 
-import { getEmployeeData, setEmployeeData } from "../../redux/slice/EmployeeDataSlice";
-
-const Employee = () => {
-
+const SubEmployee = ({
+  COMPANY_ID,
+  COMPANY_USERNAME,
+  COMPANY_PARENT_ID,
+  COMPANY_PARENT_USERNAME,
+}) => {
+  const [open, setOpen] = useState(false);
+  const [empData, setEmpData] = useState([{}]);
+  const [data, setData] = useState({ row: {} });
   const [archived, setArchived] = useState([{}]);
   const [display, setDisplay] = useState("unarchive");
-  const [resStatus, setResStatus] = useState(true);
+  const [resStatus, setResStatus] = useState(false);
   const navigate = useNavigate();
 
-  // calling dispatch for caaling the fetchempData funciton 
-  const dispatch = useDispatch();
+  //fatch Employees
+  const fetchData = async () => {
+    try {
+      const response = await axios.put("/api/get_employee", {
+        EMPLOYEE_MEMBER_PARENT_ID: COMPANY_PARENT_ID,
+        EMPLOYEE_MEMBER_PARENT_USERNAME: COMPANY_PARENT_USERNAME,
+        EMPLOYEE_PARENT_USERNAME: COMPANY_USERNAME,
+        EMPLOYEE_PARENT_ID: COMPANY_ID,
+      });
 
-  // data formSinlge company 
-  const companyLoginData = useSelector((state) => state?.companyLogin?.user);
+      const data = response.data;
+      // console.log("Employee Data: =>", data);
+      setResStatus(true)
+      setEmpData(data.result);
+    } catch (err) {
+      console.log("Something Went Wrong: =>", err);
+      setResStatus("error");
+      throw err;
+    }
+  };
 
-  // const empdata = useSelector((state) => state?.allEmployee?.employees);
-  const empdata = useSelector((state) => state?.allEmployee?.employees || []);
-
-  // const RefetchData = getEmployeeData(response )
-  console.log(empdata, "empdata")
-
-
-  const COMPANY_ID = companyLoginData[0]?.COMPANY_ID;
-  const COMPANY_PARENT_ID = companyLoginData[2]?.COMPANY_PARENT_ID;
-  const COMPANY_USERNAME = companyLoginData[1]?.COMPANY_USERNAME;
-  const COMPANY_PARENT_USERNAME = companyLoginData[3]?.COMPANY_PARENT_USERNAME;
+  useEffect(() => {
+    fetchData();
+  }, [COMPANY_ID]);
 
   // archive
   const archiveEmployee = async (archiveData) => {
@@ -60,7 +70,7 @@ const Employee = () => {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 1000,
         });
-        dispatch(getEmployeeData(response.data.result))
+        fetchData();
       } else {
         toast.error("Failed to Archived!", {});
       }
@@ -84,19 +94,16 @@ const Employee = () => {
         EMPLOYEE_ID: archiveemp.row?.EMPLOYEE_ID,
       };
 
+      console.log("Data:", data);
 
       const response = await axios.put("/api/unarchive-employee", data);
 
-      console.log("Data:2", response.data.result);
       if (response.status === 200) {
         toast.success("Employee UnArchived!", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 1000,
         });
-        console.log("empdata before update:", empdata);
-        dispatch(setEmployeeData(response.data.result));
-        console.log("empdata after update:", empdata);
-
+        fetchData();
       } else {
         toast.error("Failed to UnArchived!", {
           // Show for 2 seconds
@@ -110,12 +117,16 @@ const Employee = () => {
     }
   };
 
-
+  console.log(data, "data");
 
   const handleClick = (event) => {
-    navigate("/company/employees/detail", {
+    navigate("/subcontractor/employees/detail", {
       state: [
         event.row,
+        COMPANY_ID,
+        COMPANY_USERNAME,
+        COMPANY_PARENT_ID,
+        COMPANY_PARENT_USERNAME,
       ],
     });
   };
@@ -123,16 +134,15 @@ const Employee = () => {
 
 
 
-  // attendance status
+// attendance status
 
   const columns = [
-    { field: 'sr', headerName: 'S No.', width: 60, renderCell: (params) => params.row.id + 1 },
+    { field: "EMPLOYEE_ID", headerName: "ID", width: 60 },
     {
       field: "EMPLOYEE_USERNAME",
       headerName: "Employee Email",
       width: 120,
     },
-    { field: "EMPLOYEE_ID", headerName: "ID", width: 60 },
     {
       field: "EMPLOYEE_NAME",
       headerName: "Name",
@@ -167,7 +177,7 @@ const Employee = () => {
     },
     {
       field: "action",
-      headerName: "Details",
+      headerName: "Action",
       width: 80,
       renderCell: (cellValues) => {
         return (
@@ -189,7 +199,7 @@ const Employee = () => {
       headerName: "Edit",
       width: 80,
       renderCell: (cellValues) => {
-        return <EmployeeEdit edit={cellValues} />;
+        return <EmployeeEdit edit={cellValues} refetch={fetchData} />;
       },
     },
     {
@@ -226,21 +236,14 @@ const Employee = () => {
     }
   ];
 
+  const FilterArchive = empData?.filter(
+    (newData) => newData?.ARCHIVED === false
+  );
+  const rows = FilterArchive;
+  const archivedData = empData?.filter((newData) => newData?.ARCHIVED === true);
+  const rows2 = archivedData;
 
-
-
-  const FilterArchive = empdata?.filter((newData) => newData?.ARCHIVED === false);
-  // this extra line is only added to map the sr number with all rows of data 
-  const rows = FilterArchive.map((data, index) => ({ id: index, ...data }));
-  console.log("rows", rows);
-
-  const archivedData = empdata?.filter((newData) => newData?.ARCHIVED === true);
-  const rows2 = archivedData.map((data, index) => ({ id: index, ...data }));
-  console.log("rows2", rows2);
-
-
-
-  // const filterData = data?.row;
+  const filterData = data?.row;
 
   return (
     <>
@@ -250,12 +253,12 @@ const Employee = () => {
         COMPANY_USERNAME={COMPANY_USERNAME}
         COMPANY_PARENT_ID={COMPANY_PARENT_ID}
         COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
-        userType="company"
+        userType="subcontractor"
+
       />
-
       <Box className="box" style={{ background: "#277099" }}>
-
-        {empdata && empdata.length > 0 ? (<><button
+        {/* <Navbar toggle={() => setOpenNav((e) => !e)} name={COMPANY_USERNAME} /> */}
+        {resStatus === true ? (<><button
           variant={"outlined"}
           className={
             display === "unarchive"
@@ -267,55 +270,55 @@ const Employee = () => {
           My Employees
         </button>
 
-          <button
-            size="small"
-            variant={"outlined"}
-            className={
-              display === "archive"
-                ? "btn button border-bottom-0 bg-white btn-sm"
-                : "btn btn-sm btn-primary rounded-0 border-0  rounded-0 text-light btn-sm"
-            }
-            onClick={() => setDisplay("archive")}
-          >
-            Archive
-          </button>
-          <EmployeeCreate
-            COMPANY_ID={COMPANY_ID}
-            COMPANY_USERNAME={COMPANY_USERNAME}
-            COMPANY_PARENT_ID={COMPANY_PARENT_ID}
-            COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
-            name={"Project"}
+        <button
+          size="small"
+          variant={"outlined"}
+          className={
+            display === "archive"
+              ? "btn button border-bottom-0 bg-white btn-sm"
+              : "btn btn-sm btn-primary rounded-0 border-0  rounded-0 text-light btn-sm"
+          }
+          onClick={() => setDisplay("archive")}
+        >
+          Archive
+        </button>
+        <EmployeeCreate
+          COMPANY_ID={COMPANY_ID}
+          COMPANY_USERNAME={COMPANY_USERNAME}
+          COMPANY_PARENT_ID={COMPANY_PARENT_ID}
+          COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
+          name={"Project"}
+          Update={fetchData}
+        /></> ) : <>
+        <button
+          size="small"
+          disabled
+          className={"btn button border-bottom-0 bg-white btn-sm"}
+        >
+          My Employees
+        </button>
+        <button
+          size="small"
+          disabled
+          className={"btn rounded-0 border-0  rounded-0 text-light btn-primary btn-sm"}
+        >
+           Archive
+        </button>
+        <button
 
-          /></>) : <>
-          <button
-            size="small"
-            disabled
-            className={"btn button border-bottom-0 bg-white btn-sm"}
-          >
-            My Employees
-          </button>
-          <button
-            size="small"
-            disabled
-            className={"btn rounded-0 border-0  rounded-0 text-light btn-primary btn-sm"}
-          >
-            Archive
-          </button>
-          <button
-
-            style={{ color: "#277099" }}
-            className="btn rounded-0 border-0  rounded-0 text-light btn-primary btn-sm"
-            size="small"
-            disabled
-          >
+          style={{ color: "#277099" }}
+          className="btn rounded-0 border-0  rounded-0 text-light btn-primary btn-sm"
+          size="small"
+          disabled
+        >
             + Add New Employee
-          </button>
-        </>}
+        </button>
+      </>} 
 
         <div className="myscreen p-3">
           <Box style={{ height: "100%", padding: 0, paddingBottom: "0" }}>
             <>
-              {empdata && empdata.length > 0 ? (<DataGrid
+            {resStatus === true ? ( <DataGrid
                 className="display"
                 sx={{ border: "none" }}
                 rows={display === "archive" ? rows2 : rows}
@@ -332,10 +335,10 @@ const Employee = () => {
                 pageSizeOptions={[5]}
                 disableRowSelectionOnClick
                 localeText={{
-                  noRowsLabel: rows.length === 0 && "There is no Employies..",
+                  noRowsLabel: rows.length === 0 && "There is no Employees yet....",
                 }}
               />) : resStatus === "error" ? (
-
+                
                 <Box>
                   <div
                     className="p-3"
@@ -350,7 +353,7 @@ const Employee = () => {
                       <p>Check your connection and try again. :(</p>
                       <center>
                         <button
-                          onClick={getEmployeeData}
+                          onClick={fetchData}
                           className="btn btn-sm btn-secondary"
                         >
                           Retry
@@ -389,4 +392,4 @@ const Employee = () => {
   );
 };
 
-export default Employee;
+export default SubEmployee;

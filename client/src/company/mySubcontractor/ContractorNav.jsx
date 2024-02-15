@@ -14,6 +14,7 @@ const ContractorNav = ({ filterData, active, COMPANY_ID, COMPANY_USERNAME, COMPA
         COMPANY_USERNAME={COMPANY_USERNAME}
         COMPANY_PARENT_ID={COMPANY_PARENT_ID}
         COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
+        userType="company" 
       />
       <div className="container-fluid pb-0 g-0" style={{ background: "#277099" }}>
         <Button

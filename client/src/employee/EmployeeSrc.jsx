@@ -514,6 +514,7 @@ const EmployeeSrc = () => {
         COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
         active={2}
         toggle={openNav}
+        userType="company" 
       />
       <Box className="box" style={{ background: "#277099" }}>
         <Navbar toggle={() => setOpenNav((e) => !e)} name={COMPANY_USERNAME} />
@@ -566,7 +567,7 @@ const EmployeeSrc = () => {
                   pageSizeOptions={[5]}
                   // checkboxSelection
                   disableRowSelectionOnClick
-                  localeText={{ noRowsLabel: rows.length === 0 && "There is no Emploies.." }}
+                  localeText={{ noRowsLabel: rows.length === 0 && "There is no Employees yet...." }}
 
                 />
               </>

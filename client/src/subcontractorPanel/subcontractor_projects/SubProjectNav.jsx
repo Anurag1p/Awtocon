@@ -4,22 +4,31 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import Sidebar from "../../components/Sidebar";
 
-const EmployeeNav = ({ filterData, active, COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_ID, COMPANY_PARENT_USERNAME }) => {
+const SubProjectNav = ({
+  filterData,
+  active,
+  COMPANY_ID,
+  COMPANY_USERNAME,
+  COMPANY_PARENT_ID,
+  COMPANY_PARENT_USERNAME,
+}) => {
   const navigate = useNavigate();
-  console.log("filterData1", filterData, COMPANY_ID, COMPANY_USERNAME,COMPANY_PARENT_ID )
   return (
     <>
       <Sidebar
-        active={2}
+        active={1}
         COMPANY_ID={COMPANY_ID}
         COMPANY_USERNAME={COMPANY_USERNAME}
         COMPANY_PARENT_ID={COMPANY_PARENT_ID}
         COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
-        userType="company" 
+        userType="subcontractor"
       />
-      <div className="container-fluid pb-0 g-0" style={{ background: "#277099" }}>
+      <div
+        className="container-fluid pb-0 g-0"
+        style={{ background: "#277099" }}
+      >
         <Button
-          onClick={() => navigate("/company/employees", { state: filterData })}
+          onClick={() => navigate("/subcontractor/projects", { state: filterData })}
           variant="contained"
           className="btn rounded-0"
           size="small"
@@ -29,11 +38,14 @@ const EmployeeNav = ({ filterData, active, COMPANY_ID, COMPANY_USERNAME, COMPANY
 
         <Button
           onClick={(e) =>
-            navigate("/company/employees/detail", {
-              state: [filterData, COMPANY_ID,
+            navigate("/subcontractor/projects/detail", {
+              state: [
+                filterData,
+                COMPANY_ID,
                 COMPANY_USERNAME,
                 COMPANY_PARENT_ID,
-                COMPANY_PARENT_USERNAME]
+                COMPANY_PARENT_USERNAME,
+              ],
             })
           }
           variant={1 === active ? "outlined" : "outlined"}
@@ -49,11 +61,14 @@ const EmployeeNav = ({ filterData, active, COMPANY_ID, COMPANY_USERNAME, COMPANY
 
         <Button
           onClick={(e) =>
-            navigate("/company/employees/timesheet", {
-              state: [filterData, COMPANY_ID,
+            navigate("/subcontractor/projects/allocate-employee", {
+              state: [
+                filterData,
+                COMPANY_ID,
                 COMPANY_USERNAME,
                 COMPANY_PARENT_ID,
-                COMPANY_PARENT_USERNAME]
+                COMPANY_PARENT_USERNAME,
+              ],
             })
           }
           variant={2 === active ? "outlined" : "outlined"}
@@ -64,16 +79,19 @@ const EmployeeNav = ({ filterData, active, COMPANY_ID, COMPANY_USERNAME, COMPANY
           }
           size="small"
         >
-          TimeSheet
+          Allocated Employees
         </Button>
 
         <Button
           onClick={(e) =>
-            navigate("/company/employees/manual-attendence", {
-              state: [filterData, COMPANY_ID,
+            navigate("/subcontractor/projects/tracking", {
+              state: [
+                filterData,
+                COMPANY_ID,
                 COMPANY_USERNAME,
                 COMPANY_PARENT_ID,
-                COMPANY_PARENT_USERNAME]
+                COMPANY_PARENT_USERNAME,
+              ],
             })
           }
           variant={3 === active ? "outlined" : "outlined"}
@@ -84,16 +102,19 @@ const EmployeeNav = ({ filterData, active, COMPANY_ID, COMPANY_USERNAME, COMPANY
           }
           size="small"
         >
-          Manual Attendance
+          Track
         </Button>
 
         <Button
           onClick={(e) =>
-            navigate("/company/employees/documents", {
-              state: [filterData, COMPANY_ID,
+            navigate("/subcontractor/projects/documents", {
+              state: [
+                filterData,
+                COMPANY_ID,
                 COMPANY_USERNAME,
                 COMPANY_PARENT_ID,
-                COMPANY_PARENT_USERNAME]
+                COMPANY_PARENT_USERNAME,
+              ],
             })
           }
           variant={4 === active ? "outlined" : "outlined"}
@@ -111,4 +132,4 @@ const EmployeeNav = ({ filterData, active, COMPANY_ID, COMPANY_USERNAME, COMPANY
   );
 };
 
-export default EmployeeNav;
+export default SubProjectNav;

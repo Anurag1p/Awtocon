@@ -7,7 +7,7 @@ import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 
 
-const SubcontractorNav = ({ subcontractor, project, history, ProjectName }) => {
+const SubcontractorNav = ({ subcontractor, project,gallery, ProjectName }) => {
     const navigate = useNavigate();
     const logout = async () => {
         try {
@@ -50,13 +50,8 @@ const SubcontractorNav = ({ subcontractor, project, history, ProjectName }) => {
                 <div className="container">
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div className="navbar-nav">
-                            <Link className="bg-light text-dark nav-link" disabled to={`/subcontractor/home`}>{project}</Link>
-
-                            {ProjectName ? <a className="bg-white text-dark nav-link">
-                                Attendance - {ProjectName}
-                            </a>
-                                : <Link className="bg-light text-dark nav-link" to={`/employee/attendance-history`}>{history}</Link>}
-
+                            {/* <Link className="bg-light text-dark nav-link" disabled to={`/subcontractor/home`}>{project}</Link> */}
+                            {/* <Link className="bg-light text-dark nav-link"  to={`/subcontractor/gallery`}>{gallery}</Link> */}
                         </div>
                     </div>
                 </div>

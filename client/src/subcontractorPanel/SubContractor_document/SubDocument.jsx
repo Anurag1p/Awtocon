@@ -16,7 +16,7 @@ import Navbar from "../../components/Navbar";
 import DocReusable from "../../components/DocReusable";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function Document(props) {
+export default function SubDocument(props) {
 
     const [backdrop, setBackdrop] = useState(false);
     const [openNav, setOpenNav] = useState(false);
@@ -43,7 +43,7 @@ export default function Document(props) {
                 COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
                 active={4}
                 toggle={openNav}
-                userType="company" 
+                userType="subcontractor"
             />
             <Box className="box" >
                 <Button

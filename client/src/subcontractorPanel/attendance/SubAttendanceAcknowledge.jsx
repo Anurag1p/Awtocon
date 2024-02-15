@@ -16,7 +16,7 @@ import { getEmployeeData } from "../../redux/slice/EmployeeDataSlice";
   // Redux implementation by anurag
   // import { getEmployeeData } from "@reduxjs/toolkit";
 
-const AttendanceAcknowledge = ({
+const SubAttendanceAcknowledge = ({
   COMPANY_ID,
   COMPANY_USERNAME,
   COMPANY_PARENT_ID,
@@ -288,7 +288,7 @@ const AttendanceAcknowledge = ({
         COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
         active={3}
         toggle={openNav}
-        userType="company"
+        userType="subcontractor"
       />
       <div className="myscreen p-3">
         <Box className="box" style={{ background: "#277099" }}>
@@ -660,4 +660,4 @@ const AttendanceAcknowledge = ({
   );
 };
 
-export default AttendanceAcknowledge;
+export default SubAttendanceAcknowledge;

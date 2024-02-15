@@ -34,7 +34,7 @@ const Contractor = ({
     authorization_key: "qzOUsBmZFgMDlwGtrgYypxUz",
   };
 
-  const subcontractorData =  useSelector(state => state?.allsubcontractor?.subcontractor) 
+  const subcontractorData = useSelector(state => state?.allsubcontractor?.subcontractor)
   console.log(subcontractorData, "heelo ")
 
   //fatch Employees
@@ -145,113 +145,113 @@ const Contractor = ({
   };
 
 
-// attendance status
+  // attendance status
 
-const columns = [
-  { field: "SUBCONTRACTOR_ID", headerName: "ID", width: 90 },
-  {
-    field: "SUBCONTRACTOR_USERNAME",
-    headerName: "Subcontractor Email",
-    width: 150,
-  },
-  {
-    field: "SUBCONTRACTOR_NAME",
-    headerName: "Name",
-    width: 150,
-  },
-  {
-    field: "SUBCONTRACTOR_PHONE",
-    headerName: "Phone",
-    width: 150,
-  },
-  {
-    field: "SUBCONTRACTOR_START_DATE",
-    headerName: "Start Date",
-    width: 150,
-  },
-  {
-    field: "SUBCONTRACTOR_END_DATE",
-    headerName: "End Date",
-    type: "number",
-    width: 100,
-  },
-
-  {
-    field: "SUBCONTRACTOR_SUPERVISOR",
-    headerName: "Supervisor",
-    width: 120,
-  },
-  {
-    field: "action",
-    headerName: "Action",
-    width: 80,
-    renderCell: (cellValues) => {
-      return (
-        <Button
-          variant="contained"
-          className="view-btn btn btn-success"
-          style={{ padding: "2px 2px" }}
-          onClick={(event) => {
-            handleClick(cellValues);
-          }}
-        >
-          view
-        </Button>
-      );
+  const columns = [
+    { field: "SUBCONTRACTOR_ID", headerName: "ID", width: 90 },
+    {
+      field: "SUBCONTRACTOR_USERNAME",
+      headerName: "Subcontractor Email",
+      width: 150,
     },
-  },
-  {
-    field: "edit",
-    headerName: "Edit",
-    width: 80,
-    renderCell: (cellValues) => {
-      // return <EditSubcontract edit={cellValues} refetch={fetchData} />;
-      return(
-        <Button
-        // onClick={(event) => {
-        //   handleEdit(cellValues);
-        // }}
-        >
-          <EditSubcontract editsubcontract={cellValues} refetch={getAllSubcontractor} />
-        </Button>
-      )
+    {
+      field: "SUBCONTRACTOR_NAME",
+      headerName: "Name",
+      width: 150,
     },
-  
-  },
-  // {
-  //   field: "archive",
-  //   headerName: "Archive",
-  //   width: 120,
-  //   renderCell: (cellValues) => {
-  //     return (
-  //       <>
-  //         {display === "unarchive" ? (
-  //           <Button
-  //             variant="contained"
-  //             color="secondary"
-  //             sx={{ borderRadius: "12px", padding: "2px 10px" }}
-  //             size="small"
-  //             onClick={() => archiveEmployee(cellValues)}
-  //           >
-  //             Archive
-  //           </Button>
-  //         ) : (
-  //           <Button
-  //             variant="contained"
-  //             color="secondary"
-  //             sx={{ borderRadius: "12px", padding: "2px 10px" }}
-  //             size="small"
-  //             onClick={() => unarchiveEmployee(cellValues)}
-  //           >
-  //             UnArchive
-  //           </Button>
-  //         )}
-  //       </>
-  //     );
-  //   },
-  // }
+    {
+      field: "SUBCONTRACTOR_PHONE",
+      headerName: "Phone",
+      width: 150,
+    },
+    {
+      field: "SUBCONTRACTOR_START_DATE",
+      headerName: "Start Date",
+      width: 150,
+    },
+    {
+      field: "SUBCONTRACTOR_END_DATE",
+      headerName: "End Date",
+      type: "number",
+      width: 100,
+    },
 
-];
+    {
+      field: "SUBCONTRACTOR_SUPERVISOR",
+      headerName: "Supervisor",
+      width: 120,
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      width: 80,
+      renderCell: (cellValues) => {
+        return (
+          <Button
+            variant="contained"
+            className="view-btn btn btn-success"
+            style={{ padding: "2px 2px" }}
+            onClick={(event) => {
+              handleClick(cellValues);
+            }}
+          >
+            view
+          </Button>
+        );
+      },
+    },
+    {
+      field: "edit",
+      headerName: "Edit",
+      width: 80,
+      renderCell: (cellValues) => {
+        // return <EditSubcontract edit={cellValues} refetch={fetchData} />;
+        return (
+          <Button
+          // onClick={(event) => {
+          //   handleEdit(cellValues);
+          // }}
+          >
+            <EditSubcontract editsubcontract={cellValues} refetch={getAllSubcontractor} />
+          </Button>
+        )
+      },
+
+    },
+    // {
+    //   field: "archive",
+    //   headerName: "Archive",
+    //   width: 120,
+    //   renderCell: (cellValues) => {
+    //     return (
+    //       <>
+    //         {display === "unarchive" ? (
+    //           <Button
+    //             variant="contained"
+    //             color="secondary"
+    //             sx={{ borderRadius: "12px", padding: "2px 10px" }}
+    //             size="small"
+    //             onClick={() => archiveEmployee(cellValues)}
+    //           >
+    //             Archive
+    //           </Button>
+    //         ) : (
+    //           <Button
+    //             variant="contained"
+    //             color="secondary"
+    //             sx={{ borderRadius: "12px", padding: "2px 10px" }}
+    //             size="small"
+    //             onClick={() => unarchiveEmployee(cellValues)}
+    //           >
+    //             UnArchive
+    //           </Button>
+    //         )}
+    //       </>
+    //     );
+    //   },
+    // }
+
+  ];
 
   // const FilterArchive = empData?.filter(
   //   (newData) => newData?.ARCHIVED === false
@@ -270,6 +270,7 @@ const columns = [
         COMPANY_USERNAME={COMPANY_USERNAME}
         COMPANY_PARENT_ID={COMPANY_PARENT_ID}
         COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
+        userType="company" 
       />
       <Box className="box" style={{ background: "#277099" }}>
         {/* <Navbar toggle={() => setOpenNav((e) => !e)} name={COMPANY_USERNAME} /> */}
@@ -285,8 +286,8 @@ const columns = [
           My Subcontractors
         </button>
 
-{/*******************************  Archive button ******************************* */}
-        {/* <button
+          {/*******************************  Archive button ******************************* */}
+          {/* <button
           size="small"
           variant={"outlined"}
           className={
@@ -298,43 +299,43 @@ const columns = [
         >
           Archive
         </button> */}
-        <CreateContractor
-          COMPANY_ID={COMPANY_ID}
-          COMPANY_USERNAME={COMPANY_USERNAME}
-          COMPANY_PARENT_ID={COMPANY_PARENT_ID}
-          COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
-          name={"Project"}
+          <CreateContractor
+            COMPANY_ID={COMPANY_ID}
+            COMPANY_USERNAME={COMPANY_USERNAME}
+            COMPANY_PARENT_ID={COMPANY_PARENT_ID}
+            COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
+            name={"Project"}
           // Update={fetchData}
-        /></> ) : <>
-        <button
-          size="small"
-          disabled
-          className={"btn button border-bottom-0 bg-white btn-sm"}
-        >
-          My Employees
-        </button>
-        <button
-          size="small"
-          disabled
-          className={"btn rounded-0 border-0  rounded-0 text-light btn-primary btn-sm"}
-        >
-           Archive
-        </button>
-        <button
+          /></>) : <>
+          <button
+            size="small"
+            disabled
+            className={"btn button border-bottom-0 bg-white btn-sm"}
+          >
+            My Employees
+          </button>
+          <button
+            size="small"
+            disabled
+            className={"btn rounded-0 border-0  rounded-0 text-light btn-primary btn-sm"}
+          >
+            Archive
+          </button>
+          <button
 
-          style={{ color: "#277099" }}
-          className="btn rounded-0 border-0  rounded-0 text-light btn-primary btn-sm"
-          size="small"
-          disabled
-        >
+            style={{ color: "#277099" }}
+            className="btn rounded-0 border-0  rounded-0 text-light btn-primary btn-sm"
+            size="small"
+            disabled
+          >
             + Add Subcontractor
-        </button>
-      </>} 
+          </button>
+        </>}
 
         <div className="myscreen p-3">
           <Box style={{ height: "100%", padding: 0, paddingBottom: "0" }}>
             <>
-            {resStatus === true ? ( <DataGrid
+              {resStatus === true ? (<DataGrid
                 className="display"
                 sx={{ border: "none" }}
                 // rows={display === "archive" ? rows2 : rows}
@@ -352,10 +353,10 @@ const columns = [
                 pageSizeOptions={[5]}
                 disableRowSelectionOnClick
                 localeText={{
-                  noRowsLabel: rows.length === 0 && "There is no Emploies..",
+                  noRowsLabel: rows.length === 0 && "There is no Employees yet....",
                 }}
               />) : resStatus === "error" ? (
-                
+
                 <Box>
                   <div
                     className="p-3"

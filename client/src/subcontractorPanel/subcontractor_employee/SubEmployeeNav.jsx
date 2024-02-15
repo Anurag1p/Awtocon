@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import Sidebar from "../../components/Sidebar";
 
-const EmployeeNav = ({ filterData, active, COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_ID, COMPANY_PARENT_USERNAME }) => {
+const SubEmployeeNav = ({ filterData, active, COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_ID, COMPANY_PARENT_USERNAME }) => {
   const navigate = useNavigate();
-  console.log("filterData1", filterData, COMPANY_ID, COMPANY_USERNAME,COMPANY_PARENT_ID )
   return (
     <>
       <Sidebar
@@ -15,11 +14,12 @@ const EmployeeNav = ({ filterData, active, COMPANY_ID, COMPANY_USERNAME, COMPANY
         COMPANY_USERNAME={COMPANY_USERNAME}
         COMPANY_PARENT_ID={COMPANY_PARENT_ID}
         COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
-        userType="company" 
+        userType="subcontractor"
+
       />
       <div className="container-fluid pb-0 g-0" style={{ background: "#277099" }}>
         <Button
-          onClick={() => navigate("/company/employees", { state: filterData })}
+          onClick={() => navigate("/subcontractor/employees", { state: filterData })}
           variant="contained"
           className="btn rounded-0"
           size="small"
@@ -29,7 +29,7 @@ const EmployeeNav = ({ filterData, active, COMPANY_ID, COMPANY_USERNAME, COMPANY
 
         <Button
           onClick={(e) =>
-            navigate("/company/employees/detail", {
+            navigate("/subcontractor/employees/detail", {
               state: [filterData, COMPANY_ID,
                 COMPANY_USERNAME,
                 COMPANY_PARENT_ID,
@@ -49,7 +49,7 @@ const EmployeeNav = ({ filterData, active, COMPANY_ID, COMPANY_USERNAME, COMPANY
 
         <Button
           onClick={(e) =>
-            navigate("/company/employees/timesheet", {
+            navigate("/subcontractor/employees/timesheet", {
               state: [filterData, COMPANY_ID,
                 COMPANY_USERNAME,
                 COMPANY_PARENT_ID,
@@ -69,7 +69,7 @@ const EmployeeNav = ({ filterData, active, COMPANY_ID, COMPANY_USERNAME, COMPANY
 
         <Button
           onClick={(e) =>
-            navigate("/company/employees/manual-attendence", {
+            navigate("/subcontractor/employees/manual-attendence", {
               state: [filterData, COMPANY_ID,
                 COMPANY_USERNAME,
                 COMPANY_PARENT_ID,
@@ -89,7 +89,7 @@ const EmployeeNav = ({ filterData, active, COMPANY_ID, COMPANY_USERNAME, COMPANY
 
         <Button
           onClick={(e) =>
-            navigate("/company/employees/documents", {
+            navigate("/subcontractor/employees/documents", {
               state: [filterData, COMPANY_ID,
                 COMPANY_USERNAME,
                 COMPANY_PARENT_ID,
@@ -111,4 +111,4 @@ const EmployeeNav = ({ filterData, active, COMPANY_ID, COMPANY_USERNAME, COMPANY
   );
 };
 
-export default EmployeeNav;
+export default SubEmployeeNav;

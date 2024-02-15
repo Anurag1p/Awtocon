@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import ProjectCreate from "./ProjectCreate";
 import { Box, Button, Paper, Skeleton } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import ProjectEdit from "./ProjectEdit";
+import ProjectEdit from "./SubProjectEdit";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -11,15 +10,10 @@ import { RotatingLines } from "react-loader-spinner";
 import { useSelector } from "react-redux";
 import Animations from "../../components/Animations";
 import { getProjectData } from "../../redux/slice/getallProjectSlice";
+import SubProjectCreate from "./SubProjectCreate";
 
-const Project = () => {
-  // {
-  //   COMPANY_ID,
-  //   COMPANY_USERNAME,
-  //   COMPANY_PARENT_ID,
-  //   COMPANY_PARENT_USERNAME,
-  // }
-
+const SubProject = () => {
+  
   // company Login Data 
   const companyData = useSelector(state => state?.companyLogin?.user);
 
@@ -43,7 +37,7 @@ console.log("hhelo world = >", projectData)
 
 
   const handleClick = (event) => {
-    navigate("/company/projects/detail", {
+    navigate("/subcontractor/projects/detail", {
       state: [
         event.row,
       ],
@@ -154,12 +148,12 @@ console.log("hhelo world = >", projectData)
         COMPANY_USERNAME={COMPANY_USERNAME}
         COMPANY_PARENT_ID={COMPANY_PARENT_ID}
         COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
-        userType="company" 
+        userType="subcontractor"
       />
 
       <Box className="box" style={{ background: "#277099" }}>
         {/* <Navbar toggle={() => setOpenNav((e) => !e)} name={COMPANY_USERNAME} /> */}
-        { projectData && projectData.length > 0 && <ProjectCreate /> }
+        { projectData && projectData.length > 0 && <SubProjectCreate /> }
 
         <div className="myscreen p-3">
           <Box style={{ height: "100%", padding: 0, paddingBottom: "0" }}>
@@ -234,4 +228,4 @@ console.log("hhelo world = >", projectData)
   );
 };
 
-export default Project;
+export default SubProject;

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
-import Sidebar from "../../components/Sidebar";
-import Navbar from "../../components/Navbar";
+import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
 import { Box, Container, Grid } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -77,7 +77,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
 }));
 
 
-export default function CompanyDashboard() {
+const SubDashboard = () => {
 
   const companyData = useSelector(state => state?.setOneCompany?.user);
   const projectAllData = useSelector(prev => prev?.allProjectData?.projects);
@@ -97,31 +97,31 @@ export default function CompanyDashboard() {
       contractname: "Projects",
       counts: projectAllData?.length,
       description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
-      url: "/company/projects",
+      url: "/subcontractor/projects",
     },
     {
       contractname: "Employees",
       counts: empdata?.length,
       description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
-      url: "/company/employees",
+      url: "/subcontractor/employees",
     },
     {
       contractname: "Attandance",
       counts: allatendance?.length,
       description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
-      url: "/company/attendance",
+      url: "/subcontractor/attendance",
     },
     {
       contractname: "Documents",
       counts: alldocuments?.length,
       description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
-      url: "/company/documents",
+      url: "/subcontractor/documents",
     },
     {
-      contractname: "Sub-Contractors",
+      contractname: "Assigned Pojects",
       counts: allsubContractor?.length,
       description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
-      url: "/company/subcontractors",
+      url: "/subcontractor/assigned-projects",
     },
     {
       contractname: "Payments",
@@ -156,7 +156,7 @@ export default function CompanyDashboard() {
                   color="#3366cc"
                   gutterBottom
                 >
-                Company {post.contractname}: {post.counts}
+                Subcontractor {post.contractname}: {post.counts}
                 </Typography>
                 <Typography component="div" color="#808080">
                   {post.description}
@@ -264,7 +264,7 @@ export default function CompanyDashboard() {
         COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
         active={0}
         toggle={open}
-        userType="company" // Using to identify dashboard related to whom
+        userType="subcontractor"
       />
 
       <Navbar toggle={() => setOpen((e) => !e)} />
@@ -291,3 +291,4 @@ export default function CompanyDashboard() {
     </>
   );
 }
+export default SubDashboard;

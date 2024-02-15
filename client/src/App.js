@@ -10,36 +10,42 @@ import "./assests/css/sidebar.css";
 import "./assests/css/style.css";
 import "./assests/css/graph.css";
 import AdminDashboard from "./Admin/AdminDashboard";
-
-// import CompanyDashboard from "./company/dashboard/Dashboard";
-// import ProjectHome from "./company/myproject/ProjectAllocate";
-// import EmployeeSrc from "./employee/EmployeeSrc";
-// import AttendanceReport from "./company/attendance/AttendanceAcknowledge";
 import Signup from "./auth/Signup";
 import { auth } from "./firebase";
 import AdminLogin from "./auth/AdminLogin";
 import Firecreate from "./components/Firecreate";
 import UserLogin from "./auth/UserLogin";
 import Updates from "./auth/RestEmailLink";
+
+// company employee 
 import EmployeeTimeSheet from "./company/myemployee/EmployeeTimeSheet";
+import Employee from "./company/myemployee/Employee";
+import EmployeeDetails from "./company/myemployee/EmployeeDetail";
+import EmployeeManual from "./company/myemployee/EmployeeManual";
+import EmployeeDocuments from "./company/myemployee/EmployeeDocuments";
+
+// company projects
 import Project from "./company/myproject/Project";
 import ProjectDetail from "./company/myproject/ProjectDetail";
 import ProjectAllocate from "./company/myproject/ProjectAllocate";
 import ProjectLoc from "./company/myproject/ProjectLoc";
 import ProjectDocuments from "./company/myproject/ProjectDocuments";
-import Employee from "./company/myemployee/Employee";
-import EmployeeDetails from "./company/myemployee/EmployeeDetail";
-import EmployeeManual from "./company/myemployee/EmployeeManual";
-import EmployeeDocuments from "./company/myemployee/EmployeeDocuments";
+import SubcontractorAssigned from "./company/myproject/SubcontractorAssigned";
+
+// company attendance
 import AttendanceAcknowledge from "./company/attendance/AttendanceAcknowledge";
-import Documents from "./company/document/Documents";
+
+// company subcontractor
 import Contractor from "./company/mySubcontractor/Contractor";
 import ContractorDetail from "./company/mySubcontractor/ContractorDetail";
+import SubContractorDoc from "./company/mySubcontractor/SubContractorDoc";
+import SubcontractorProjectDetail from "./company/mySubcontractor/SubcontractorProjectDetail";
+
+
+import Documents from "./company/document/Documents";
 import Dashboard from "./company/dashboard/Dashboard"; //company dashboard
 import { useDispatch, useSelector } from "react-redux";
 import { setCompanyuser } from "./redux/slice/CompanyLoginSlice"
-// import { setOneCompany } from "./redux/slices/getOneCompanySlice"
-import SubContractorDoc from "./company/mySubcontractor/SubContractorDoc";
 
 // /.......Employees
 import EmployeeLoginHome from "./employee/EmployeeLoginHome";
@@ -54,9 +60,32 @@ import { getEmployeeData } from "./redux/slice/EmployeeDataSlice";
 import { getAllSubcontractor } from "./redux/slice/SubContractorSlice";
 import { getAllttendance } from "./redux/slice/AttendanceSlice";
 import { getAllCompany } from "./redux/slice/AllCompanySlice"
-import SubcontractorLoginHome from "./company/mySubcontractor/SubcontractorLoginHome";
-import SubcontractorAssigned from "./company/myproject/SubcontractorAssigned";
-import SubcontractorProjectDetail from "./company/mySubcontractor/SubcontractorProjectDetail";
+
+// Subcontractor setup ........................................
+
+// suncontractor employee 
+import SubEmployeeDetail from "./subcontractorPanel/subcontractor_employee/SubEmployeeDetail";
+import SubEmployeeTimeSheet from "./subcontractorPanel/subcontractor_employee/SubEmployeeTimeSheet";
+import SubEmployeeManual from "./subcontractorPanel/subcontractor_employee/SubEmployeeManual";
+import SubEmployeeDocuments from "./subcontractorPanel/subcontractor_employee/SubEmployeeDocuments";
+import SubEmployee from "./subcontractorPanel/subcontractor_employee/SubEmployee";
+
+// suncontractor project
+import SubProject from "./subcontractorPanel/subcontractor_projects/SubProject";
+import SubProjectDetail from "./subcontractorPanel/subcontractor_projects/SubProjectDetail";
+import SubProjectAllocate from "./subcontractorPanel/subcontractor_projects/SubProjectAllocate";
+import SubProjectLoc from "./subcontractorPanel/subcontractor_projects/SubProjectLoc";
+import SubProjectDocuments from "./subcontractorPanel/subcontractor_projects/SubProjectDocuments";
+
+// suncontractor attendance
+import SubDashboard from "./subcontractorPanel/SubDashboard";
+import SubDocument from "./subcontractorPanel/SubContractor_document/SubDocument";
+import SubAttendanceAcknowledge from "./subcontractorPanel/attendance/SubAttendanceAcknowledge";
+import SubAssignedProjects from "./subcontractorPanel/assignedProject/SubAssignedProject";
+import SubProjectAssignDetails from "./subcontractorPanel/assignedProject/SubProjectAssignDetails";
+import SubGallery from "./subcontractorPanel/assignedProject/SubGallery";
+
+
 function App() {
 
   const [userName, setUserName] = useState("");
@@ -66,14 +95,9 @@ function App() {
   console.log(AdminLoginData, "Admin")
   const admin_id = userName[2]
   const admin_username = userName[3]
-  // console.log(admin_id, admin_username, "hello")
   const companyData = useSelector(prev => prev?.companyLogin?.user)
-  console.log(companyData, "login")
-  // const companyAllData = useSelector(prev => prev?.setOneCompany?.user)
-  // const projectAllData = useSelector(prev => prev?.allProject?.user);
 
   const singleCompany = useSelector(state => state?.singleCompData?.singleComp);
-  // const employeeData = useSelector(state => state?.allEmployee?.employees)
 
   const empdata = useSelector((state) => state?.allEmployee?.employees || []);
 
@@ -155,14 +179,15 @@ function App() {
     }))
   }, [dispatch, COMPANY_USERNAME, COMPANY_PARENT_USERNAME])
 
-  //getting the employeeData from 
-  // useEffect(() => {
-  //   dispatch(getIndividualEmployee({
-  //     EMPLOYEE_ID: userName[0],
-  //     ADMIN_USERNAME: userName[3],
-  //   }))
-  // }, [dispatch, userName[3], userName[0]])
 
+  useEffect(() => {
+    dispatch(getAllSubcontractor({
+      COMPANY_ID: COMPANY_ID,
+      COMPANY_USERNAME: COMPANY_USERNAME,
+      COMPANY_PARENT_ID: COMPANY_PARENT_ID,
+      COMPANY_PARENT_USERNAME: COMPANY_PARENT_USERNAME
+    }));
+  }, [dispatch, COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_ID, COMPANY_PARENT_USERNAME]);
 
   // getting the data of all company 
   useEffect(() => {
@@ -210,6 +235,7 @@ function App() {
               path="/company/projects/detail"
               element={<ProjectDetail />}
             />
+
             <Route
               path="/company/projects/allocate-employee"
               element={<ProjectAllocate />}
@@ -219,11 +245,14 @@ function App() {
               path="/company/projects/allocated_subcontractor"
               element={<SubcontractorAssigned />}
             />
+
             <Route path="/company/projects/tracking" element={<ProjectLoc />} />
+
             <Route
               path="/company/projects/documents"
               element={<ProjectDocuments />}
             />
+
             {/* project */}
 
             {/* My company employees */}
@@ -238,6 +267,7 @@ function App() {
                 />
               }
             />
+
 
             <Route
               path="/company/employees/detail"
@@ -269,6 +299,7 @@ function App() {
                 />
               }
             />
+
             {/* attendance */}
 
             {/* document company */}
@@ -283,6 +314,7 @@ function App() {
                 />
               }
             />
+
             {/* document company */}
 
             {/* My contractors */}
@@ -343,14 +375,111 @@ function App() {
 
 
             <Route
-              path="/subcontractor/home"
-              element={<SubcontractorLoginHome state={userName} />}
+              path="/subcontractor/dashboard"
+              element={<SubDashboard state={userName} />}
             />
+
+            <Route
+              path="/subcontractor/projects"
+              element={
+                <SubProject requiredData={companyData} />
+              }
+            />
+
+
+            {/* subcontractor employees ... */}
+            <Route
+              path="/subcontractor/employees"
+              element={
+                <SubEmployee
+                  COMPANY_ID={COMPANY_ID}
+                  COMPANY_USERNAME={COMPANY_USERNAME}
+                  COMPANY_PARENT_ID={COMPANY_PARENT_ID}
+                  COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
+                />
+              }
+            />
+
+            <Route
+              path="/subcontractor/employees/detail"
+              element={<SubEmployeeDetail />}
+            />
+
+            <Route
+              path="/subcontractor/employees/timesheet"
+              element={<SubEmployeeTimeSheet />}
+            />
+
+            <Route
+              path="/subcontractor/employees/manual-attendence"
+              element={<SubEmployeeManual />}
+            />
+            <Route
+              path="/subcontractor/employees/documents"
+              element={<SubEmployeeDocuments />}
+            />
+            {/* Subcontractor Projects  */}
+
+            <Route
+              path="/subcontractor/projects/detail"
+              element={<SubProjectDetail />}
+            />
+
+            <Route
+              path="/subcontractor/projects/allocate-employee"
+              element={<SubProjectAllocate />}
+            />
+
+            <Route
+              path="/subcontractor/projects/documents"
+              element={<SubProjectDocuments />}
+            />
+            <Route
+              path="/subcontractor/attendance"
+              element={
+                <SubAttendanceAcknowledge
+                  COMPANY_ID={COMPANY_ID}
+                  COMPANY_USERNAME={COMPANY_USERNAME}
+                  COMPANY_PARENT_ID={COMPANY_PARENT_ID}
+                  COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
+                />
+              }
+            />
+
+            <Route path="/subcontractor/projects/tracking" element={<SubProjectLoc />} />
+
+            <Route
+              path="/subcontractor/documents"
+              element={
+                <SubDocument
+                  COMPANY_ID={COMPANY_ID}
+                  COMPANY_USERNAME={COMPANY_USERNAME}
+                  COMPANY_PARENT_ID={COMPANY_PARENT_ID}
+                  COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
+                />
+              }
+            />
+
+            <Route
+              path="/subcontractor/assigned-projects"
+              element={<SubAssignedProjects state={userName} />}
+            />
+
+            <Route
+              path="/subcontractor/assigned-projects/detail"
+              element={<SubProjectAssignDetails state={userName} />}
+            />
+            <Route
+              path="/subcontractor/assigned-projects/gallery"
+              element={<SubGallery state={userName} />}
+            />
+            {/* SubProjectDetail */}
 
             <Route
               path="/subcontractor/projects-details/:employees/:projects"
               element={<SubcontractorProjectDetail state={userName} />}
             />
+
             {/* 
             <Route
               path="/subcontractor/dashboard"
