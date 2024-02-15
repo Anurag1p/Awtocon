@@ -57,7 +57,6 @@ const SubSiteImagesUpload = ({ maxLength, maxFileSize }) => {
         alert('All images are successfully uploaded!');
     };
 
-    const isSubmitEnabled = images.length === maxLength && images.length > 0;
 
     return (
         <>
