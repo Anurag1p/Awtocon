@@ -39,8 +39,7 @@ import AttendanceAcknowledge from "./company/attendance/AttendanceAcknowledge";
 import Contractor from "./company/mySubcontractor/Contractor";
 import ContractorDetail from "./company/mySubcontractor/ContractorDetail";
 import SubContractorDoc from "./company/mySubcontractor/SubContractorDoc";
-import SubcontractorProjectDetail from "./company/mySubcontractor/SubcontractorProjectDetail";
-
+// import SubcontractorProjectDetail from "./company/mySubcontractor/SubcontractorProjectDetail";
 
 import Documents from "./company/document/Documents";
 import Dashboard from "./company/dashboard/Dashboard"; //company dashboard
@@ -475,10 +474,10 @@ function App() {
             />
             {/* SubProjectDetail */}
 
-            <Route
+            {/* <Route
               path="/subcontractor/projects-details/:employees/:projects"
               element={<SubcontractorProjectDetail state={userName} />}
-            />
+            /> */}
 
             {/* 
             <Route

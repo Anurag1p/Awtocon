@@ -20,7 +20,7 @@ import { auth } from "../../firebase";
 import { getEmployeeData, setEmployeeData } from "../../redux/slice/EmployeeDataSlice"
 
 
-export default function AddEmployee({ Update }) {
+export default function SubEmployeeCreate({ Update }) {
 
   const companyData = useSelector((prev) => prev.companyLogin.user);
   // const { previousEmployees, currentEmployees } = useSelector((state) => state.EmployeeData);

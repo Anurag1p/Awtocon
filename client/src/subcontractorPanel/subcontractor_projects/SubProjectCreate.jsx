@@ -7,17 +7,22 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import projectList from "../../jsonlist/typeOfProject.json";
 import { Button } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { setAllproject } from "../../redux/slice/getallProjectSlice";
 
 
 
 
-export default function SubProjectCreate({
-  COMPANY_ID,
-  COMPANY_USERNAME,
-  COMPANY_PARENT_ID,
-  COMPANY_PARENT_USERNAME,
-  Update,
-}) {
+export default function SubProjectCreate() {
+
+  const companyData = useSelector(prev => prev.companyLogin.user)
+
+  // extract company
+  const COMPANY_ID = companyData[0];
+  const COMPANY_USERNAME = companyData[1];
+  const COMPANY_PARENT_ID = companyData[2];
+  const COMPANY_PARENT_USERNAME = companyData[3];
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -98,7 +103,7 @@ export default function SubProjectCreate({
     const isValidName = createProject.PROJECT_NAME !== "";
     const isValidUsername = createProject.PROJECT_USERNAME !== "";
     const isValidCompAccount = createProject.PROJECT_ACCOUNT !== "";
-    
+
     if (!isValidUsername) {
       setUsernameError("Username should not be empty");
       return;
@@ -129,7 +134,7 @@ export default function SubProjectCreate({
             position: toast.POSITION.TOP_CENTER,
             autoClose: 1000,
           });
-          Update();
+          dispatch(setAllproject(response.data.result));
           setOpen(false);
           setCreateProject({});
         }
@@ -169,11 +174,11 @@ export default function SubProjectCreate({
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        style={{zIndex:9999999}}
+        style={{ zIndex: 9999999 }}
       >
         <Box className="modal-content">
           <form onSubmit={handleSubmit} className="overflow-auto">
-          <h5>Create project</h5>
+            <h5>Create project</h5>
             <div className="row py-2">
               <div className="form-group col-xl-4">
                 <label> Project Username</label>
@@ -185,6 +190,7 @@ export default function SubProjectCreate({
                   value={createProject.PROJECT_USERNAME}
                   name="PROJECT_USERNAME"
                   onChange={handleCreate}
+                  id="project_username"
                 />
                 {usernameErr && (
                   <div className="invalid-feedback">{usernameErr}</div>
@@ -196,12 +202,12 @@ export default function SubProjectCreate({
                   type="text"
                   className={`form-control form-control-2 rounded-0 ${nameError ? "is-invalid" : ""
                     }`}
-                  id="inputname"
+                  id="project_name"
                   placeholder="Project Name"
                   value={createProject.PROJECT_NAME}
                   name="PROJECT_NAME"
                   onChange={handleCreate}
-     
+
                 />
                 {nameError && (
                   <div className="invalid-feedback">{nameError}</div>
@@ -213,12 +219,12 @@ export default function SubProjectCreate({
                   type="number"
                   className={`form-control form-control-2 rounded-0 ${companyaccError ? "is-invalid" : ""
                     }`}
-                  id="inputPassword4"
+                  id="PROJECT_ACCOUNT"
                   placeholder="Enter your Account"
                   name="PROJECT_ACCOUNT"
                   value={createProject.PROJECT_ACCOUNT}
                   onChange={handleCreate}
-       
+
                 />
                 {companyaccError && (
                   <div className="invalid-feedback">{companyaccError}</div>
@@ -232,6 +238,7 @@ export default function SubProjectCreate({
                   type="date"
                   value={createProject.PROJECT_START_DATE}
                   name="PROJECT_START_DATE"
+                  id="PROJECT_START_DATE"
                   onChange={handleCreate}
                   className="form-control form-control-2 rounded-0 "
                 />
@@ -244,16 +251,17 @@ export default function SubProjectCreate({
                   value={createProject.PROJECT_END_DATE}
                   name="PROJECT_END_DATE"
                   onChange={handleCreate}
+                  id="PROJECT_END_DATE"
                   className="form-control form-control-2 rounded-0"
                 />
               </div>
               <div className="form-group col-xl-4">
                 <label>Project Type</label>
                 <select
-                  id="inputEnroll"
                   className="form-control form-control-2 border rounded-0"
                   onChange={handleCreate}
                   name="PROJECT_TYPE"
+                  id="PROJECT_TYPE"
                   value={createProject.PROJECT_TYPE}
                 >
                   <option selected>--Choose Project Type--</option>
@@ -285,7 +293,7 @@ export default function SubProjectCreate({
                 <input
                   type="number"
                   className="form-control form-control-2 rounded-0 "
-                  id="inputsupervisor"
+                  id="project_value"
                   name="PROJECT_VALUE"
                   value={createProject.PROJECT_VALUE}
                   onChange={handleCreate}
@@ -295,7 +303,7 @@ export default function SubProjectCreate({
               <div className="form-group col-md-4">
                 <label></label>
                 <select
-                  id="inputEnroll"
+                  id="project_currency"
                   className="form-control form-control-2 border rounded-0"
                   onChange={handleCreate}
                   name="PROJECT_CURRENCY"
@@ -332,6 +340,7 @@ export default function SubProjectCreate({
                   className="form-control form-control-2 border rounded-0"
                   placeholder="Country"
                   name="PROJECT_COUNTRY"
+                  id="project_country"
                   value={createProject.PROJECT_COUNTRY}
                   onChange={handleCreate}
                 >
@@ -352,6 +361,7 @@ export default function SubProjectCreate({
                   className="form-control form-control-2 border rounded-0"
                   placeholder="State"
                   name="PROJECT_STATE"
+                  id="project_state"
                   value={createProject.PROJECT_STATE}
                   onChange={handleCreate}
                 >
@@ -372,6 +382,7 @@ export default function SubProjectCreate({
                   className="form-control form-control-2 border rounded-0"
                   placeholder="City"
                   name="PROJECT_CITY"
+                  id="project_city"
                   value={createProject.PROJECT_CITY}
                   onChange={handleCreate}
                 >

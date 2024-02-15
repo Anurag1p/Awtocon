@@ -19,7 +19,7 @@ const style = {
   borderRadius: 4,
 };
 
-export default function EmployeeEdit(props) {
+export default function SubEmployeeEdit(props) {
   const [open, setOpen] = React.useState(false);
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
