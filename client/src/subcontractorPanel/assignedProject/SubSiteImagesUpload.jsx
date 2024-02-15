@@ -11,35 +11,6 @@ const SubSiteImagesUpload = ({ maxLength, maxFileSize }) => {
         setProgressWidth(percentage);
     }, [images, maxLength]);
 
-    // const handleImageUpload = (e) => {
-    //     const files = e.target.files;
-
-    //     for (let i = 0; i < files.length; i++) {
-    //         const file = files[i];
-
-    //         // Check if the file size exceeds the maximum allowed size
-    //         if (file.size > maxFileSize) {
-    //             alert(`File ${file.name} exceeds the maximum allowed size of ${maxFileSize / (1024 * 1024)} MB.`);
-    //             continue;
-    //         }
-
-    //         if (!file.type.match('image.*')) {
-    //             continue;
-    //         }
-
-    //         if (images.length >= maxLength) {
-    //             alert(`Maximum ${maxLength} images allowed.`);
-    //             break;
-    //         }
-
-    //         const reader = new FileReader();
-    //         reader.onload = (e) => {
-    //             setImages(prevImages => [...prevImages, { src: e.target.result, name: file.name, size: file.size }]);
-    //         };
-    //         reader.readAsDataURL(file);
-    //     }
-    // };
-
 
     const handleImageUpload = (e) => {
         const files = e.target.files;
@@ -93,12 +64,19 @@ const SubSiteImagesUpload = ({ maxLength, maxFileSize }) => {
             <div className="new-upload__box">
                 <h5 className='text-black-50 mb-4'>Gallery</h5>
 
-                <div className="new-upload__btn-box">
+                <div className="new-upload__btn-box align-items-center d-flex ">
                     <label className="new-upload__btn custom-upload-btn">
                         <p className="custom-upload-text">Upload images</p>
                         <input type="file" multiple onChange={handleImageUpload} className="new-upload__inputfile" />
                     </label>
+
+                    <div className="new-upload__counter ms-2">
+                        <p className=" fw-bold fs-6 m-0">
+                            {images.length} {images.length === 1 ? 'image' : 'images'} uploaded
+                        </p>
+                    </div>
                 </div>
+
                 {images.length > 0 ?
                     <>
                         <div className="new-upload__img-wrap gap-1 mb-5">
@@ -114,15 +92,17 @@ const SubSiteImagesUpload = ({ maxLength, maxFileSize }) => {
                         <div className="progress">
                             <div className="progress-bar progress-bar-striped progress-bar-animated p-2 progressincrease" style={{ width: `${progressWidth}%` }} role="progressbar" aria-valuenow={images.length} aria-valuemin="0" aria-valuemax={maxLength}>{images.length}%</div>
                         </div>
-                        <button className="btn btn-danger mt-2" onClick={handleClearAll}>Clear All</button>
+                        <button className="btn btn-danger mt-2 me-2" onClick={handleClearAll}>Clear All</button>
+                        {images.length > 0 && (
+                            <button className="btn btn-success mt-2" onClick={handleSubmitImages}>Submit Images</button>
+                        )}
                     </>
                     : <h6 className='d-flex justify-content-center text-black-50'>Please upload site Progress images....</h6>}
-
-                {isSubmitEnabled && (
-                    <button className="btn btn-success mt-2" onClick={handleSubmitImages}>Submit Images</button>
-                )}
             </div>
         </>
+
+
+
     );
 };
 
