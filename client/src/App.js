@@ -56,7 +56,7 @@ import EmployeeHistory from "./employee/EmployeeHistory";
 import { getProjectData } from "./redux/slice/getallProjectSlice";
 import { getSingleCompData } from "./redux/slice/SingleCompSlice";
 import { getEmployeeData } from "./redux/slice/EmployeeDataSlice";
-import { getAllSubcontractor } from "./redux/slice/SubContractorSlice";
+// import { getAllSubcontractor } from "./redux/slice/SubContractorSlice";
 import { getAllttendance } from "./redux/slice/AttendanceSlice";
 import { getAllCompany } from "./redux/slice/AllCompanySlice"
 
@@ -122,10 +122,6 @@ function App() {
   const COMPANY_PARENT_USERNAME = companyData?.[3];
 
 
-  // const headers = {
-  //   "Content-Type": "application/json"
-  // };
-
   // get company
 
   useEffect(() => {
@@ -161,14 +157,14 @@ function App() {
 
 
   //getting the documents data from SUBCONTRACTOR
-  useEffect(() => {
-    dispatch(getAllSubcontractor({
-      SUBCONTRACTOR_PARENT_ID: COMPANY_ID,
-      SUBCONTRACTOR_PARENT_USERNAME: COMPANY_USERNAME,
-      SUBCONTRACTOR_MEMBER_PARENT_ID: COMPANY_PARENT_ID,
-      SUBCONTRACTOR_MEMBER_PARENT_USERNAME: COMPANY_PARENT_USERNAME
-    }))
-  }, [dispatch, COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_USERNAME, COMPANY_PARENT_ID])
+  // useEffect(() => {
+  //   dispatch(getAllSubcontractor({
+  //     SUBCONTRACTOR_PARENT_ID: COMPANY_ID,
+  //     SUBCONTRACTOR_PARENT_USERNAME: COMPANY_USERNAME,
+  //     SUBCONTRACTOR_MEMBER_PARENT_ID: COMPANY_PARENT_ID,
+  //     SUBCONTRACTOR_MEMBER_PARENT_USERNAME: COMPANY_PARENT_USERNAME
+  //   }))
+  // }, [dispatch, COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_USERNAME, COMPANY_PARENT_ID])
 
   //getting the attendance data from store
   useEffect(() => {
@@ -179,14 +175,14 @@ function App() {
   }, [dispatch, COMPANY_USERNAME, COMPANY_PARENT_USERNAME])
 
 
-  useEffect(() => {
-    dispatch(getAllSubcontractor({
-      COMPANY_ID: COMPANY_ID,
-      COMPANY_USERNAME: COMPANY_USERNAME,
-      COMPANY_PARENT_ID: COMPANY_PARENT_ID,
-      COMPANY_PARENT_USERNAME: COMPANY_PARENT_USERNAME
-    }));
-  }, [dispatch, COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_ID, COMPANY_PARENT_USERNAME]);
+  // useEffect(() => {
+  //   dispatch(getAllSubcontractor({
+  //     COMPANY_ID: COMPANY_ID,
+  //     COMPANY_USERNAME: COMPANY_USERNAME,
+  //     COMPANY_PARENT_ID: COMPANY_PARENT_ID,
+  //     COMPANY_PARENT_USERNAME: COMPANY_PARENT_USERNAME
+  //   }));
+  // }, [dispatch, COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_ID, COMPANY_PARENT_USERNAME]);
 
   // getting the data of all company 
   useEffect(() => {

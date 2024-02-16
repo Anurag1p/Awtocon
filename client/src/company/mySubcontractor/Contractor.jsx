@@ -27,10 +27,10 @@ const Contractor = ({
       SUBCONTRACTOR_MEMBER_PARENT_ID: COMPANY_PARENT_ID,
       SUBCONTRACTOR_MEMBER_PARENT_USERNAME: COMPANY_PARENT_USERNAME
     })).then(() => setResStatus("success")) // Update state to "success" when data fetching is complete
-    .catch(() => setResStatus("error")); // Update state to "error" if there is an error fetching data
+      .catch(() => setResStatus("error")); // Update state to "error" if there is an error fetching data
   }, [dispatch, COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_USERNAME, COMPANY_PARENT_ID])
 
-  
+
   const subcontractorData = useSelector(state => state?.allsubcontractor?.subcontractor)
   console.log(subcontractorData, "subcontractor")
 
@@ -191,7 +191,7 @@ const Contractor = ({
                 </Box>
               ) : (
                 <Animations />
-                
+
               )}
             </>
           </Box>

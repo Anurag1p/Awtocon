@@ -293,7 +293,17 @@ const Sidebar = ({
                     My Subcontractors
                   </ListItemButton>
                 </ListItem>
-              </Link> : ""}
+              </Link> :  <Link
+                to={`/subcontractor/assigned-projects`}
+                className="nav-link"
+                style={{ background: active === 5 ? "#f3f3f3" : "" }}
+              >
+                <ListItem disablePadding>
+                  <ListItemButton sx={{ fontSize: "16px" }}>
+                    Assigned Project
+                  </ListItemButton>
+                </ListItem>
+              </Link>}
           </List>
           <Divider />
           <div
