@@ -13,6 +13,7 @@ import Sidebar from "../../components/Sidebar";
 import Navbar from "../../components/Navbar";
 import { useSelector } from "react-redux";
 import { getEmployeeData } from "../../redux/slice/EmployeeDataSlice";
+import Animations from "../../components/Animations";
   // Redux implementation by anurag
   // import { getEmployeeData } from "@reduxjs/toolkit";
 
@@ -292,7 +293,7 @@ const AttendanceAcknowledge = ({
       />
       <div className="myscreen p-3">
         <Box className="box" style={{ background: "#277099" }}>
-          <Navbar toggle={() => setOpenNav((e) => !e)} />
+          <Navbar toggle={() => setOpenNav((e) => !e) } name={COMPANY_USERNAME} />
           {resStatus === true ? (<button
             size="small"
             variant={show ? "outlined" : "outlined"}
@@ -364,7 +365,7 @@ const AttendanceAcknowledge = ({
                     </div>
                   ) : (
                     <>
-                      <div className="container">
+                      <div className="container-fluid">
                         <div className="row sticky-top bg-white">
                           <div className="col-xl-6">
                             <div className="row justify-content-between">
@@ -492,7 +493,7 @@ const AttendanceAcknowledge = ({
                           </div>
                         </div>
                       </div>
-                      <div className="container">
+                      <div className="container-fluid">
                         <div className="row">
                           <div className="col-xl-12 col-lg-6 overflow-auto">
                             <table className="table table-hover table-sm table-fixed table-responsive">
@@ -642,14 +643,7 @@ const AttendanceAcknowledge = ({
 
                   }}
                 >
-                  <RotatingLines
-                    strokeColor="#2D5169"
-                    strokeWidth="5"
-                    animationDuration="0.75"
-                    width="50"
-                    visible={true}
-
-                  />
+                  <Animations/>
                 </div>
               </Box>
             </div>

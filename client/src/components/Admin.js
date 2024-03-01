@@ -11,9 +11,6 @@ const Admin = () => {
     console.log(data, "deepak")
     const admindata = data.state.user
 
-
-
-
     return (
         <div >
              <AdminDashboard adminData={admindata} />

@@ -98,7 +98,7 @@ const Sidebar = ({
             <Link
               to={userType === 'company' ? '/company/dashboard' : '/subcontractor/dashboard'}
               className="nav-link"
-              style={{ background: active === 5 ? "#f3f3f3" : "" }}
+              style={{ background: active === 0 ? "#f3f3f3" : "" }}
             >
               <ListItem disablePadding>
                 <ListItemButton sx={{ fontSize: "16px" }}>
@@ -286,7 +286,7 @@ const Sidebar = ({
               <Link
                 to={`/company/subcontractors`}
                 className="nav-link"
-                style={{ background: active === 6 ? "#f3f3f3" : "" }}
+                style={{ background: active === 5 ? "#f3f3f3" : "" }}
               >
                 <ListItem disablePadding>
                   <ListItemButton sx={{ fontSize: "16px" }}>

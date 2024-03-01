@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import moment from "moment";
+import Navbar from "../../components/Navbar";
 
 const SubEmployeeDetail = () => {
   const filteredEmployee = useLocation();
@@ -25,7 +26,7 @@ const SubEmployeeDetail = () => {
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(1);
   const [workvalue, setWorkvalue] = useState([]);
-
+  const [openNav, setOpenNav] = useState(false);
   console.log(projectData, "projectData");
 
   // fatch project
@@ -119,11 +120,6 @@ const SubEmployeeDetail = () => {
     fetchData();
   }, [filterData]);
 
-
-
-
-
-
   const columns = [
     { field: "PROJECT_ID", headerName: "ID", width: 60 },
     {
@@ -164,26 +160,7 @@ const SubEmployeeDetail = () => {
       headerName: "Project Type",
       width: 140,
     }
-  ];
-
-
-
-
-  // useEffect(() => {
-  //   gettimesheet();
-  // }, [filterData]);
-
-
-  // const Manual = workvalue?.filter(
-  //   (prev) =>
-  //     prev.ATTENDANCE_TYPE_OUT === "manual" ||
-  //     prev.ATTENDANCE_TYPE_IN === "manual"
-  // );
-
-
-  // console.log(Manual.length, "total")
-
-
+  ]
 
 
   return (
@@ -195,7 +172,9 @@ const SubEmployeeDetail = () => {
         }}
         className="box position-absolute"
       >
+        <Navbar toggle={() => setOpenNav((e) => !e)} name={COMPANY_USERNAME} />
         {/* <Navbar toggle={() => setOpenNav((e) => !e)} name={COMPANY_USERNAME} /> */}
+
 
         <SubEmployeeNav
           filterData={filterData}
@@ -206,8 +185,7 @@ const SubEmployeeDetail = () => {
           COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
         />
         <div className="myscreen p-3">
-          <div className="container mt-1">
-            {/* <h1 className="text-center">Employee Detail Dashboard</h1> */}
+          <div className="container-fluid mt-1">
             <div className="row">
               <div className="col-xl-6">
                 <div className="row mt-2">
@@ -324,6 +302,7 @@ const SubEmployeeDetail = () => {
                           <button
                             className="btn btn-primary btn-sm"
                             onClick={handleAssignProject}
+                            style={{width:"20%"}}
                           >
                             Assign Project
                           </button>

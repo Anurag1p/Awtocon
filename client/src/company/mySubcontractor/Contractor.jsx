@@ -8,6 +8,8 @@ import Sidebar from "../../components/Sidebar";
 import CreateContractor from "./CreateContractor";
 import EditSubcontract from "./EditSubContract";
 import Animations from "../../components/Animations";
+import { styled } from "@mui/material/styles";
+import CustomNoRowsOverlay from "../../components/CustomNoRowsOverlay";
 
 const Contractor = ({
   COMPANY_ID,
@@ -46,6 +48,12 @@ const Contractor = ({
     });
   };
 
+  //  stylign for no rows of mui design 
+
+
+
+  //   ended 
+
   const columns = [
     { field: "SUBCONTRACTOR_ID", headerName: "ID", width: 90 },
     { field: "SUBCONTRACTOR_USERNAME", headerName: "Subcontractor Email", width: 150 },
@@ -78,6 +86,7 @@ const Contractor = ({
       headerName: "Edit",
       width: 80,
       renderCell: (cellValues) => {
+        // console.log(cellValues, "cellvalue")
         return (
           <Button >
             <EditSubcontract editsubcontract={cellValues} refetch={getAllSubcontractor} />
@@ -142,31 +151,29 @@ const Contractor = ({
         )}
 
         <div className="myscreen p-3">
+
           <Box style={{ height: "100%", padding: 0, paddingBottom: "0" }}>
-            <>
-              {resStatus ? (
-                <DataGrid
-                  className="display"
-                  sx={{ border: "none" }}
-                  rows={rows}
-                  columns={columns}
-                  getRowId={(row) => row.SUBCONTRACTOR_ID}
-                  initialState={{
-                    pagination: {
-                      paginationModel: {
-                        pageSize: 20,
-                      },
+            {resStatus === "success" ? (
+
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                sx={{ border: "none", height: '80vh' }}
+                initialState={{
+                  pagination: {
+                    paginationModel: {
+                      pageSize: 14,
                     },
-                  }}
-                  density="compact"
-                  pageSizeOptions={[5]}
-                  disableRowSelectionOnClick
-                  localeText={{
-                    noRowsLabel: rows.length === 0 && "There are no Subcontractors yet....",
-                  }}
-                />
-              ) : resStatus === "error" ? (
-                <Box>
+                  },
+                }}
+                pageSizeOptions={[10]}
+                disableMultipleSelection
+                density="compact"
+                slots={{ noRowsOverlay: CustomNoRowsOverlay }}
+                getRowId={(row) => row.SUBCONTRACTOR_ID}
+              />
+            ) : resStatus === "error" ? (
+              <Box>
                   <div
                     className="p-3"
                     style={{
@@ -189,12 +196,9 @@ const Contractor = ({
                     </small>
                   </div>
                 </Box>
-              ) : (
-                <Animations />
-
-              )}
-            </>
+            ) : <Animations />}
           </Box>
+
         </div>
       </Box>
     </>

@@ -87,14 +87,6 @@ const EmployeeDetail = () => {
         });
         fetchProject();
         fetchData();
-        // if (response.data.result?.employee) {
-        // } else {
-        //   toast.error("Project Already Assign",{
-        //     position: toast.POSITION.TOP_CENTER,
-        //     autoClose: 1000,
-        //   });
-
-        // }
       })
       .catch((error) => {
         console.error(error, "ERR");
@@ -178,6 +170,7 @@ const EmployeeDetail = () => {
         }}
         className="box position-absolute"
       >
+        
         <EmployeeNav
           filterData={filterData}
           active={1}
@@ -187,8 +180,7 @@ const EmployeeDetail = () => {
           COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
         />
         <div className="myscreen p-3">
-          <div className="container mt-1">
-            {/* <h1 className="text-center">Employee Detail Dashboard</h1> */}
+          <div className="container-fluid mt-1">
             <div className="row">
               <div className="col-xl-6">
                 <div className="row mt-2">
@@ -305,6 +297,7 @@ const EmployeeDetail = () => {
                           <button
                             className="btn btn-primary btn-sm"
                             onClick={handleAssignProject}
+                            style={{width:"20%"}}
                           >
                             Assign Project
                           </button>

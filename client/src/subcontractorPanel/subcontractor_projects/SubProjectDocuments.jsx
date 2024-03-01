@@ -1,18 +1,16 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import ProjectNav from "./SubProjectNav";
 import DocReusable from "../../components/DocReusable";
+import SubProjectNav from "./SubProjectNav";
+
 
 const SubProjectDocuments = () => {
   const filteredProject = useLocation();
   console.log(filteredProject, "uselocation")
 
   const filterData = filteredProject?.state[0]
-  // const COMPANY_ID = filteredProject?.state[1]
-  // const COMPANY_USERNAME = filteredProject?.state[2]
-  // const COMPANY_PARENT_ID = filteredProject?.state[3]
-  // const COMPANY_PARENT_USERNAME = filteredProject?.state[4]
+
 
   return (
     <>
@@ -23,8 +21,8 @@ const SubProjectDocuments = () => {
         }}
         className="box position-absolute"
       >
-        {/* <ProjectNav filterData={filterData} active={4} COMPANY_ID={COMPANY_ID} COMPANY_USERNAME={COMPANY_USERNAME} COMPANY_PARENT_ID={COMPANY_PARENT_ID} COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME} /> */}
-        <ProjectNav filterData={filterData} active={4} />
+     
+        <SubProjectNav filterData={filterData} active={4}/>
         <div className="myscreen p-3">
 
           <DocReusable

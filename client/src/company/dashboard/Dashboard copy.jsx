@@ -60,61 +60,31 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 
-// const StyledCard = styled(Card)(({ theme }) => ({
-//   margin: theme.spacing(0.5),
-//   transition: "background-color 0.3s ease-in-out",
-
-//   "&:hover": {
-//     backgroundColor: theme.palette.primary.main, // Change to your desired hover color
-//     "& .MuiTypography-root": {
-//       color: "#fff", // Change to white or your desired hover text color
-//     },
-//     "& a": {
-//       color: "#fff", // Change to white or your desired hover link color
-//     },
-//   },
-// }));
-
 
 const StyledCard = styled(Card)(({ theme }) => ({
   margin: theme.spacing(0.5),
   transition: "background-color 0.3s ease-in-out",
 
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-between",
-
-  maxWidth: 500,
-  height: 300,
-  padding: 35,
-
-  color: "#fff",
-  border: "1px solid rgba(255, 255, 255, 0.25)",
-  borderRadius: 20,
-  background: `linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0.25),
-    rgba(255, 255, 255, 0.75) 70%, 
-    rgba(255, 255, 255, 0.25)
-  )`,
-  boxShadow: "0 0 10px 1px rgba(0, 0, 0, 0.25)",
-  backdropFilter: "blur(15px)",
-
   "&:hover": {
-    backgroundColor: theme.palette.primary.main,
-  },
-
-  "& .MuiTypography-root": {
-    marginBottom: 0,
-    fontSize: 20,
+    backgroundColor: "tan", // Change to your desired hover color (e.g., "tan")
+    "& .MuiTypography-root": {
+      color: "#fff", // Change to white or your desired hover text color
+    },
+    "& a": {
+      color: "#fff", // Change to white or your desired hover link color
+    },
   },
 }));
+
 
 export default function CompanyDashboard() {
 
   const companyData = useSelector(state => state?.setOneCompany?.user);
   const projectAllData = useSelector(prev => prev?.allProjectData?.projects);
   const empdata = useSelector((state) => state?.allEmployee?.employees || []);
+  const allatendance = useSelector((state) => state?.allAttandanceData?.attendance);
+  const alldocuments = useSelector((state) => state?.companyDocuments?.documents);
+  const allsubContractor = useSelector((state) => state?.allsubcontractor?.subcontractor)
 
   const COMPANY_ID = companyData?.[0];
   const COMPANY_USERNAME = companyData?.[1];
@@ -137,21 +107,21 @@ export default function CompanyDashboard() {
     },
     {
       contractname: "Attandance",
-      counts: "200",
+      counts: allatendance?.length,
       description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
-      url: "Learn More",
+      url: "/company/attendance",
     },
     {
       contractname: "Documents",
-      counts: "200",
+      counts: alldocuments?.length,
       description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
-      url: "Learn More",
+      url: "/company/documents",
     },
     {
       contractname: "Sub-Contractors",
-      counts: "200",
+      counts: allsubContractor?.length,
       description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
-      url: "Learn More",
+      url: "/company/subcontractors",
     },
     {
       contractname: "Payments",
@@ -186,9 +156,9 @@ export default function CompanyDashboard() {
                   color="#3366cc"
                   gutterBottom
                 >
-                  Total {post.contractname}: {post.counts}
+                Company {post.contractname}: {post.counts}
                 </Typography>
-                <Typography component="div" color="#fff">
+                <Typography component="div" color="#808080">
                   {post.description}
                 </Typography>
               </CardContent>
@@ -294,6 +264,7 @@ export default function CompanyDashboard() {
         COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
         active={0}
         toggle={open}
+        userType="company" // Using to identify dashboard related to whom
       />
 
       <Navbar toggle={() => setOpen((e) => !e)} />

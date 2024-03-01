@@ -60,7 +60,7 @@ const SubProjectAssignNav = ({
           Detail
         </Button>
 
-        <Button
+        {/* <Button
           onClick={(e) =>
             navigate("/subcontractor/assigned-projects/gallery", {
               state: [
@@ -81,13 +81,34 @@ const SubProjectAssignNav = ({
           size="small"
         >
           Gallery
+        </Button> */}
+
+        <Button
+          onClick={(e) =>
+            navigate("/subcontractor/assigned-projects/violation", {
+              state: [
+                filterData,
+                COMPANY_ID,
+                COMPANY_USERNAME,
+                COMPANY_PARENT_ID,
+                COMPANY_PARENT_USERNAME,
+              ],
+            })
+          }
+          variant={3 === active ? "outlined" : "outlined"}
+          className={
+            3 === active
+              ? "btn button border-bottom-0 bg-white"
+              : "btn rounded-0 border-0  rounded-0 text-light"
+          }
+          size="small"
+        >
+          Violation
         </Button>
 
-     
-
-        {/* <Button
+        <Button
           onClick={(e) =>
-            navigate("/subcontractor/projects/documents", {
+            navigate("/subcontractor/assigned-projects/tasks", {
               state: [
                 filterData,
                 COMPANY_ID,
@@ -105,8 +126,8 @@ const SubProjectAssignNav = ({
           }
           size="small"
         >
-          Documents
-        </Button> */}
+          Tasks
+        </Button>
       </div>
     </>
   );

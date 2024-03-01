@@ -1,107 +1,161 @@
 import React, { useState, useEffect } from 'react';
-import "../../assests/css/upload.css";
+import axios from 'axios';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { FiPlus } from 'react-icons/fi';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
-const SubSiteImagesUpload = ({ maxLength, maxFileSize }) => {
+const SubSiteImagesUpload = ({
+    maxLength, maxFileSize,
+    TASK_IMAGE_SUBCONTRACTOR_ID,
+    TASK_IMAGE_PARENT_USERNAME,
+    TASK_IMAGE_TASK_ID,
+    TASK_IMAGE_PARENT_ID,
+    TASK_IMAGE_MEMBER_PARENT_USERNAME,
+    TASK_IMAGE_MEMBER_PARENT_ID,
+    TASK_IMAGE_PROJECT_ID
+
+}) => {
+    console.log(TASK_IMAGE_TASK_ID, "TASK_IMAGE_TASK_ID")
     const [images, setImages] = useState([]);
+    const [firebaseimg, setFirebase] = useState([]);
+    console.log(images, "setImages")
+    console.log(firebaseimg, "images")
+    console.log(firebaseimg, "firebaseimg")
     const [progressWidth, setProgressWidth] = useState(0);
-
+    const createEndpoint = "/api/create_task_image";
+    console.log(images.SITE_UPLOAD_NO, "site upload no")
     useEffect(() => {
-        // Calculate the width of the progress bar based on the number of uploaded images
-        const percentage = (images.length / maxLength) * 100;
+        const percentage = (firebaseimg.length / maxLength) * 100;
         setProgressWidth(percentage);
-    }, [images, maxLength]);
-
+    }, [firebaseimg, maxLength]);
 
     const handleImageUpload = (e) => {
         const files = e.target.files;
+        console.log(files, "files=>e.target.value")
+        setFirebase([...files]);
+    };
 
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
+    const handleSubmitImages = async () => {
+        try {
+            const storage = getStorage();
+            const uploadedImageUrls = [];
+            console.log(uploadedImageUrls, "uploadedImageUrls")
 
-            // Check if the file type is not an image
-            if (!file.type.startsWith('image/')) {
-                alert('You can only upload images. Please select an image file.');
-                continue;
+            for (let i = 0; i < firebaseimg.length; i++) {
+                const file = firebaseimg[i];
+
+                const storageRef = ref(storage, file.name);
+                await uploadBytes(storageRef, file);
+                const downloadURL = await getDownloadURL(storageRef);
+                uploadedImageUrls.push(downloadURL);
+
             }
 
-            // Check if the file size exceeds the maximum allowed size
-            if (file.size > maxFileSize) {
-                alert(`File ${file.name} exceeds the maximum allowed size of ${maxFileSize / (1024 * 1024)} MB.`);
-                continue;
-            }
+            const response = await axios.post(createEndpoint, {
+                imageUrls: uploadedImageUrls,
+                TASK_IMAGE_SUBCONTRACTOR_ID,
+                TASK_IMAGE_PARENT_USERNAME,
+                TASK_IMAGE_TASK_ID,
+                TASK_IMAGE_PARENT_ID,
+                TASK_IMAGE_MEMBER_PARENT_USERNAME,
+                TASK_IMAGE_MEMBER_PARENT_ID,
+                TASK_IMAGE_PROJECT_ID
+            });
 
-            if (images.length >= maxLength) {
-                alert(`Maximum ${maxLength} images allowed.`);
-                break;
-            }
-
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                setImages(prevImages => [...prevImages, { src: e.target.result, name: file.name, size: file.size }]);
-            };
-            reader.readAsDataURL(file);
+            setFirebase([]);
+            console.log(response.data.result, 'All firebaseimg are successfully uploaded!');
+            fetchData();
+        } catch (error) {
+            console.error(error);
+            alert('Error uploading firebaseimg. Please try again.');
         }
     };
 
-    const handleImageRemove = (imageName) => {
-        setImages(prevImages => prevImages.filter(img => img.name !== imageName));
+    // fetching images data from mongo 
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.put('/api/get_all_task_images', {
+                TASK_IMAGE_SUBCONTRACTOR_ID: TASK_IMAGE_SUBCONTRACTOR_ID,
+                TASK_IMAGE_MEMBER_PARENT_USERNAME: TASK_IMAGE_MEMBER_PARENT_USERNAME,
+                TASK_IMAGE_PROJECT_ID: TASK_IMAGE_PROJECT_ID,
+                TASK_IMAGE_TASK_ID: TASK_IMAGE_TASK_ID
+            });
+            setImages(response.data.result); // Assuming response.data is an array of arrays of image URLs
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
     };
 
-    const handleClearAll = () => {
-        setImages([]);
+    useEffect(() => {
+        setTimeout(() => {
+            fetchData()
+
+        }, 800)
+    }, [])
+
+    const handleDeleteImage = (index) => {
+        const config = {
+            data: {
+                SUBCONTRACTOR_MEMBER_PARENT_USERNAME: TASK_IMAGE_MEMBER_PARENT_USERNAME,
+                SITE_UPLOAD_NO: index
+            }
+        };
+
+        axios.delete("/api/delete_site_image", config)
+            .then((res) => {
+                const result = res.data.result;
+                console.log(result, "result");
+                fetchData();
+            })
+            .catch((error) => {
+                console.error("Error deleting image:", error);
+            });
     };
-
-    const handleSubmitImages = () => {
-        // Here you can implement the logic to submit the images to the server
-        // For now, let's display an alert indicating that all images are successfully uploaded
-        alert('All images are successfully uploaded!');
-    };
-
-
     return (
-        <>
-            <div className="new-upload__box">
-                <h5 className='text-black-50 mb-4'>Gallery</h5>
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol className="breadcrumb bg-muted border border-muted rounded p-2 mt-3">
+                    <li className="breadcrumb-item active " aria-current="page">UPLOAD SITE PROGRESS IMAGES HERE</li>
+                </ol>
+            </nav>
 
-                <div className="new-upload__btn-box align-items-center d-flex ">
-                    <label className="new-upload__btn custom-upload-btn">
-                        <p className="custom-upload-text">Upload images</p>
-                        <input type="file" multiple onChange={handleImageUpload} className="new-upload__inputfile" />
-                    </label>
+            <label htmlFor="file-upload" className="custom-file-upload mt-3 mb-3">
+                <FiPlus className='text-secondary' />
+            </label>
+            <input type="file" id="file-upload" multiple onChange={handleImageUpload} />
+            <div className='d-flex'>
+                {firebaseimg && firebaseimg?.map((image, index) => (
+                    <div key={index} className='image-array d-flex flex-column'>
+                        <img src={URL.createObjectURL(image)} alt={image.name} className='galleryImage' />
 
-                    <div className="new-upload__counter ms-2">
-                        <p className=" fw-bold fs-6 m-0">
-                            {images.length} {images.length === 1 ? 'image' : 'images'} uploaded
-                        </p>
                     </div>
-                </div>
-
-                {images.length > 0 ?
-                    <>
-                        <div className="new-upload__img-wrap gap-1 mb-5">
-                            {images.map((image, index) => (
-                                <div key={index} className="new-upload__img-box">
-                                    <div style={{ backgroundImage: `url(${image.src})` }} className="new-img-bg">
-                                        <div className="new-upload__img-close" onClick={() => handleImageRemove(image.name)}></div>
-                                    </div>
-                                    <p className="image-info">{image.name} ({(image.size / (1024 * 1024)).toFixed(2)} MB)</p>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="progress">
-                            <div className="progress-bar progress-bar-striped progress-bar-animated p-2 progressincrease" style={{ width: `${progressWidth}%` }} role="progressbar" aria-valuenow={images.length} aria-valuemin="0" aria-valuemax={maxLength}>{images.length}%</div>
-                        </div>
-                        <button className="btn btn-danger mt-2 me-2" onClick={handleClearAll}>Clear All</button>
-                        {images.length > 0 && (
-                            <button className="btn btn-success mt-2" onClick={handleSubmitImages}>Submit Images</button>
-                        )}
-                    </>
-                    : <h6 className='d-flex justify-content-center text-black-50'>Please upload site Progress images....</h6>}
+                ))}
             </div>
-        </>
+            {firebaseimg?.length > 0 && <button onClick={handleSubmitImages} className='btn btn-success mt-2 btn-sm'>Submit</button>}
+            <hr />
 
+            {/* showing uploaded images inmongo  */}
 
+            <div>
 
+                <h2 className='btn btn-primary m-3'>Images <span className='badge badge-light'>{images.length}</span></h2>
+
+            </div>
+            <div className="gallery d-flex flex-wrap">
+                {images?.map((imageArray, index) => (
+                    <div key={index} className="image-array ml-2 position-relative">
+                    {imageArray?.TASK_APPROVE_FOR_CONTRACTOR ? <img src={imageArray?.imageUrls} alt={`Image ${index}`} className='galleryImage border-3 border-success ' />:<img src={imageArray.imageUrls} alt={`Image ${index}`} className='galleryImage border-3 border-danger' /> }    
+                        <div className="delete-overlay" onClick={() => handleDeleteImage(imageArray.SITE_UPLOAD_NO)}>
+                            <FontAwesomeIcon icon={faTrashAlt} className='delete-button' />
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+        </div>
     );
 };
 

@@ -181,6 +181,7 @@ export default function CreateContractor(props) {
           dispatch(setSubcontractor(response.data.result))
           toast.success("Subcontract Created successfully!", {
             position: toast.POSITION.TOP_CENTER,
+            autoClose: 1000,
           });
         }
       })

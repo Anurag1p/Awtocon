@@ -2,18 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import axios from "axios";
-// import { DataGrid } from "@mui/x-data-grid";
-// import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-// import ProjectCreate from "./ProjectCreate";
-// // import { MyContext } from "../context/Mycontext";
-// import ProjectEdit from "./ProjectEdit";
-// import ProjectLoc from "./ProjectLoc";
-// import ProjectAssigned from "../ProjectAssigned";
-// import { Button, Paper, Skeleton, styled } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-// import Navbar from "../../components/Navbar";
-// import ProjectDocuments from "./ProjectDocuments";
-// import ProjectDetail from "./ProjectDetail";
 import ProjectNav from "./ProjectNav";
 import { useSelector } from "react-redux";
 

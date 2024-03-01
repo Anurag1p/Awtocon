@@ -54,6 +54,7 @@ export default function EditSubcontract(props) {
     });
 
     const editsubcontracts = props?.editsubcontract.row
+    
     const dispatch = useDispatch();
     useEffect(() => {
         if (editsubcontracts) {

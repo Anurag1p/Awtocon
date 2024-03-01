@@ -53,8 +53,7 @@ const ContractorDetail = () => {
       PROJECT_ID: getallparam[0]?.PROJECT_ID,
       PROJECT_PARENT_ID: getallparam[0]?.PROJECT_PARENT_ID,
       PROJECT_MEMBER_PARENT_ID: getallparam[0]?.PROJECT_MEMBER_PARENT_ID,
-      PROJECT_MEMBER_PARENT_USERNAME:
-        getallparam[0]?.PROJECT_MEMBER_PARENT_USERNAME,
+      PROJECT_MEMBER_PARENT_USERNAME: getallparam[0]?.PROJECT_MEMBER_PARENT_USERNAME,
       PROJECT_USERNAME: getallparam[0]?.PROJECT_USERNAME,
       SUBCONTRACTOR_ID: filterData?.SUBCONTRACTOR_ID,
       SUBCONTRACTOR_PARENT_ID: filterData?.SUBCONTRACTOR_PARENT_ID,
@@ -78,38 +77,22 @@ const ContractorDetail = () => {
         fetchData();
         if (response.data.result?.employee) {
         } else {
-          toast.success("Project Already Assign", {
+          toast.error("Project Already Assign", {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 1000,
           });
         }
       })
       .catch((error) => {
-        console.error(error, "ERR");
+        toast.error("Project Already Assign", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 1000,
+        });
       });
 
   };
-  // axios
-    // .post("/api/assign_subcontractor_Project", mergedData)
-    // .then((response) => {
-    //   setSelectedProject(response.data.result);
-    //   fetchProject();
-    //   fetchData();
-    //   if (response.data.result && response.data.result.isAssigned) {
-    //     toast.error("Project Already Assign", {
-    //       position: toast.POSITION.TOP_CENTER,
-    //       autoClose: 1000,
-    //     });
-    //   } else {
-    //     toast.success("Project Assign successfully!", {
-    //       position: toast.POSITION.TOP_CENTER,
-    //       autoClose: 1000,
-    //     });
-    //   }
-    // })
-    // .catch((error) => {
-    //   console.error(error, "ERR");
-    // });
+
+
 
   const fetchData = async (e) => {
     try {
@@ -193,7 +176,7 @@ const ContractorDetail = () => {
           COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
         />
         <div className="myscreen p-3">
-          <div className="container mt-1">
+          <div className="container-fluid mt-1">
             {/* <h1 className="text-center">Employee Detail Dashboard</h1> */}
             <div className="row">
               <div className="col-xl-6">
@@ -310,6 +293,7 @@ const ContractorDetail = () => {
                           </select>
                           <button
                             className="btn btn-primary btn-sm"
+                            style={{width:"20%"}}
                             onClick={handleAssignProject}
                           >
                             Assign Project

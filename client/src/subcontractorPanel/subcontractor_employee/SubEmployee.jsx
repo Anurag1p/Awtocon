@@ -9,6 +9,7 @@ import EmployeeCreate from "./SubEmployeeCreate";
 import Sidebar from "../../components/Sidebar";
 import moment from "moment";
 import { RotatingLines } from "react-loader-spinner";
+import Animations from "../../components/Animations";
 
 const SubEmployee = ({
   COMPANY_ID,
@@ -373,14 +374,7 @@ const SubEmployee = ({
                       transform: "translate(-50%,-50%)",
                     }}
                   >
-                    <RotatingLines
-                      strokeColor="#2D5169"
-                      strokeWidth="5"
-                      animationDuration="0.75"
-                      width="50"
-                      visible={true}
-
-                    />
+                   <Animations/>
                   </div>
                 </Box>
               )}

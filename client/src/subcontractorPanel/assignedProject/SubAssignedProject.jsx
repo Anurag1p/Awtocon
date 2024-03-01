@@ -13,6 +13,7 @@ const SubAssignedProjects = ({ state }) => {
   const dispatch = useDispatch();
 
   const companyData = useSelector((prev) => prev?.companyLogin?.user);
+  
   const COMPANY_ID = companyData[0];
   const COMPANY_USERNAME = companyData[1];
   const COMPANY_PARENT_ID = companyData[2];
@@ -21,6 +22,7 @@ const SubAssignedProjects = ({ state }) => {
   const [project, setProject] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchsubcontractorData = async () => {
       try {
@@ -37,9 +39,9 @@ const SubAssignedProjects = ({ state }) => {
         const response = await axios.request(empDataConfig);
         const data = response.data;
 
-        if (data.result) {
-          setSubcontractor(data.result);
-        }
+        // if (data.result) {
+          setSubcontractor(data?.result);
+        // }
         console.log(data, "Employee data");
       } catch (error) {
         console.error(error, "Error fetching employee data");
@@ -86,10 +88,10 @@ const SubAssignedProjects = ({ state }) => {
     };
 
     // Check if subcontractor.EMPLOYEE_ASSIGN has changed
-    if (subcontractor.SUBCONTRACTOR_ASSIGN && subcontractor.SUBCONTRACTOR_ASSIGN.length > 0) {
+    if (subcontractor?.SUBCONTRACTOR_ASSIGN && subcontractor?.SUBCONTRACTOR_ASSIGN.length > 0) {
       fetchProjectsData();
     }
-  }, [subcontractor.SUBCONTRACTOR_ASSIGN]);
+  }, [subcontractor?.SUBCONTRACTOR_ASSIGN]);
 
   const handleClick = (event) => {
     navigate("/subcontractor/assigned-projects/detail", {
@@ -106,6 +108,7 @@ const SubAssignedProjects = ({ state }) => {
   const columns = [
     { field: 'sr', headerName: 'S No.', width: 60, renderCell: (params) => params.row.id + 1 },
     { field: 'PROJECT_NAME', headerName: 'Name', width: 200 },
+    { field: 'PROJECT_ID', headerName: 'PROJECT_ID', width: 200 },
     { field: 'PROJECT_SUPERVISOR', headerName: 'Project Supervisor', width: 200 },
     { field: 'PROJECT_START_DATE', headerName: 'Start Date', width: 150 },
     { field: 'PROJECT_END_DATE', headerName: 'End Date', width: 150 },

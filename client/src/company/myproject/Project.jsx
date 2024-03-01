@@ -3,14 +3,15 @@ import ProjectCreate from "./ProjectCreate";
 import { Box, Button, Paper, Skeleton } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import ProjectEdit from "./ProjectEdit";
-import { styled } from "@mui/material/styles";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
-import { RotatingLines } from "react-loader-spinner";
+// import { RotatingLines } from "react-loader-spinner";
 import { useSelector } from "react-redux";
 import Animations from "../../components/Animations";
 import { getProjectData } from "../../redux/slice/getallProjectSlice";
+import Navbar from "../../components/Navbar";
+
+import CustomNoRowsOverlay from "../../components/CustomNoRowsOverlay";
 
 const Project = () => {
   // {
@@ -33,11 +34,11 @@ const Project = () => {
 
   const projectData = useSelector(state => state?.allProjectData.projects)
   
-console.log("hhelo world = >", projectData)
 
   const [open, setOpen] = useState(false);
   const [data, setData] = useState({ row: {} });
   const [resStatus, setResStatus] = useState(false);
+  const [openNav, setOpenNav] = useState(false);
   
   const navigate = useNavigate();
 
@@ -155,10 +156,11 @@ console.log("hhelo world = >", projectData)
         COMPANY_PARENT_ID={COMPANY_PARENT_ID}
         COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
         userType="company" 
+        toggle={openNav}
       />
 
       <Box className="box" style={{ background: "#277099" }}>
-        {/* <Navbar toggle={() => setOpenNav((e) => !e)} name={COMPANY_USERNAME} /> */}
+        <Navbar toggle={() => setOpenNav((e) => !e)} name={COMPANY_USERNAME} />
         { projectData && projectData.length > 0 && <ProjectCreate /> }
 
         <div className="myscreen p-3">
@@ -180,6 +182,7 @@ console.log("hhelo world = >", projectData)
                 pageSizeOptions={[5]}
                 checkboxSelection={false}
                 disableRowSelectionOnClick
+                slots={{ noRowsOverlay: CustomNoRowsOverlay }}
               />) : resStatus === "error" ? (
                 <Box>
                   <div
@@ -215,14 +218,7 @@ console.log("hhelo world = >", projectData)
                       transform: "translate(-50%,-50%)",
                     }}
                   >
-                    <RotatingLines
-                      strokeColor="#2D5169"
-                      strokeWidth="5"
-                      animationDuration="0.75"
-                      width="50"
-                      visible={true}
-
-                    />
+                  <Animations/>
                   </div>
                 </Box>
               )} 

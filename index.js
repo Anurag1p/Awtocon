@@ -154,6 +154,19 @@ app.post("/api/create_emp_attendance", (req, res) => {
   sendHttpRequest("POST", `${process.env.SERVERAPIREQUEST}/create_emp_attendance`, req, res)
 });
 
+// create task proxy .....
+app.post("/api/create_task", (req, res) => {
+  sendHttpRequest("POST", `${process.env.SERVERAPIREQUEST}/create_task`, req, res)
+});
+
+app.put("/api/get_all_tasks", (req, res) => {
+  sendHttpRequest("PUT", `${process.env.SERVERAPIREQUEST}/get_all_tasks`, req, res)
+});
+app.put("/api/get_all_task_images", (req, res) => {
+  sendHttpRequest("PUT", `${process.env.SERVERAPIREQUEST}/get_all_task_images`, req, res)
+});
+
+
 
 app.put("/api/get_projects_one", (req, res) => {
   sendHttpRequest("PUT", `${process.env.SERVERAPIREQUEST}/get_projects_one`, req, res)
@@ -338,6 +351,16 @@ app.put("/api/get_all_document", (req, res) => {
   sendHttpRequest("PUT", `${process.env.SERVERAPIREQUEST}/get_all_document`, req, res)
 });
 
+app.put("/api/get_all_site_images", (req, res) => {
+  sendHttpRequest("PUT", `${process.env.SERVERAPIREQUEST}/get_all_site_images`, req, res)
+});
+
+app.delete("/api/delete_site_image", (req, res) => {
+  sendHttpRequest("DELETE", `${process.env.SERVERAPIREQUEST}/delete_site_image`, req, res)
+});
+
+
+
 //create  Employee documents 
 
 const employee_document = createProxyMiddleware('/api/create_employee_document', {
@@ -349,6 +372,11 @@ const employee_document = createProxyMiddleware('/api/create_employee_document',
 });
 app.use(employee_document);
 
+
+
+app.post("/api/create_task_image", (req, res) => {
+  sendHttpRequest("POST", `${process.env.SERVERAPIREQUEST}/create_task_image`, req, res);
+})
 
 
 //create  subcontrcator documents 

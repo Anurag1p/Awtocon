@@ -13,12 +13,15 @@ import { useDispatch, useSelector } from "react-redux";
 
 // import for refetch the data to update 
 import { getEmployeeData, setEmployeeData } from "../../redux/slice/EmployeeDataSlice";
+import Navbar from "../../components/Navbar";
 
 const Employee = () => {
 
   const [archived, setArchived] = useState([{}]);
   const [display, setDisplay] = useState("unarchive");
   const [resStatus, setResStatus] = useState(true);
+  const [openNav, setOpenNav] = useState(false);
+
   const navigate = useNavigate();
 
   // calling dispatch for caaling the fetchempData funciton 
@@ -251,9 +254,10 @@ const Employee = () => {
         COMPANY_PARENT_ID={COMPANY_PARENT_ID}
         COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
         userType="company"
+        toggle={openNav}
       />
-
       <Box className="box" style={{ background: "#277099" }}>
+        <Navbar toggle={() => setOpenNav((e) => !e)}  name={COMPANY_USERNAME}/>
 
         {empdata && empdata.length > 0 ? (<><button
           variant={"outlined"}

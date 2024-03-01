@@ -13,6 +13,7 @@ import Sidebar from "../../components/Sidebar";
 import Navbar from "../../components/Navbar";
 import { useSelector } from "react-redux";
 import { getEmployeeData } from "../../redux/slice/EmployeeDataSlice";
+import Animations from "../../components/Animations";
   // Redux implementation by anurag
   // import { getEmployeeData } from "@reduxjs/toolkit";
 
@@ -291,7 +292,7 @@ const SubAttendanceAcknowledge = ({
         userType="subcontractor"
       />
       <div className="myscreen p-3">
-        <Box className="box" style={{ background: "#277099" }}>
+        <Box className="box " style={{ background: "#277099" }}>
           <Navbar toggle={() => setOpenNav((e) => !e)} />
           {resStatus === true ? (<button
             size="small"
@@ -330,6 +331,8 @@ const SubAttendanceAcknowledge = ({
           )}
           {resStatus === true ? (
             <div className="myscreen p-3">
+            <div className="container-fluid">
+  
               <Box
                 style={{
                   height: "100%",
@@ -341,30 +344,12 @@ const SubAttendanceAcknowledge = ({
               >
                 {show ? (
                   processedData <= 0 ? (
-                    <div
-                      className="container"
-                      style={{ postion: "position-relative" }}
-                    >
-                      <div
-                        style={{
-                          position: "absolute",
-                          top: "50%",
-                          left: "50%",
-                          transform: "translate(-50%,-50%)",
-                        }}
-                      >
-                        <RotatingLines
-                          strokeColor="#2D5169"
-                          strokeWidth="5"
-                          animationDuration="0.75"
-                          width="50"
-                          visible={true}
-                        />
-                      </div>
-                    </div>
+                    <div className="myscreen">
+                    <Animations/>
+                   </div>
                   ) : (
                     <>
-                      <div className="container">
+                      <div className="container-fluid">
                         <div className="row sticky-top bg-white">
                           <div className="col-xl-6">
                             <div className="row justify-content-between">
@@ -492,7 +477,9 @@ const SubAttendanceAcknowledge = ({
                           </div>
                         </div>
                       </div>
-                      <div className="container">
+
+
+                      <div className="container-fluid">
                         <div className="row">
                           <div className="col-xl-12 col-lg-6 overflow-auto">
                             <table className="table table-hover table-sm table-fixed table-responsive">
@@ -602,6 +589,8 @@ const SubAttendanceAcknowledge = ({
                   showDetail
                 )}
               </Box>
+              </div>
+
             </div>
           ) : resStatus === "error" ? (
             <div className="myscreen p-3">
@@ -630,30 +619,11 @@ const SubAttendanceAcknowledge = ({
               </Box>
             </div>
           ) : (
-            <div className="myscreen p-3">
-              <Box style={{ height: "100%", padding: 0, paddingBottom: "0" }}>
-                <div
-                  className="p-3"
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%,-50%)",
-
-                  }}
-                >
-                  <RotatingLines
-                    strokeColor="#2D5169"
-                    strokeWidth="5"
-                    animationDuration="0.75"
-                    width="50"
-                    visible={true}
-
-                  />
-                </div>
-              </Box>
+            <div className="myscreen">
+             <Animations/>
             </div>
           )}
+         
         </Box>
       </div>
     </>

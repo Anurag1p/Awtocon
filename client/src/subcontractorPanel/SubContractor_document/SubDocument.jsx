@@ -29,7 +29,9 @@ export default function SubDocument(props) {
 
     const dispatch = useDispatch();
 
-    // const { COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_ID, COMPANY_PARENT_USERNAME } = useParams();
+    //  design for ui to show no rows in mui function 
+
+
     console.log("myprops : =>", companyData)
     const companyDoc = useSelector(state => state?.companyDocuments?.documents)
     console.log(companyDoc, "documents data")

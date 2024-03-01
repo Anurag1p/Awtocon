@@ -151,6 +151,30 @@ const ProjectNav = ({
         >
           Subcontractor Assigned
         </Button>
+
+        
+        <Button
+          onClick={(e) =>
+            navigate("/company/projects/tasks", {
+              state: [
+                filterData,
+                COMPANY_ID,
+                COMPANY_USERNAME,
+                COMPANY_PARENT_ID,
+                COMPANY_PARENT_USERNAME,
+              ],
+            })
+          }
+          variant={6 === active ? "outlined" : "outlined"}
+          className={
+            6 === active
+              ? "btn button border-bottom-0 bg-white"
+              : "btn rounded-0 border-0  rounded-0 text-light"
+          }
+          size="small"
+        >
+         Tasks 
+                </Button>
       </div>
     </>
   );

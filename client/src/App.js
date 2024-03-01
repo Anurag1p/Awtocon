@@ -83,6 +83,9 @@ import SubAttendanceAcknowledge from "./subcontractorPanel/attendance/SubAttenda
 import SubAssignedProjects from "./subcontractorPanel/assignedProject/SubAssignedProject";
 import SubProjectAssignDetails from "./subcontractorPanel/assignedProject/SubProjectAssignDetails";
 import SubGallery from "./subcontractorPanel/assignedProject/SubGallery";
+import Violation from "./subcontractorPanel/assignedProject/Violation";
+import TaskSpliting from "./subcontractorPanel/assignedProject/TaskSpliting";
+import Tasks from "./company/myproject/Tasks";
 
 
 function App() {
@@ -246,6 +249,10 @@ function App() {
             <Route
               path="/company/projects/documents"
               element={<ProjectDocuments />}
+            />
+            <Route
+              path="/company/projects/tasks"
+              element={<Tasks />}
             />
 
             {/* project */}
@@ -465,9 +472,19 @@ function App() {
               element={<SubProjectAssignDetails state={userName} />}
             />
             <Route
-              path="/subcontractor/assigned-projects/gallery"
+              path="/subcontractor/assigned-projects/task/gallery"
               element={<SubGallery state={userName} />}
             />
+            <Route
+              path="/subcontractor/assigned-projects/violation"
+              element={<Violation state={userName} />}
+            />
+            <Route
+              path="/subcontractor/assigned-projects/tasks"
+              element={<TaskSpliting state={userName} />}
+            />
+
+
             {/* SubProjectDetail */}
 
             {/* <Route

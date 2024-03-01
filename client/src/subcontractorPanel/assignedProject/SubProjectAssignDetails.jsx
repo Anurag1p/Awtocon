@@ -1,10 +1,10 @@
 import React, { useEffect, useState} from "react";
 import Box from "@mui/material/Box";
 import { useLocation} from "react-router-dom";
-import { RotatingLines } from "react-loader-spinner";
 import SubProjectAssignNav from "./SubProjectAssignNav";
+import Animations from "../../components/Animations";
 
-const SubProjectDetail = () => {
+const SubProjectAssignDetails = () => {
   const filteredProject = useLocation();
 
   const filterData = filteredProject?.state[0]
@@ -185,14 +185,7 @@ const SubProjectDetail = () => {
               transform: "translate(-50%,-50%)",
             }}
           >
-            <RotatingLines
-              strokeColor="#2D5169"
-              strokeWidth="5"
-              animationDuration="0.75"
-              width="50"
-              visible={true}
-
-            />
+           <Animations/>
           </div>
       )}
       </Box> 
@@ -200,4 +193,4 @@ const SubProjectDetail = () => {
   );
 };
 
-export default SubProjectDetail;
+export default SubProjectAssignDetails;
