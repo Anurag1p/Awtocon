@@ -14,14 +14,7 @@ import Navbar from "../../components/Navbar";
 import CustomNoRowsOverlay from "../../components/CustomNoRowsOverlay";
 
 const Project = () => {
-  // {
-  //   COMPANY_ID,
-  //   COMPANY_USERNAME,
-  //   COMPANY_PARENT_ID,
-  //   COMPANY_PARENT_USERNAME,
-  // }
 
-  // company Login Data 
   const companyData = useSelector(state => state?.companyLogin?.user);
 
   const COMPANY_ID = companyData?.[0]

@@ -6,6 +6,7 @@ import { Box, Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import Animations from '../../components/Animations';
+import CustomNoRowsOverlay from '../../components/CustomNoRowsOverlay';
 
 
 const SubAssignedProjects = ({ state }) => {
@@ -79,7 +80,7 @@ const SubAssignedProjects = ({ state }) => {
         const arry = responses.map((response) => response.data.result[0]);
         if (arry) {
           setProject(arry);
-          setLoading(false); // Data is loaded, set loading to false
+          setLoading(false);
           console.log(arry, "Projects data");
         }
       } catch (error) {
@@ -159,9 +160,9 @@ const rowsWithIds = project.map((item, index) => ({ ...item, id:index }));
 
         <div className="myscreen p-3">
           <Box style={{ height: "100%", padding: 0, paddingBottom: "0" }}>
-            {loading ? ( // Show loading indicator if data is still loading
+            {loading ? (
               <Animations />
-            ) : project.length > 0 ? ( // Show DataGrid if projects are available
+            ) : project.length > 0 ? ( 
               <DataGrid
                 rows={rowsWithIds}
                 columns={columns}
@@ -173,9 +174,11 @@ const rowsWithIds = project.map((item, index) => ({ ...item, id:index }));
                   },
                 }}
                 pageSizeOptions={[5]}
-                
+                slots={{
+                  noRowsOverlay:CustomNoRowsOverlay
+                }}
               />
-            ) : ( // Show message if no projects are available
+            ) : ( 
               <p>There are no projects assigned yet...</p>
             )}
           </Box>

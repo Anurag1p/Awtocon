@@ -86,6 +86,7 @@ import SubGallery from "./subcontractorPanel/assignedProject/SubGallery";
 import Violation from "./subcontractorPanel/assignedProject/Violation";
 import TaskSpliting from "./subcontractorPanel/assignedProject/TaskSpliting";
 import Tasks from "./company/myproject/Tasks";
+import ProjectTaskGallery from "./company/myproject/ProjectTaskGallery";
 
 
 function App() {
@@ -340,9 +341,6 @@ function App() {
               path="/company/subcontractors/documents"
               element={<SubContractorDoc />}
             />
-
-
-
 
             {/* for employee login ... */}
             <Route

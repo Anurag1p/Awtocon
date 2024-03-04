@@ -7,6 +7,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import Animations from '../../components/Animations';
 import axios from 'axios';
 import SubGallery from './SubGallery'; // Import the SubGallery component
+import CustomNoRowsOverlay from '../../components/CustomNoRowsOverlay';
 
 
 const TaskSpliting = () => {
@@ -20,13 +21,12 @@ const TaskSpliting = () => {
     const COMPANY_PARENT_ID = filteredProject?.state[3];
     const COMPANY_PARENT_USERNAME = filteredProject?.state[4];
     const [open, setOpen] = React.useState(false);
-
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [resStatus, setResStatus] = useState("success");
     const [taskData, setTaskData] = useState([]);
     const [selectedTaskId, setSelectedTaskId] = useState(null); // State to store the selected task id
-console.log(selectedTaskId, "selectedTaskId")
     const handleOpen = () => setOpen(true);
+    
 
     const data = {
         TASK_MEMBER_PARENT_USERNAME: COMPANY_PARENT_USERNAME,
@@ -37,7 +37,9 @@ console.log(selectedTaskId, "selectedTaskId")
     const fetchData = async () => {
         try {
             const response = await axios.put("/api/get_all_tasks", data);
+            setResStatus("loading");
             setTaskData(response.data.result);
+            setResStatus("success");
         } catch (error) {
             console.error("Error fetching data:", error);
             setResStatus("error");
@@ -50,17 +52,19 @@ console.log(selectedTaskId, "selectedTaskId")
 
     const handleDetailButtonClick = (taskId) => {
         setIsModalOpen(true);
-        setSelectedTaskId(taskId); // Store the selected task id
+        setSelectedTaskId(taskId);
     };
 
     const columns = [
-        { field: "TASK_ID", headerName: "ID", width: 90 },
-        { field: "TASK_NAME", headerName: "Task Name", width: 150 },
-        { field: "TASK_VALUE", headerName: "Value", width: 150 },
+        { field: "TASK_ID", headerName: "ID", width: 50 },
+        { field: "TASK_NAME", headerName: "Task Name", width: 120 },
+        { field: "TASK_VALUE", headerName: "Value", width: 100 },
         { field: "TASK_DESCRIPTION", headerName: "Task Description", width: 150 },
-        { field: "TASK_START_DATE", headerName: "Start Date", width: 150 },
+        { field: "TASK_START_DATE", headerName: "Start Date", width: 100 },
         { field: "TASK_END_DATE", headerName: "End Date", type: "number", width: 100 },
         { field: "TASK_PROJECT_LEAD", headerName: "Task Lead", width: 120 },
+        { field: "TASK_ADVANCE_AMOUNT", headerName: "Advance Pay", type: "number", width: 100 },
+        { field: "TASK_REMAINING_AMOUNT", headerName: "Remaining Pay", width: 120 },
         {
             field: "details",
             headerName: "Details",
@@ -137,6 +141,7 @@ console.log(selectedTaskId, "selectedTaskId")
                                     disableMultipleSelection
                                     density="compact"
                                     getRowId={(row) => row._id}
+                                    slots={{ noRowsOverlay: CustomNoRowsOverlay }}
                                 />
                             )}
                             {resStatus === "error" && (
@@ -168,7 +173,7 @@ console.log(selectedTaskId, "selectedTaskId")
                     </div>
                 </>
             ) : (
-                <SubGallery taskId={selectedTaskId} /> // Pass the selected task id to SubGallery component
+                <SubGallery taskId={selectedTaskId} />
             )}
         </Box>
     );

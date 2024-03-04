@@ -1,13 +1,14 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Checkbox, FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Select } from '@mui/material'
+import { Accordion, AccordionDetails, AccordionSummary, Box, FormControl, InputLabel, MenuItem, Select, Button } from '@mui/material'
 import React, { useState } from 'react'
 import ProjectNav from './ProjectNav'
-import { useLocation } from 'react-router-dom';
-
+import { useLocation, useNavigate } from 'react-router-dom';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PanToolAltIcon from '@mui/icons-material/PanToolAlt';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { DataGrid } from '@mui/x-data-grid';
 import CustomNoRowsOverlay from '../../components/CustomNoRowsOverlay';
+import SubGallery from '../../subcontractorPanel/assignedProject/SubGallery';
+import ProjectTaskGallery from './ProjectTaskGallery';
+
 
 // mui multiple select tag style start....
 const ITEM_HEIGHT = 100;
@@ -24,25 +25,24 @@ const MenuProps = {
 
 const Tasks = () => {
 
-    const filteredProject = useLocation
-        ();
-    console.log(filteredProject, "filteredProject");
-
+    const filteredProject = useLocation();
     const filterData = filteredProject?.state[0]
-    console.log(filterData?.SUB_PROJECT_ASSIGN, "filterTasks")
     const COMPANY_ID = filteredProject?.state[1]
     const COMPANY_USERNAME = filteredProject?.state[2]
     const COMPANY_PARENT_ID = filteredProject?.state[3]
     const COMPANY_PARENT_USERNAME = filteredProject?.state[4]
-
-    const [personName, setPersonName] = React.useState([]);
-
     const assignSubContractor = filterData?.SUB_PROJECT_ASSIGN
     const [selectedSubcontractorId, setSelectedSubcontractorId] = useState('');
     const [filteredTasks, setFilteredTasks] = useState([]);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    console.log("1 :=>", COMPANY_PARENT_USERNAME)
     // Extracting unique subcontractor IDs from the data
     const subcontractorIds = [...new Set(assignSubContractor.map(item => item.SUBCONTRACTOR_ID))];
+    console.log(subcontractorIds, "subcontractorIds")
     const defaultSelectedSubcontractorId = subcontractorIds[0];
+    const [selectedTaskId, setSelectedTaskId] = useState(null);
     // Function to handle subcontractor selection
     const handleSubcontractorChange = (e) => {
         const selectedId = e.target.value;
@@ -51,6 +51,12 @@ const Tasks = () => {
         const tasks = assignSubContractor.find(item => item.SUBCONTRACTOR_ID === selectedId)?.SUBCONTRACTOR_TASK || [];
         setFilteredTasks(tasks);
     };
+
+    const handleDetailButtonClick = (taskId) => {
+        setIsModalOpen(true);
+        setSelectedTaskId(taskId); // Store the selected task id
+    };
+
 
     const columns = [
         { field: 'TASK_ID', headerName: ' Task Id', width: 90 },
@@ -94,14 +100,37 @@ const Tasks = () => {
             width: 160,
 
         },
+        {
+            field: 'TASK_VALUE',
+            headerName: 'Task Value',
+            sortable: false,
+            width: 160,
+
+        },
+
+        {
+            field: "action",
+            headerName: "Detail",
+            width: 80,
+            renderCell: (cellValues) => {
+                return (
+                    <Button
+                        variant="contained"
+                        className="view-btn primary btn btn-success"
+                        style={{ padding: "2px 2px" }}
+                        onClick={() => {
+                            handleDetailButtonClick(cellValues);
+                        }}
+                    >
+                        view
+                    </Button>
+                );
+            },
+        },
     ];
 
     const rows = filteredTasks;
-    // const rows = filteredTasks.map((project, index) => ({
-    //     ...project,
-    //     id: index + 1,
-    // }));
-    console.log(rows, "rows")
+
     return (
         <>
             <Box
@@ -112,9 +141,9 @@ const Tasks = () => {
                 className="box position-absolute"
             >
                 <ProjectNav filterData={filterData} active={6} COMPANY_ID={COMPANY_ID} COMPANY_USERNAME={COMPANY_USERNAME} COMPANY_PARENT_ID={COMPANY_PARENT_ID} COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME} />
-
+                {!isModalOpen ? (   
                 <div className="myscreen p-3 d-flex flex-column justify-content-space-around ">
-                    <Accordion
+                   <Accordion
                         className="container-fluid mt-2"
                     >
                         <AccordionSummary
@@ -166,11 +195,10 @@ const Tasks = () => {
                                         <b className='text-capitalize'>project end Date</b>
                                         <p className="bg-light text-dark p-2 rounded-2 text-capitalize">{filterData?.PROJECT_END_DATE}</p></div>
                                 </div>
-
-
                             </div>
                         </AccordionDetails>
                     </Accordion>
+
                     <FormControl sx={{ width: "300px", margin: "20px 0", height: "7%" }}>
                         <InputLabel id="demo-simple-select-label" variant="standard" sx={{ marginLeft: "5px" }} >Select Subcontractor</InputLabel>
                         <Select
@@ -183,18 +211,18 @@ const Tasks = () => {
                             sx={{ height: "100%" }}
                         >
                             {subcontractorIds.map(id => (
-                                <MenuItem key={id} value={id}>{assignSubContractor.filter(e=>e.SUBCONTRACTOR_ID===id)[0]?.SUBCONTRACTOR_NAME || "NOT FOUND"} </MenuItem>
+                                <MenuItem key={id} value={id}>{assignSubContractor.filter(e => e.SUBCONTRACTOR_ID === id)[0]?.SUBCONTRACTOR_NAME || "NOT FOUND"} </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
-                    <DataGrid
+                   <DataGrid
                         rows={rows}
                         columns={columns}
                         getRowId={(row) => row?.TASK_PROJECT_ID}
                         initialState={{
                             pagination: {
                                 paginationModel: {
-                                    pageSize:5,
+                                    pageSize: 5,
                                 },
                             },
                         }}
@@ -203,10 +231,21 @@ const Tasks = () => {
                         }}
                         disableRowSelectionOnClick
                         density="compact"
-                    />
+                    />    
                 </div>
 
+                ) : (
+                <ProjectTaskGallery
+                 taskId={selectedTaskId}
+                  filteredTasks={filteredTasks}
+                  filteredProject={filteredProject}
+                  COMPANY_PARENT_USERNAME={assignSubContractor}
+                  />
 
+
+
+                  
+                )}
             </Box>
         </>
     )

@@ -355,8 +355,12 @@ app.put("/api/get_all_site_images", (req, res) => {
   sendHttpRequest("PUT", `${process.env.SERVERAPIREQUEST}/get_all_site_images`, req, res)
 });
 
-app.delete("/api/delete_site_image", (req, res) => {
-  sendHttpRequest("DELETE", `${process.env.SERVERAPIREQUEST}/delete_site_image`, req, res)
+app.put("/api/get_indiviual_task_images", (req, res) => {
+  sendHttpRequest("PUT", `${process.env.SERVERAPIREQUEST}/get_indiviual_task_images`, req, res)
+});
+
+app.delete("/api/delete_task_image", (req, res) => {
+  sendHttpRequest("DELETE", `${process.env.SERVERAPIREQUEST}/delete_task_image`, req, res)
 });
 
 

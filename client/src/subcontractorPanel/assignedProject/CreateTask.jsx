@@ -4,20 +4,11 @@ import Modal from "@mui/material/Modal";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import country from "../../jsonlist/countriess.json";
-
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import env from "react-dotenv";
 
 import { Button, Grid } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { setSubcontractor } from "../../redux/slice/SubContractorSlice";
-import {
-    validatePhoneNumber,
-    validateUsername,
-    validateEmail,
-    validatePassword
-} from "../../components/Validation";
 import { useLocation } from "react-router-dom";
 const style = {
     position: "absolute",
@@ -31,7 +22,7 @@ const style = {
     borderRadius: 4,
 };
 
-export default function CreateTask({update}) {
+export default function CreateTask({ update }) {
 
     const filteredProject = useLocation();
     console.log(filteredProject?.state[0].PROJECT_PARENT_ID, "PROJECT_PARENT_ID")
@@ -46,7 +37,7 @@ export default function CreateTask({update}) {
     const SUBCONTRCATOR_USERNAME = filteredProject?.state[2]
     const COMPANY_PARENT_ID = filteredProject?.state[3]
     const COMPANY_PARENT_USERNAME = filteredProject?.state[4]
-
+    const [taskNameError, setTaskNameError] = useState("");
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -63,11 +54,11 @@ export default function CreateTask({update}) {
         TASK_START_DATE: "",
         TASK_END_DATE: "",
         TASK_PROJECT_LEAD: "",
-        TASK_DESCRIPTION: ""
+        TASK_DESCRIPTION: "",
+        TASK_COMMENT: "",
+        TASK_ADVANCE_AMOUNT: "",
+        TASK_REMAINING_AMOUNT: "",
     });
-
-    console.log(createTask, "createTask")
-
 
     const handleCreate = (e) => {
         const { name, value } = e.target;
@@ -75,14 +66,36 @@ export default function CreateTask({update}) {
             ...prevState,
             [name]: value,
         }));
+
+        if (name === "TASK_NAME") {
+            setTaskNameError(""); // Clear error message
+        }
     };
 
-    const handleSubmit = () => {
-        // You can add form submission logic here
-        const response = axios.post("/api/create_task", createTask).then((res) => res.data.result);
-        console.log(response, "response")
-        setOpen(false); // Close the modal after submission
-        update();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (createTask.TASK_NAME.trim() === "") {
+            setTaskNameError("Task name is required....");
+            return; // Stop form submission if task name is empty
+        }
+
+        try {
+            const response = await axios.post("/api/create_task", createTask).then((res) => res.data.result);
+            toast.success("Task Created Successfully", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 1000,
+            });
+            setOpen(false);
+            update();
+        } catch (error) {
+            console.log(error)
+            toast.error(`${error}`, {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 1000,
+            });
+        }
+
     }
 
     return (
@@ -120,7 +133,7 @@ export default function CreateTask({update}) {
                                     id="TASK_NAME"
                                     onChange={handleCreate}
                                 />
-
+                                {taskNameError && <div > <p className="text-danger mt-1 ">{taskNameError}</p> </div>}
                             </div>
                             <div className="form-group col-xl-4">
                                 <label>Task Start Date</label>
@@ -152,7 +165,7 @@ export default function CreateTask({update}) {
 
 
                         <div className="row py-2">
-                            <div className="form-group  col-md-12">
+                            <div className="form-group  col-md-6">
                                 <label>Task Description <span style={{ color: "tan" }}>Optional</span></label>
                                 <textarea
                                     type="text"
@@ -164,22 +177,20 @@ export default function CreateTask({update}) {
                                     onChange={handleCreate}
                                 />
                             </div>
-                        </div>
 
-                        <div className="row py-2">
-                            <div className="form-group col-xl-6">
+                            <div className="form-group col-xl-3">
                                 <label>Task Value</label>
                                 <input
                                     type="number"
                                     className="form-control form-control-2 rounded-0 "
                                     id="TASK_VALUE"
-                                    placeholder="Enter Phone Number"
+                                    placeholder="Enter task value"
                                     name="TASK_VALUE"
                                     value={createTask.TASK_VALUE}
                                     onChange={handleCreate}
                                 />
                             </div>
-                            <div className="form-group col-md-6">
+                            <div className="form-group col-md-3">
                                 <label>Task Project Lead</label>
                                 <input
                                     type="text"
@@ -187,6 +198,34 @@ export default function CreateTask({update}) {
                                     id="TASK_PROJECT_LEAD"
                                     name="TASK_PROJECT_LEAD"
                                     value={createTask.TASK_PROJECT_LEAD}
+                                    onChange={handleCreate}
+                                />
+                            </div>
+                        </div>
+
+
+                        <div className="row py-2">
+                            <div className="form-group col-xl-6">
+                                <label>Task Advance Payment</label>
+                                <input
+                                    type="number"
+                                    className="form-control form-control-2 rounded-0 "
+                                    id="TASK_ADVANCE_AMOUNT"
+                                    placeholder="Enter advance amount"
+                                    name="TASK_ADVANCE_AMOUNT"
+                                    value={createTask.TASK_ADVANCE_AMOUNT}
+                                    onChange={handleCreate}
+                                />
+                            </div>
+                            <div className="form-group col-md-6">
+                                <label>Task Remaining Payment</label>
+                                <input
+                                    type="number"
+                                    className="form-control form-control-2 rounded-0 "
+                                    id="TASK_REMAINING_AMOUNT"
+                                    placeholder="Enter remaining amount"
+                                    name="TASK_REMAINING_AMOUNT"
+                                    value={createTask.TASK_REMAINING_AMOUNT}
                                     onChange={handleCreate}
                                 />
                             </div>

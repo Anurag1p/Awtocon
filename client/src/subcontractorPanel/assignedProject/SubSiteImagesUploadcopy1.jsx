@@ -3,8 +3,7 @@ import axios from 'axios';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { FiPlus } from 'react-icons/fi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+import { faInfoCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 const SubSiteImagesUpload = ({
     maxLength, maxFileSize,
@@ -20,18 +19,17 @@ const SubSiteImagesUpload = ({
     console.log(TASK_IMAGE_TASK_ID, "TASK_IMAGE_TASK_ID")
     const [images, setImages] = useState([]);
     const [firebaseimg, setFirebase] = useState([]);
+    console.log(images, "setImages")
+    console.log(firebaseimg, "images")
+    console.log(firebaseimg, "firebaseimg")
     const [progressWidth, setProgressWidth] = useState(0);
     const createEndpoint = "/api/create_task_image";
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [dialogOpen, setDialogOpen] = useState(false);
-
+    console.log(images.SITE_UPLOAD_NO, "site upload no")
     useEffect(() => {
         const percentage = (firebaseimg.length / maxLength) * 100;
         setProgressWidth(percentage);
     }, [firebaseimg, maxLength]);
 
-
-    // handling images to upload 
     const handleImageUpload = (e) => {
         const files = e.target.files;
         console.log(files, "files=>e.target.value")
@@ -75,6 +73,7 @@ const SubSiteImagesUpload = ({
     };
 
     // fetching images data from mongo 
+
     const fetchData = async () => {
         try {
             const response = await axios.put('/api/get_all_task_images', {
@@ -97,17 +96,15 @@ const SubSiteImagesUpload = ({
         }, 800)
     }, [])
 
-
-    // function for delete the images 
     const handleDeleteImage = (index) => {
         const config = {
             data: {
-                TASK_IMAGE_MEMBER_PARENT_USERNAME: TASK_IMAGE_MEMBER_PARENT_USERNAME,
-                TASK_IMAGE_SITE_UPLOAD_ID: index
+                SUBCONTRACTOR_MEMBER_PARENT_USERNAME: TASK_IMAGE_MEMBER_PARENT_USERNAME,
+                SITE_UPLOAD_NO: index
             }
         };
 
-        axios.delete("/api/delete_task_image", config)
+        axios.delete("/api/delete_site_image", config)
             .then((res) => {
                 const result = res.data.result;
                 console.log(result, "result");
@@ -116,12 +113,6 @@ const SubSiteImagesUpload = ({
             .catch((error) => {
                 console.error("Error deleting image:", error);
             });
-    };
-
-    //function for oepn modal 
-    const handleDetailsClick = (index) => {
-        setSelectedImage(images[index]);
-        setDialogOpen(true);
     };
     return (
         <div>
@@ -153,35 +144,52 @@ const SubSiteImagesUpload = ({
                 <h2 className='btn btn-primary m-3'>Images <span className='badge badge-light'>{images.length}</span></h2>
 
             </div>
-            <div className="gallery d-flex flex-wrap">
-                {images?.map((imageArray, index) => (
-                    <div key={index} className="image-array ml-2 position-relative">
-                        {imageArray?.TASK_APPROVE_FOR_CONTRACTOR ? <img src={imageArray?.imageUrls} alt={`Image ${index}`} className='galleryImage border-3 border-success ' /> : <img src={imageArray.imageUrls} alt={`Image ${index}`} className='galleryImage border-3 border-danger' />}
-                        <div className="delete-overlay" onClick={() => handleDeleteImage(imageArray.TASK_IMAGE_SITE_UPLOAD_ID)}>
-                            <FontAwesomeIcon icon={faTrashAlt} className='delete-button' />
-                        </div>
-                        <div className="details-overlay-top-right" onClick={() => handleDetailsClick(index)}>
-                            <FontAwesomeIcon icon={faInfoCircle} className='details-button' />
+            {/* <div className='d-flex flex-wrap'>
+                {images?.map((image, index) => (
+                    <div key={index} className='flip-box m-2'>
+                        <div className='flip-box-inner'>
+                            <div className='flip-box-front'>
+                                <img src={image?.imageUrls} alt={`Image ${index + 1}`} style={{ width: "100%", height: "100%", objectFit: "fill", }} />
+
+                            </div>
+                            <div className='flip-box-back'>
+                                <h2>{image.description}</h2>
+                            </div>
+                            <div className="delete-overlay" onClick={() => handleDeleteImage(image.SITE_UPLOAD_NO)}>
+                                <FontAwesomeIcon icon={faTrashAlt} className='delete-button' />
+                            </div>
                         </div>
                     </div>
                 ))}
-            </div>
+            </div> */}
 
-            <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-                <DialogTitle>Image Details</DialogTitle>
-                <DialogContent>
-                    {selectedImage && (
-                        <div>
-                            <img src={selectedImage?.imageUrls} alt="Selected Image" style={{ maxWidth: '100%' }} className='border border-danger' />
-                            {/* <p>{selectedImage?.description}</p> */}
-                            <p>Here is the Image Description.....</p>
-                        </div>
-                    )}
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setDialogOpen(false)}>Close</Button>
-                </DialogActions>
-            </Dialog>
+
+
+<div className='d-flex flex-wrap'>
+    {images?.map((image, index) => (
+        <div key={index} className='position-relative m-2' style={{ position: 'relative' }}>
+            <div className='flip-box'>
+                <div className='flip-box-inner'>
+                    <div className='flip-box-front'>
+                        <img src={image?.imageUrls} alt={`image ${index + 1}`} style={{ width: "100%", height: "100%", objectFit: "fill" }} />
+                    </div>
+                    <div className='flip-box-back'>
+                        <h2>{image.description}</h2>
+                    </div>
+                </div>
+            </div>
+            <div className="delete-overlay" style={{ position: 'absolute', bottom: '20px', left: '0' }} onClick={() => handleDeleteImage(image.SITE_UPLOAD_NO)}>
+                <FontAwesomeIcon icon={faTrashAlt} className='delete-button' style={{ cursor: 'pointer' }} />
+            </div>
+            <div className="details-overlay" style={{ position: 'absolute', top: '0', right: '0' }} onClick={() => handleDeleteImage(image.SITE_UPLOAD_NO)}>
+                <FontAwesomeIcon icon={faInfoCircle} className='details-button' style={{ cursor: 'pointer' }} />
+            </div>
+        </div>
+        ))}
+</div>
+
+
+
 
         </div>
     );

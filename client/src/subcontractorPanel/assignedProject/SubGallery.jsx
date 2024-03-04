@@ -86,11 +86,21 @@ const SubGallery = ({ taskId }) => {
               </div>
               <div className="row">
                 <div className="col-md-2">
-                  <b className='text-capitalize'>Task Start Date</b>
-                  <p className="bg-light text-dark p-2 rounded-2 text-capitalize">{taskId?.TASK_START_DATE}</p></div>
+                  <b className='text-capitalize'>Task Advance Payemnt</b>
+                  <p className="bg-light text-dark p-2 rounded-2 text-capitalize">{taskId?.TASK_ADVANCE_AMOUNT}</p>
+                </div>
+                <div className="col-md-2">
+                  <b className='text-capitalize'>Task final payment</b>
+                  <p className="bg-light text-dark p-2 rounded-2 text-capitalize">{taskId?.TASK_REMAINING_AMOUNT}</p>
+                </div>
                 <div className="col-md-2">
                   <b className='text-capitalize'>task end Date</b>
-                  <p className="bg-light text-dark p-2 rounded-2 text-capitalize">{taskId?.TASK_END_DATE}</p></div>
+                  <p className="bg-light text-dark p-2 rounded-2 text-capitalize">{taskId?.TASK_END_DATE}</p>
+                </div>
+                <div className="col-md-2">
+                  <b className='text-capitalize'>task end Date</b>
+                  <p className="bg-light text-dark p-2 rounded-2 text-capitalize">{taskId?.TASK_END_DATE}</p>
+                </div>
               </div>
 
 

@@ -21,7 +21,7 @@ const ProjectNav = ({
         COMPANY_USERNAME={COMPANY_USERNAME}
         COMPANY_PARENT_ID={COMPANY_PARENT_ID}
         COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
-        userType="company" 
+        userType="company"
       />
       <div
         className="container-fluid pb-0 g-0"
@@ -152,7 +152,7 @@ const ProjectNav = ({
           Subcontractor Assigned
         </Button>
 
-        
+
         <Button
           onClick={(e) =>
             navigate("/company/projects/tasks", {
@@ -173,8 +173,9 @@ const ProjectNav = ({
           }
           size="small"
         >
-         Tasks 
-                </Button>
+          Tasks
+        </Button>
+
       </div>
     </>
   );
