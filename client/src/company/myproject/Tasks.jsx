@@ -8,6 +8,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import CustomNoRowsOverlay from '../../components/CustomNoRowsOverlay';
 import SubGallery from '../../subcontractorPanel/assignedProject/SubGallery';
 import ProjectTaskGallery from './ProjectTaskGallery';
+import Animations from '../../components/Animations';
 
 
 // mui multiple select tag style start....
@@ -34,6 +35,7 @@ const Tasks = () => {
     const assignSubContractor = filterData?.SUB_PROJECT_ASSIGN
     const [selectedSubcontractorId, setSelectedSubcontractorId] = useState('');
     const [filteredTasks, setFilteredTasks] = useState([]);
+    const [resStatus, setResstatus] = useState(true)
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -49,7 +51,9 @@ const Tasks = () => {
         setSelectedSubcontractorId(selectedId);
         // Filtering tasks based on selected subcontractor ID
         const tasks = assignSubContractor.find(item => item.SUBCONTRACTOR_ID === selectedId)?.SUBCONTRACTOR_TASK || [];
+
         setFilteredTasks(tasks);
+        setSelectedTaskId(false)
     };
 
     const handleDetailButtonClick = (taskId) => {
@@ -141,110 +145,109 @@ const Tasks = () => {
                 className="box position-absolute"
             >
                 <ProjectNav filterData={filterData} active={6} COMPANY_ID={COMPANY_ID} COMPANY_USERNAME={COMPANY_USERNAME} COMPANY_PARENT_ID={COMPANY_PARENT_ID} COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME} />
-                {!isModalOpen ? (   
-                <div className="myscreen p-3 d-flex flex-column justify-content-space-around ">
-                   <Accordion
-                        className="container-fluid mt-2"
-                    >
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1-content"
-                            id="panel1-header"
-                            className="container-fluid text-capitalize text-primary"
+                {!isModalOpen ? (
+                    <div className="myscreen p-3 d-flex flex-column justify-content-space-around ">
+                        <Accordion
+                            className="container-fluid mt-2"
                         >
-                            <PanToolAltIcon color='#198754' />  <p style={{ fontSize: "15px", margin: "5px", color: "#198754" }}> Click here for more task details</p>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <div className="container-fluid">
-                                <div className="row">
-                                    <div className="col-md-2">
-                                        <b className='text-capitalize'>Project Name</b>
-                                        <p className="bg-light text-dark p-2 rounded-2 text-capitalize">
-                                            {filterData?.PROJECT_NAME}
-                                        </p>
-                                    </div>
-                                    <div className="col-md-2">
-                                        <b className='text-capitalize'>Description</b>
-                                        {filterData?.PROJECT_TYPE ? <p className="bg-light text-dark p-2 rounded-2 text-capitalize">
-                                            {filterData?.PROJECT_TYPE}
-                                        </p> : <p className="bg-light text-dark p-2 rounded-2 text-capitalize border border-danger">
-                                            <span className='text-capitalize text-danger'>Please provide the task description...</span>
-                                        </p>}
-                                    </div>
-                                    <div className="col-md-6">
-                                        <b className='text-capitalize'> Project Location</b>
-                                        <p className="bg-light text-dark p-2 rounded-2 text-capitalize">
-                                            {filterData?.LOCATION_NAME}
-                                        </p>
-                                    </div>
-                                    <div className="col-2">
-                                        <b className='text-capitalize'>Project Value</b>
-                                        <p className="bg-light text-dark p-2 rounded-2 text-capitalize">{filterData?.PROJECT_VALUE}</p>
-                                    </div>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1-content"
+                                id="panel1-header"
+                                className="container-fluid text-capitalize text-primary"
+                            >
+                                <PanToolAltIcon color='#198754' />  <p style={{ fontSize: "15px", margin: "5px", color: "#198754" }}> Click here for more task details</p>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <div className="container-fluid">
+                                    <div className="row">
+                                        <div className="col-md-2">
+                                            <b className='text-capitalize'>Project Name</b>
+                                            <p className="bg-light text-dark p-2 rounded-2 text-capitalize">
+                                                {filterData?.PROJECT_NAME}
+                                            </p>
+                                        </div>
+                                        <div className="col-md-2">
+                                            <b className='text-capitalize'>Description</b>
+                                            {filterData?.PROJECT_TYPE ? <p className="bg-light text-dark p-2 rounded-2 text-capitalize">
+                                                {filterData?.PROJECT_TYPE}
+                                            </p> : <p className="bg-light text-dark p-2 rounded-2 text-capitalize border border-danger">
+                                                <span className='text-capitalize text-danger'>Please provide the task description...</span>
+                                            </p>}
+                                        </div>
+                                        <div className="col-md-6">
+                                            <b className='text-capitalize'> Project Location</b>
+                                            <p className="bg-light text-dark p-2 rounded-2 text-capitalize">
+                                                {filterData?.LOCATION_NAME}
+                                            </p>
+                                        </div>
+                                        <div className="col-2">
+                                            <b className='text-capitalize'>Project Value</b>
+                                            <p className="bg-light text-dark p-2 rounded-2 text-capitalize">{filterData?.PROJECT_VALUE}</p>
+                                        </div>
 
-                                </div>
-                                <div className="row">
-                                    <div className="col-md-2">
-                                        <b className='text-capitalize'>supervisor</b>
-                                        <p className="bg-light text-dark p-2 rounded-2 text-capitalize">{filterData?.PROJECT_SUPERVISOR}</p>
                                     </div>
-                                    <div className="col-md-2">
-                                        <b className='text-capitalize'>project Start Date</b>
-                                        <p className="bg-light text-dark p-2 rounded-2 text-capitalize">{filterData?.PROJECT_START_DATE}</p></div>
-                                    <div className="col-md-2">
-                                        <b className='text-capitalize'>project end Date</b>
-                                        <p className="bg-light text-dark p-2 rounded-2 text-capitalize">{filterData?.PROJECT_END_DATE}</p></div>
+                                    <div className="row">
+                                        <div className="col-md-2">
+                                            <b className='text-capitalize'>supervisor</b>
+                                            <p className="bg-light text-dark p-2 rounded-2 text-capitalize">{filterData?.PROJECT_SUPERVISOR}</p>
+                                        </div>
+                                        <div className="col-md-2">
+                                            <b className='text-capitalize'>project Start Date</b>
+                                            <p className="bg-light text-dark p-2 rounded-2 text-capitalize">{filterData?.PROJECT_START_DATE}</p></div>
+                                        <div className="col-md-2">
+                                            <b className='text-capitalize'>project end Date</b>
+                                            <p className="bg-light text-dark p-2 rounded-2 text-capitalize">{filterData?.PROJECT_END_DATE}</p></div>
+                                    </div>
                                 </div>
-                            </div>
-                        </AccordionDetails>
-                    </Accordion>
+                            </AccordionDetails>
+                        </Accordion>
 
-                    <FormControl sx={{ width: "300px", margin: "20px 0", height: "7%" }}>
-                        <InputLabel id="demo-simple-select-label" variant="standard" sx={{ marginLeft: "5px" }} >Select Subcontractor</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={selectedSubcontractorId || defaultSelectedSubcontractorId}
-                            label="Select Subcontractor"
-                            onChange={handleSubcontractorChange}
-                            MenuProps={MenuProps}
-                            sx={{ height: "100%" }}
-                        >
-                            {subcontractorIds.map(id => (
-                                <MenuItem key={id} value={id}>{assignSubContractor.filter(e => e.SUBCONTRACTOR_ID === id)[0]?.SUBCONTRACTOR_NAME || "NOT FOUND"} </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                   <DataGrid
-                        rows={rows}
-                        columns={columns}
-                        getRowId={(row) => row?.TASK_PROJECT_ID}
-                        initialState={{
-                            pagination: {
-                                paginationModel: {
-                                    pageSize: 5,
-                                },
-                            },
-                        }}
-                        slots={{
-                            noRowsOverlay: CustomNoRowsOverlay,
-                        }}
-                        disableRowSelectionOnClick
-                        density="compact"
-                    />    
-                </div>
+                        <FormControl sx={{ width: "300px", margin: "20px 0", height: "7%" }}>
+                            <InputLabel id="demo-simple-select-label" variant="standard" sx={{ marginLeft: "5px" }} >Select Subcontractor</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={selectedSubcontractorId || defaultSelectedSubcontractorId}
+                                label="Select Subcontractor"
+                                onChange={handleSubcontractorChange}
+                                MenuProps={MenuProps}
+                                sx={{ height: "100%" }}
+                            >
+                                {subcontractorIds.map(id => (
+                                    <MenuItem key={id} value={id}>{assignSubContractor.filter(e => e.SUBCONTRACTOR_ID === id)[0]?.SUBCONTRACTOR_NAME || "NOT FOUND"} </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        {resStatus ? (
+                            <DataGrid
+                                rows={rows}
+                                columns={columns}
+                                getRowId={(row) => row?.TASK_PROJECT_ID}
+                                initialState={{
+                                    pagination: {
+                                        paginationModel: {
+                                            pageSize: 5,
+                                        },
+                                    },
+                                }}
+                                slots={{
+                                    noRowsOverlay: CustomNoRowsOverlay,
+                                }}
+                                disableRowSelectionOnClick
+                                density="compact"
+                            />
+                        ) : (<Animations/>)}
+
+                    </div>
 
                 ) : (
-                <ProjectTaskGallery
-                 taskId={selectedTaskId}
-                  filteredTasks={filteredTasks}
-                  filteredProject={filteredProject}
-                  COMPANY_PARENT_USERNAME={assignSubContractor}
-                  />
-
-
-
-                  
+                    <ProjectTaskGallery
+                        taskId={selectedTaskId}
+                        filteredTasks={filteredTasks}
+                        filteredProject={filteredProject}
+                        COMPANY_PARENT_USERNAME={assignSubContractor}
+                    />
                 )}
             </Box>
         </>
