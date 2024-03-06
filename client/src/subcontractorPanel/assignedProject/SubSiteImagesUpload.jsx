@@ -172,9 +172,9 @@ const SubSiteImagesUpload = ({
                 <DialogContent>
                     {selectedImage && (
                         <div>
-                            <img src={selectedImage?.imageUrls} alt="Selected Image" style={{ maxWidth: '100%' }} className='border border-danger' />
-                            {/* <p>{selectedImage?.description}</p> */}
-                            <p>Here is the Image Description.....</p>
+                            <img src={selectedImage?.imageUrls} alt="Selected Image"  style={{ maxWidth: '100%', minWidth: '100%', height: "250px", objectFit: "fill", objectPosition: "center" }} className='mb-2' />
+                           <span className='fw-bold text-primary mt-5'>Comment : </span> <p className='text-secondary mt-2'>{selectedImage?.TASK_COMMENT}</p>
+                          
                         </div>
                     )}
                 </DialogContent>

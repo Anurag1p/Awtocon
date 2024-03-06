@@ -400,12 +400,10 @@ const DocReusable = (props) => {
             const response = await axios.post(createEndpoint, data);
             if (response.data.operation === "successfull") {
                 setOpen(false);
-                //   update();
                 toast.success("Document uploaded successfully!", {
                     position: toast.POSITION.TOP_CENTER,
                     autoClose: 1000,
                 });
-                setIsLoading(true);
                 setFile(file ? file.name : "");
                 setFormData({
                     selectedFile: null,
@@ -413,12 +411,19 @@ const DocReusable = (props) => {
                     DOCUMENT_TYPE: "",
                 });
                 dispatch(setDocument(response.data.result));
+                setIsLoading(false);
             } else {
-                toast.error("Failed to upload document.");
+                toast.error("Failed to upload document.", {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 1000,
+                });
             }
         } catch (error) {
             console.error(error);
-            toast.error("An error occurred while uploading the document.");
+            toast.error(`${error}`, {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 1000,
+            });
         } finally {
             setIsSubmitting(false);
             setBackdrop(false);

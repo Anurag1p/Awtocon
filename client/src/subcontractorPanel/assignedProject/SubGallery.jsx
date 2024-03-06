@@ -12,7 +12,7 @@ import Link from "@mui/material/Link";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
-const SubGallery = ({ taskId }) => {
+const SubGallery = ({ taskId,setIsModalOpen }) => {
   const filteredProject = useLocation();
   const filterData = filteredProject?.state[0]
   const COMPANY_ID = filteredProject?.state[0]?.PROJECT_PARENT_ID
@@ -34,8 +34,8 @@ const SubGallery = ({ taskId }) => {
     <>
 
       <div className="container-fluid mt-2">
-        <Breadcrumbs aria-label="breadcrumb" separator="›">
-          <Link color="inherit" href="/subcontractor/assigned-projects/tasks" className='cursor-pointer text-decoration-none'>
+        <Breadcrumbs aria-label="breadcrumb" separator="›" >
+          <Link color="inherit"  className='cursor-pointer text-decoration-none' onClick={()=>setIsModalOpen(false)}>
             Back
           </Link>
           <Typography className='text-primary'>Gallery</Typography>

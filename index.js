@@ -181,7 +181,9 @@ app.post("/api/create_emp_attendence", (req, res) => {
   sendHttpRequest("POST", `${process.env.SERVERAPIREQUEST}/create_emp_attendance`, req, res)
 });
 
-
+app.put("/api/task_approval_for_image", (req, res) => {
+  sendHttpRequest("PUT", `${process.env.SERVERAPIREQUEST}/task_approval_for_image`, req, res)
+});
 
 
 app.put("/api/get_subcontractor", (req, res) => {

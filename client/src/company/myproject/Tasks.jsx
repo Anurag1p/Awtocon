@@ -1,5 +1,5 @@
 import { Accordion, AccordionDetails, AccordionSummary, Box, FormControl, InputLabel, MenuItem, Select, Button } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ProjectNav from './ProjectNav'
 import { useLocation, useNavigate } from 'react-router-dom';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -9,7 +9,7 @@ import CustomNoRowsOverlay from '../../components/CustomNoRowsOverlay';
 import SubGallery from '../../subcontractorPanel/assignedProject/SubGallery';
 import ProjectTaskGallery from './ProjectTaskGallery';
 import Animations from '../../components/Animations';
-
+import KeyboardDoubleArrowRightSharpIcon from '@mui/icons-material/KeyboardDoubleArrowRightSharp';
 
 // mui multiple select tag style start....
 const ITEM_HEIGHT = 100;
@@ -26,13 +26,21 @@ const MenuProps = {
 
 const Tasks = () => {
 
+    const [subConData, setSubConData] = useState([])
+    const [assignSubCon, setAssignSUbCon] = useState([])
+    console.log(assignSubCon, "assignSubCon")
+    console.log(subConData, "subConData")
+
     const filteredProject = useLocation();
-    const filterData = filteredProject?.state[0]
-    const COMPANY_ID = filteredProject?.state[1]
-    const COMPANY_USERNAME = filteredProject?.state[2]
-    const COMPANY_PARENT_ID = filteredProject?.state[3]
-    const COMPANY_PARENT_USERNAME = filteredProject?.state[4]
+    console.log("chrome task", filteredProject)
+    const filterData = filteredProject?.state?.[0]
+    // const COMPANY_ID = filteredProject?.state?.[1]
+    // const COMPANY_USERNAME = filteredProject?.state[2]
+    // const COMPANY_PARENT_ID = filteredProject?.state[3]
+    const COMPANY_PARENT_USERNAME = filteredProject?.state?.[4]
+
     const assignSubContractor = filterData?.SUB_PROJECT_ASSIGN
+
     const [selectedSubcontractorId, setSelectedSubcontractorId] = useState('');
     const [filteredTasks, setFilteredTasks] = useState([]);
     const [resStatus, setResstatus] = useState(true)
@@ -40,9 +48,21 @@ const Tasks = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     console.log("1 :=>", COMPANY_PARENT_USERNAME)
+
+
     // Extracting unique subcontractor IDs from the data
-    const subcontractorIds = [...new Set(assignSubContractor.map(item => item.SUBCONTRACTOR_ID))];
-    console.log(subcontractorIds, "subcontractorIds")
+
+    const subcontractorIds = [...new Set(assignSubContractor?.map(item => item?.SUBCONTRACTOR_ID))];
+
+    useEffect(() => {
+        if (subcontractorIds) {
+            setSubConData(subcontractorIds)
+        }
+        if (assignSubContractor) {
+            setAssignSUbCon(assignSubContractor)
+        }
+    }, [])
+
     const defaultSelectedSubcontractorId = subcontractorIds[0];
     const [selectedTaskId, setSelectedTaskId] = useState(null);
     // Function to handle subcontractor selection
@@ -50,7 +70,7 @@ const Tasks = () => {
         const selectedId = e.target.value;
         setSelectedSubcontractorId(selectedId);
         // Filtering tasks based on selected subcontractor ID
-        const tasks = assignSubContractor.find(item => item.SUBCONTRACTOR_ID === selectedId)?.SUBCONTRACTOR_TASK || [];
+        const tasks = assignSubContractor.find(item => item?.SUBCONTRACTOR_ID === selectedId)?.SUBCONTRACTOR_TASK || [];
 
         setFilteredTasks(tasks);
         setSelectedTaskId(false)
@@ -144,7 +164,8 @@ const Tasks = () => {
                 }}
                 className="box position-absolute"
             >
-                <ProjectNav filterData={filterData} active={6} COMPANY_ID={COMPANY_ID} COMPANY_USERNAME={COMPANY_USERNAME} COMPANY_PARENT_ID={COMPANY_PARENT_ID} COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME} />
+                {/* <ProjectNav filterData={filterData} active={6} COMPANY_ID={COMPANY_ID} COMPANY_USERNAME={COMPANY_USERNAME} COMPANY_PARENT_ID={COMPANY_PARENT_ID} COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME} /> */}
+                <ProjectNav data={filteredProject?.state} active={6} />
                 {!isModalOpen ? (
                     <div className="myscreen p-3 d-flex flex-column justify-content-space-around ">
                         <Accordion
@@ -214,10 +235,12 @@ const Tasks = () => {
                                 MenuProps={MenuProps}
                                 sx={{ height: "100%" }}
                             >
-                                {subcontractorIds.map(id => (
-                                    <MenuItem key={id} value={id}>{assignSubContractor.filter(e => e.SUBCONTRACTOR_ID === id)[0]?.SUBCONTRACTOR_NAME || "NOT FOUND"} </MenuItem>
+                                {subConData?.map(id => (
+                                    <MenuItem key={id} value={id}>
+                                        {assignSubCon?.filter(e => e?.SUBCONTRACTOR_ID === id)[0]?.SUBCONTRACTOR_NAME || "NOT FOUND"} </MenuItem>
                                 ))}
                             </Select>
+                            {console.log("chrome data", subConData, assignSubContractor)}
                         </FormControl>
                         {resStatus ? (
                             <DataGrid
@@ -237,7 +260,7 @@ const Tasks = () => {
                                 disableRowSelectionOnClick
                                 density="compact"
                             />
-                        ) : (<Animations/>)}
+                        ) : (<Animations />)}
 
                     </div>
 
@@ -247,11 +270,12 @@ const Tasks = () => {
                         filteredTasks={filteredTasks}
                         filteredProject={filteredProject}
                         COMPANY_PARENT_USERNAME={assignSubContractor}
+                        setIsModalOpen={setIsModalOpen}
                     />
                 )}
             </Box>
         </>
     )
-}
+};
 
-export default Tasks
+export default Tasks;

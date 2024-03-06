@@ -14,8 +14,8 @@ import Navbar from "../../components/Navbar";
 import { useSelector } from "react-redux";
 import { getEmployeeData } from "../../redux/slice/EmployeeDataSlice";
 import Animations from "../../components/Animations";
-  // Redux implementation by anurag
-  // import { getEmployeeData } from "@reduxjs/toolkit";
+// Redux implementation by anurag
+// import { getEmployeeData } from "@reduxjs/toolkit";
 
 const AttendanceAcknowledge = ({
   COMPANY_ID,
@@ -43,12 +43,12 @@ const AttendanceAcknowledge = ({
 
 
   let MyDateCurrent = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
- // console.log(MyDateCurrent, "MyDateCurrent")
+  // console.log(MyDateCurrent, "MyDateCurrent")
 
   const formattedMyDateCurrent = moment(MyDateCurrent)
     .utcOffset(0)
     .format("YYYY-MM-DD");
-    // console.log(formattedMyDateCurrent, "formattedMyDateCurrent")
+  // console.log(formattedMyDateCurrent, "formattedMyDateCurrent")
 
   const generateWeekOptions = () => {
     const options = [];
@@ -76,7 +76,7 @@ const AttendanceAcknowledge = ({
     return options;
   };
   const weeklyDate = generateWeekOptions();
- 
+
 
   var Defaultstart = weeklyDate.filter((e, index) => {
     return index === 0 && e;
@@ -107,7 +107,7 @@ const AttendanceAcknowledge = ({
   }, [startDate, endDate]);
 
   const HandlePeriod = (e) => {
-   
+
     const extractDate = e?.split(" - ");
     setSelectDate(e);
     setStartDate(moment(extractDate[0]));
@@ -117,7 +117,7 @@ const AttendanceAcknowledge = ({
 
   const fetchEmployee = useSelector(state => state?.allEmployee?.employees);
 
-  // get data
+  // get data reports may be it not working try to remove what happens lets see to refine code 
   const Reports = (ADMIN_USERNAME, EMPLOYEE_PARENT_USERNAME) => {
     let data = JSON.stringify({
       ADMIN_USERNAME,
@@ -293,7 +293,7 @@ const AttendanceAcknowledge = ({
       />
       <div className="myscreen p-3">
         <Box className="box" style={{ background: "#277099" }}>
-          <Navbar toggle={() => setOpenNav((e) => !e) } name={COMPANY_USERNAME} />
+          <Navbar toggle={() => setOpenNav((e) => !e)} name={COMPANY_USERNAME} />
           {resStatus === true ? (<button
             size="small"
             variant={show ? "outlined" : "outlined"}
@@ -336,33 +336,12 @@ const AttendanceAcknowledge = ({
                   height: "100%",
                   padding: 0,
                   paddingBottom: "0",
-                  border: "",
                   overflowY: "scroll",
                 }}
               >
                 {show ? (
                   processedData <= 0 ? (
-                    <div
-                      className="container"
-                      style={{ postion: "position-relative" }}
-                    >
-                      <div
-                        style={{
-                          position: "absolute",
-                          top: "50%",
-                          left: "50%",
-                          transform: "translate(-50%,-50%)",
-                        }}
-                      >
-                        <RotatingLines
-                          strokeColor="#2D5169"
-                          strokeWidth="5"
-                          animationDuration="0.75"
-                          width="50"
-                          visible={true}
-                        />
-                      </div>
-                    </div>
+                      <Animations />
                   ) : (
                     <>
                       <div className="container-fluid">
@@ -633,18 +612,7 @@ const AttendanceAcknowledge = ({
           ) : (
             <div className="myscreen p-3">
               <Box style={{ height: "100%", padding: 0, paddingBottom: "0" }}>
-                <div
-                  className="p-3"
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%,-50%)",
-
-                  }}
-                >
-                  <Animations/>
-                </div>
+                  <Animations />
               </Box>
             </div>
           )}

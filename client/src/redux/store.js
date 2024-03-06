@@ -32,6 +32,7 @@ import AllSubcontractor from "./slice/SubContractorSlice"
 import attendanceData from "./slice/AttendanceSlice";
 import employee_one from "./slice/EmpDashboardSlice";
 import allCompanyData from "./slice/AllCompanySlice";
+import taskImgApprove from "./slice/TaskImageApproveSlice"
 
 
 
@@ -68,6 +69,7 @@ const rootReducer = combineReducers({
   allsubcontractor: AllSubcontractor,
   allAttandanceData: attendanceData,
   employeeOne : employee_one, 
+  taskImgApprove : taskImgApprove,
 
   // setOneCompany:persistedCompanyReducer
 

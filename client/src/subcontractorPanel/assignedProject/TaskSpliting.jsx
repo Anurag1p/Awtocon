@@ -173,7 +173,10 @@ const TaskSpliting = () => {
                     </div>
                 </>
             ) : (
-                <SubGallery taskId={selectedTaskId} />
+                <SubGallery
+                 taskId={selectedTaskId} 
+                 setIsModalOpen={setIsModalOpen}
+                 />
             )}
         </Box>
     );
