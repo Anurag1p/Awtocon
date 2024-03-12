@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import for refetch the data to update 
 import { getEmployeeData, setEmployeeData } from "../../redux/slice/EmployeeDataSlice";
 import Navbar from "../../components/Navbar";
+import Animations from "../../components/Animations";
 
 const Employee = () => {
 
@@ -29,18 +30,25 @@ const Employee = () => {
 
   // data formSinlge company 
   const companyLoginData = useSelector((state) => state?.companyLogin?.user);
+  console.log(companyLoginData, "companyLogin")
+  const COMPANY_ID = companyLoginData?.[0];
+  const COMPANY_PARENT_ID = companyLoginData?.[2];
+  const COMPANY_USERNAME = companyLoginData?.[1];
+  const COMPANY_PARENT_USERNAME = companyLoginData?.[3];
+  console.log(COMPANY_ID, "COMAPNYid")
 
-  // const empdata = useSelector((state) => state?.allEmployee?.employees);
-  const empdata = useSelector((state) => state?.allEmployee?.employees || []);
+  useEffect(() => {
+    dispatch(getEmployeeData({
+      EMPLOYEE_PARENT_ID: COMPANY_ID,
+      EMPLOYEE_PARENT_USERNAME: COMPANY_USERNAME,
+      EMPLOYEE_MEMBER_PARENT_ID: COMPANY_PARENT_ID,
+      EMPLOYEE_MEMBER_PARENT_USERNAME: COMPANY_PARENT_USERNAME
+    })).then(() => setResStatus("success"))
+    .catch(() => setResStatus("error")); 
+  }, [dispatch, COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_USERNAME, COMPANY_PARENT_ID])
 
-  // const RefetchData = getEmployeeData(response )
-  console.log(empdata, "empdata")
+  const empdata = useSelector(state => state?.allEmployee?.employees);
 
-
-  const COMPANY_ID = companyLoginData[0]?.COMPANY_ID;
-  const COMPANY_PARENT_ID = companyLoginData[2]?.COMPANY_PARENT_ID;
-  const COMPANY_USERNAME = companyLoginData[1]?.COMPANY_USERNAME;
-  const COMPANY_PARENT_USERNAME = companyLoginData[3]?.COMPANY_PARENT_USERNAME;
 
   // archive
   const archiveEmployee = async (archiveData) => {
@@ -122,9 +130,6 @@ const Employee = () => {
       ],
     });
   };
-
-
-
 
   // attendance status
 
@@ -229,9 +234,6 @@ const Employee = () => {
     }
   ];
 
-
-
-
   const FilterArchive = empdata?.filter((newData) => newData?.ARCHIVED === false);
   // this extra line is only added to map the sr number with all rows of data 
   const rows = FilterArchive.map((data, index) => ({ id: index, ...data }));
@@ -288,7 +290,7 @@ const Employee = () => {
             COMPANY_USERNAME={COMPANY_USERNAME}
             COMPANY_PARENT_ID={COMPANY_PARENT_ID}
             COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
-            name={"Project"}
+            name={"Employee"}
 
           /></>) : <>
           <button
@@ -364,26 +366,7 @@ const Employee = () => {
                   </div>
                 </Box>
               ) : (
-                <Box>
-                  <div
-                    className="p-3"
-                    style={{
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      transform: "translate(-50%,-50%)",
-                    }}
-                  >
-                    <RotatingLines
-                      strokeColor="#2D5169"
-                      strokeWidth="5"
-                      animationDuration="0.75"
-                      width="50"
-                      visible={true}
-
-                    />
-                  </div>
-                </Box>
+                 <Animations/>
               )}
             </>
           </Box>

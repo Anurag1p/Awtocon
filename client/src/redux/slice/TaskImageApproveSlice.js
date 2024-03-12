@@ -3,7 +3,7 @@ import axios from "axios";
 // import e from "cors";
 
 
-export const SetTaskImageApprove = createAsyncThunk("comapny/project/tasks/gallery",
+export const SetTaskImageApprove = createAsyncThunk("company/project/tasks/gallery",
     async (allTaskImg, { rejectWithValue, dispatch }) => {
         try {
             const response = await axios.put("/api/task_approval_for_image", allTaskImg)
@@ -40,10 +40,10 @@ const TaskImageApproveSlice = createSlice({
             })
             .addCase(SetTaskImageApprove.rejected, (state, action) => {
                 state.loading = "Failed"
-                state.taskImg = action.payload
+                state.error = action.payload
             })
     }
 })
-export default TaskImageApproveSlice.reducer
+export default TaskImageApproveSlice.reducer;
 
 export const { setTaskImgApprove } = TaskImageApproveSlice.actions

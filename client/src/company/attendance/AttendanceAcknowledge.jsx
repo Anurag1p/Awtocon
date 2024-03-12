@@ -11,9 +11,10 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import SalaryPDF from "../../Invoices/SalaryPDF";
 import Sidebar from "../../components/Sidebar";
 import Navbar from "../../components/Navbar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getEmployeeData } from "../../redux/slice/EmployeeDataSlice";
 import Animations from "../../components/Animations";
+import { getAllttendance } from "../../redux/slice/AttendanceSlice";
 // Redux implementation by anurag
 // import { getEmployeeData } from "@reduxjs/toolkit";
 
@@ -40,6 +41,13 @@ const AttendanceAcknowledge = ({
   const [dateArray, setDateArray] = useState([]);
   const [resStatus, setResStatus] = useState(false);
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllttendance({
+      ADMIN_USERNAME: COMPANY_PARENT_USERNAME,
+      EMPLOYEE_PARENT_USERNAME: COMPANY_USERNAME,
+    }))
+  }, [dispatch, COMPANY_USERNAME, COMPANY_PARENT_USERNAME])
 
 
   let MyDateCurrent = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");

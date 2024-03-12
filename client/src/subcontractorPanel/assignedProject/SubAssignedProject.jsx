@@ -169,14 +169,16 @@ const rowsWithIds = project.map((item, index) => ({ ...item, id:index }));
                 initialState={{
                   pagination: {
                     paginationModel: {
-                      pageSize: 5,
+                      pageSize: 14,
                     },
                   },
                 }}
-                pageSizeOptions={[5]}
+                pageSizeOptions={[10]}
                 slots={{
                   noRowsOverlay:CustomNoRowsOverlay
                 }}
+                disableMultipleSelection
+                density="compact"
               />
             ) : ( 
               <p>There are no projects assigned yet...</p>

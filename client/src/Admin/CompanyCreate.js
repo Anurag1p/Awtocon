@@ -31,8 +31,9 @@ const style = {
   overflow: "hidden",
 };
 
-export default function CompanyCreate(props) {
-  console.log(props, "cprops")
+export default function CompanyCreate({ ADMIN_ID, ADMIN_USERNAME, Update }) {
+
+  console.log(ADMIN_ID, ADMIN_USERNAME, Update(), "anuragPal");
 
   const [open, setOpen] = React.useState(false);
   const [loader, setLoader] = React.useState(false);
@@ -115,8 +116,8 @@ export default function CompanyCreate(props) {
     // Perform API validation and request
     axios
       .post(`/api/create_company`, {
-        COMPANY_PARENT_ID: props?.ADMIN_ID,
-        COMPANY_PARENT_USERNAME: props?.ADMIN_USERNAME,
+        COMPANY_PARENT_ID: ADMIN_ID,
+        COMPANY_PARENT_USERNAME: ADMIN_USERNAME,
         ...create_company
       })
       .then((response) => {
@@ -130,7 +131,7 @@ export default function CompanyCreate(props) {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 1000,
           });
-          props.Update();
+          Update();
 
           setOpen(false);
         }

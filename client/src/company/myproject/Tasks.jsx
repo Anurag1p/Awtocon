@@ -47,7 +47,7 @@ const Tasks = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    console.log("1 :=>", COMPANY_PARENT_USERNAME)
+    console.log("assignSubContractor :=>", assignSubContractor)
 
 
     // Extracting unique subcontractor IDs from the data
@@ -154,7 +154,7 @@ const Tasks = () => {
     ];
 
     const rows = filteredTasks;
-
+console.log(rows, "ows")
     return (
         <>
             <Box
@@ -246,11 +246,11 @@ const Tasks = () => {
                             <DataGrid
                                 rows={rows}
                                 columns={columns}
-                                getRowId={(row) => row?.TASK_PROJECT_ID}
+                                getRowId={(row) => row?.TASK_ID}
                                 initialState={{
                                     pagination: {
                                         paginationModel: {
-                                            pageSize: 5,
+                                            pageSize: 10,
                                         },
                                     },
                                 }}

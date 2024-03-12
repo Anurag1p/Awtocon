@@ -6,7 +6,7 @@ import ProjectEdit from "./ProjectEdit";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
 // import { RotatingLines } from "react-loader-spinner";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Animations from "../../components/Animations";
 import { getProjectData } from "../../redux/slice/getallProjectSlice";
 import Navbar from "../../components/Navbar";
@@ -16,23 +16,33 @@ import CustomNoRowsOverlay from "../../components/CustomNoRowsOverlay";
 const Project = () => {
 
   const companyData = useSelector(state => state?.companyLogin?.user);
-
   const COMPANY_ID = companyData?.[0]
   const COMPANY_USERNAME = companyData?.[1]
   const COMPANY_PARENT_ID = companyData?.[2]
   const COMPANY_PARENT_USERNAME = companyData?.[3]
+  const dispatch = useDispatch();
 
-  console.log("companyData1", companyData)
   // Project data 
 
+
+  useEffect(() => {
+    dispatch(getProjectData({
+      PROJECT_PARENT_ID: COMPANY_ID,
+      PROJECT_PARENT_USERNAME: COMPANY_USERNAME,
+      PROJECT_MEMBER_PARENT_ID: COMPANY_PARENT_ID,
+      PROJECT_MEMBER_PARENT_USERNAME: COMPANY_PARENT_USERNAME,
+    })).then(() => setResStatus("success")) // Update state to "success" when data fetching is complete
+      .catch(() => setResStatus("error"));
+  }, [dispatch, COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_ID, COMPANY_PARENT_USERNAME])
+
   const projectData = useSelector(state => state?.allProjectData.projects)
-  
+
 
   const [open, setOpen] = useState(false);
   const [data, setData] = useState({ row: {} });
   const [resStatus, setResStatus] = useState(false);
   const [openNav, setOpenNav] = useState(false);
-  
+
   const navigate = useNavigate();
 
 
@@ -126,7 +136,7 @@ const Project = () => {
       renderCell: (cellValues) => {
         return (
           // <Button>
-            <ProjectEdit edit={cellValues} />
+          <ProjectEdit edit={cellValues} />
           // </Button>
         );
       },
@@ -148,18 +158,18 @@ const Project = () => {
         COMPANY_USERNAME={COMPANY_USERNAME}
         COMPANY_PARENT_ID={COMPANY_PARENT_ID}
         COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
-        userType="company" 
+        userType="company"
         toggle={openNav}
       />
 
       <Box className="box" style={{ background: "#277099" }}>
         <Navbar toggle={() => setOpenNav((e) => !e)} name={COMPANY_USERNAME} />
-        { projectData && projectData.length > 0 && <ProjectCreate /> }
+        {projectData && projectData.length > 0 && <ProjectCreate />}
 
         <div className="myscreen p-3">
           <Box style={{ height: "100%", padding: 0, paddingBottom: "0" }}>
-            <>    
-             { projectData && projectData.length > 0  ? (<DataGrid
+            <>
+              {projectData && projectData.length > 0 ? (<DataGrid
                 sx={{ border: "none" }}
                 rows={rows}
                 columns={columns}
@@ -211,10 +221,10 @@ const Project = () => {
                       transform: "translate(-50%,-50%)",
                     }}
                   >
-                  <Animations/>
+                    <Animations />
                   </div>
                 </Box>
-              )} 
+              )}
             </>
           </Box>
         </div>

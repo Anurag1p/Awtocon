@@ -156,7 +156,7 @@ const SubSiteImagesUpload = ({
             <div className="gallery d-flex flex-wrap">
                 {images?.map((imageArray, index) => (
                     <div key={index} className="image-array ml-2 position-relative">
-                        {imageArray?.TASK_APPROVE_FOR_CONTRACTOR ? <img src={imageArray?.imageUrls} alt={`Image ${index}`} className='galleryImage border-3 border-success ' /> : <img src={imageArray.imageUrls} alt={`Image ${index}`} className='galleryImage border-3 border-danger' />}
+                        {imageArray?.TASK_APPROVE_FOR_CONTRACTOR ? <img src={imageArray?.imageUrls} alt={index} className='galleryImage border-3 border-success ' /> : <img src={imageArray.imageUrls} alt={`Image ${index}`} className='galleryImage border-3 border-danger' />}
                         <div className="delete-overlay" onClick={() => handleDeleteImage(imageArray.TASK_IMAGE_SITE_UPLOAD_ID)}>
                             <FontAwesomeIcon icon={faTrashAlt} className='delete-button' />
                         </div>
@@ -172,9 +172,10 @@ const SubSiteImagesUpload = ({
                 <DialogContent>
                     {selectedImage && (
                         <div>
-                            <img src={selectedImage?.imageUrls} alt="Selected Image"  style={{ maxWidth: '100%', minWidth: '100%', height: "250px", objectFit: "fill", objectPosition: "center" }} className='mb-2' />
-                           <span className='fw-bold text-primary mt-5'>Comment : </span> <p className='text-secondary mt-2'>{selectedImage?.TASK_COMMENT}</p>
-                          
+                            <img src={selectedImage?.imageUrls} alt="Selected" style={{ maxWidth: '100%', minWidth: '100%', height: "250px", objectFit: "fill", objectPosition: "center" }} className='mb-2' />
+                            <span className='fw-bold text-secondary mt-5 fs-5'>Comment : </span>
+                            {selectedImage?.TASK_APPROVE_FOR_CONTRACTOR ? <p className='text-secondary mt-2 text-success fs-6'>{selectedImage?.TASK_COMMENT}</p> : <p className='text-secondary mt-2 text-danger fs-6'>{selectedImage?.TASK_COMMENT}</p>}
+
                         </div>
                     )}
                 </DialogContent>

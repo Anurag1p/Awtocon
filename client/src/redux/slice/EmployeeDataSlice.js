@@ -9,7 +9,7 @@ export const getEmployeeData = createAsyncThunk("auth/companyLogin/employee",
             dispatch(setEmployeeData(response.data.result))
             return response.data.result
         } catch (error) {
-            return rejectWithValue(error.message)
+            return rejectWithValue({ errorMessage: error.message })
         }
     }
 )
@@ -23,11 +23,14 @@ const employeData = createSlice({
         loading: "Please Wait while we are Processing..."
     },
     reducers: {
-        setEmployeeData: (state, action) => {
-            state.employees = state.employees.concat(action.payload);
-            // state = { ...state, employees: action.payload || [] }
+        // setEmployeeData: (state, action) => {
+        //     state.employees = state.employees.concat(action.payload);
+        //     // state = { ...state, employees: action.payload || [] }
 
-        },
+        // },
+        setEmployeeData: (state, action) => {
+            state.employees = [...state.employees, ...action.payload];
+          },
 
     },
 
@@ -41,8 +44,8 @@ const employeData = createSlice({
                 state.employees = action.payload
             })
             .addCase(getEmployeeData.rejected, (state, action) => {
-                state.loading = "Failed"
-                state.error = action.payload
+                state.loading = "Failed";
+                state.error = action.payload.errorMessage;
             })
     }
 })

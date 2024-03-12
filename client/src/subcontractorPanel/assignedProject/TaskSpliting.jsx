@@ -8,6 +8,8 @@ import Animations from '../../components/Animations';
 import axios from 'axios';
 import SubGallery from './SubGallery'; // Import the SubGallery component
 import CustomNoRowsOverlay from '../../components/CustomNoRowsOverlay';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllProjectTasks, setProjectTasks } from '../../redux/slice/ProjectTaskSlice';
 
 
 const TaskSpliting = () => {
@@ -26,7 +28,8 @@ const TaskSpliting = () => {
     const [taskData, setTaskData] = useState([]);
     const [selectedTaskId, setSelectedTaskId] = useState(null); // State to store the selected task id
     const handleOpen = () => setOpen(true);
-    
+
+    const dispatch = useDispatch();
 
     const data = {
         TASK_MEMBER_PARENT_USERNAME: COMPANY_PARENT_USERNAME,
@@ -34,6 +37,18 @@ const TaskSpliting = () => {
         TASK_PROJECT_ID: PROJECT_ID
     };
 
+
+    useEffect(() => {
+        dispatch(getAllProjectTasks({
+            TASK_MEMBER_PARENT_USERNAME: COMPANY_PARENT_USERNAME,
+            TASK_SUBCONTRACTOR_ID: SUBCONTRCATOR_ID,
+            TASK_PROJECT_ID: PROJECT_ID
+        })).then( () => setResStatus("success")).catch(() => setResStatus("error"));
+
+    },[dispatch, COMPANY_PARENT_USERNAME, SUBCONTRCATOR_ID, PROJECT_ID])
+
+    const fetchprojectTasks = useSelector(state => state?.alltasks?.tasks)
+    console.log(fetchprojectTasks, "redux task data")
     const fetchData = async () => {
         try {
             const response = await axios.put("/api/get_all_tasks", data);
@@ -174,9 +189,9 @@ const TaskSpliting = () => {
                 </>
             ) : (
                 <SubGallery
-                 taskId={selectedTaskId} 
-                 setIsModalOpen={setIsModalOpen}
-                 />
+                    taskId={selectedTaskId}
+                    setIsModalOpen={setIsModalOpen}
+                />
             )}
         </Box>
     );

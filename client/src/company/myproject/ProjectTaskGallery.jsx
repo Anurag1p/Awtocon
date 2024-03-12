@@ -5,6 +5,7 @@ import axios from 'axios';
 import FlakyIcon from '@mui/icons-material/Flaky'; // Import the Flaky icon from Material-UI Icons
 import { setTaskImgApprove, TaskImageApproveSlice, SetTaskImageApprove } from "../../redux/slice/TaskImageApproveSlice"
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 
 const ProjectTaskGallery = ({ filteredTasks, taskId, COMPANY_PARENT_USERNAME, setIsModalOpen }) => {
@@ -25,13 +26,13 @@ const ProjectTaskGallery = ({ filteredTasks, taskId, COMPANY_PARENT_USERNAME, se
     console.log(approve, "approve")
     const { comment, isApproved } = approve
     const dispatch = useDispatch();
-
+    const [errorMessage, setErrorMessage] = useState("");
 
     //fetch all task images Approvals from redux 
 
     const taskImgApprovals = useSelector(state => state?.taskImgApprove?.taskImg);
-
     console.log(taskImgApprovals, "taskimagApprovals")
+
     // Fetch all the images
     const fetchAllTaskImages = async () => {
         try {
@@ -48,22 +49,21 @@ const ProjectTaskGallery = ({ filteredTasks, taskId, COMPANY_PARENT_USERNAME, se
 
     useEffect(() => {
         fetchAllTaskImages();
-    }, []); // Fetch images only once on component mount
+    }, [approve]); // Fetch images only once on component mount
 
     const handleImageClick = (image) => {
         setSelectedImage(image);
         if (image.TASK_APPROVE_FOR_CONTRACTOR) {
             setDialogOpen((prev) => {
-                return { ...prev, dialog: true }
+                return { ...prev, dialog: true, dialog_approve_btn: false, dialog_decline_btn: false }
             });
 
         } else {
             setDialogOpen((prev) => {
-                return { ...prev, dialog: true, dialog_decline_btn: false }
+                return { ...prev, dialog: true, dialog_approve_btn: false, dialog_decline_btn: false }
             });
 
         }
-        console.log(image, "image")
     };
 
     const handleChange = (e) => {
@@ -87,7 +87,13 @@ const ProjectTaskGallery = ({ filteredTasks, taskId, COMPANY_PARENT_USERNAME, se
             comment: "",
             isApproved: true
         });
-        setDialogOpen(false)
+        setDialogOpen({
+            dialog: true,
+            dialog_approve_btn: true,
+            dialog_decline_btn: false
+        });
+        // dispatch(setErrorMessage(""))
+
     }
 
 
@@ -104,10 +110,11 @@ const ProjectTaskGallery = ({ filteredTasks, taskId, COMPANY_PARENT_USERNAME, se
             isApproved: false
         });
         setDialogOpen({
-            dialog: false,
-            dialog_approve_btn: true,
-            dialog_decline_btn: false
-        })
+            dialog: true,
+            dialog_approve_btn: false,
+            dialog_decline_btn: true
+        });
+        // dispatch(setErrorMessage(""))
     };
     return (
         <div className="container-fluid mt-2">
@@ -133,27 +140,27 @@ const ProjectTaskGallery = ({ filteredTasks, taskId, COMPANY_PARENT_USERNAME, se
                 dialog: false,
                 dialog_approve_btn: true,
                 dialog_decline_btn: true
-            })} >
+            })} className='position-relative'>
                 <DialogTitle>Image Verification</DialogTitle>
-                <DialogContent>
+                <Button onClick={() => setDialogOpen(false)} className='position-absolute top-0 end-0 text-danger fs-5 '>X</Button>
+                <DialogContent >
                     {selectedImage && (
                         <div className='d-flex flex-column w-100'>
                             <img src={selectedImage?.imageUrls} alt="Selected Image" style={{ maxWidth: '100%', minWidth: '500px', height: "250px", objectFit: "fill", objectPosition: "center" }} className='mb-2' />
                             <label className='fs-5'>Comment </label>
                             <textarea type="text" name="comment" id="comment" className='p-2 shadow-textarea' placeholder='Please write your comment here .....' value={comment} onChange={handleChange} />
 
+                            <span className='text-center text-success'>{errorMessage}</span>
                         </div>
                     )}
                 </DialogContent>
-                <DialogActions>
-                    {/* <Button onClick={() => setDialogOpen(false)}>Close</Button> */}
-                    <div className="button-groups d-flex flex-row mt-2" sx={{ justifyContent: 'center' }}>
+                <DialogActions className='d-flex justify-content-between'>
 
+                    <div className="button-groups m-3">
                         <Button className="accept ml-2" variant='contained' disabled={dialogOpen.dialog_approve_btn} color='success' sx={{ mr: { xs: 1, sm: 2 } }} onClick={(e) => handleApprove(e.selectedImage)}>Approve</Button>
                         <Button className="decline" variant='contained' disabled={dialogOpen.dialog_decline_btn} color='error' sx={{ mr: { xs: 1, sm: 2 } }} onClick={(e) => handleDecline(e.selectedImage)}>Decline</Button>
-
-
                     </div>
+
                 </DialogActions>
             </Dialog>
         </div>

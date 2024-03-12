@@ -91,15 +91,16 @@ import ProjectTaskGallery from "./company/myproject/ProjectTaskGallery";
 
 function App() {
 
-  const [userName, setUserName] = useState("");
   const dispatch = useDispatch()
-
   const AdminLoginData = useSelector(state => state?.adminLogin?.user)
   console.log(AdminLoginData, "Admin")
-  const admin_id = userName[2]
-  const admin_username = userName[3]
-  const companyData = useSelector(prev => prev?.companyLogin?.user)
+  const admin_id = AdminLoginData[2]
+  const admin_username = AdminLoginData[3]
 
+  console.log("admin_id", admin_id, "admin_username", admin_username)
+
+  const companyData = useSelector(prev => prev?.companyLogin?.user)
+  
   const singleCompany = useSelector(state => state?.singleCompData?.singleComp);
 
   const empdata = useSelector((state) => state?.allEmployee?.employees || []);
@@ -111,12 +112,13 @@ function App() {
         const data = user?.displayName;
         const splitedData = data?.split("&&");
         console.log(user, "user");
-        setUserName(splitedData);
+  
         dispatch(setCompanyuser(splitedData))
         console.log(splitedData, "splitedData");
-      } else setUserName("");
+      }
     });
   }, []);
+  
 
 
   // extract company
@@ -208,9 +210,12 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/root" element={<AdminLogin />} />
             <Route path="/" element={<UserLogin />} />
-            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin" element={<AdminDashboard 
+            AdminLoginData={AdminLoginData}
+            />
+          } />
             <Route path="/employee/history" element={<EmployeeHistory />} />
-            <Route path="/myadmin" element={<AdminDashboard />} />
+            {/* <Route path="/myadmin" element={<AdminDashboard />} /> */}
             <Route path="/test" element={<Updates />} />
 
 
@@ -345,28 +350,28 @@ function App() {
             {/* for employee login ... */}
             <Route
               path="/employee/home"
-              element={<EmployeeLoginHome state={userName} />}
+              element={<EmployeeLoginHome state={AdminLoginData} />}
             />
 
             <Route
               path="/employee/mark-attendance"
-              element={<EmployeeAttendance state={userName} />}
+              element={<EmployeeAttendance state={AdminLoginData} />}
             />
 
 
             {/*...... for employee section  only ...... */}
             <Route
               path="/employee/project-assigned"
-              element={<EmployeeLoginHome state={userName} />}
+              element={<EmployeeLoginHome state={AdminLoginData} />}
             />
             <Route
               path="/employee/attendance-history"
-              element={<EmployeeTimeSheetUser state={userName} />}
+              element={<EmployeeTimeSheetUser state={AdminLoginData} />}
             />
 
             <Route
               path="/employee/attendance/:latt/:lngi/:areas/:loca/:employees/:projects/:projectids"
-              element={<EmployeeAttendance state={userName} />}
+              element={<EmployeeAttendance state={AdminLoginData} />}
             />
 
             {/* My contractos */}
@@ -376,7 +381,7 @@ function App() {
 
             <Route
               path="/subcontractor/dashboard"
-              element={<SubDashboard state={userName} />}
+              element={<SubDashboard state={AdminLoginData} />}
             />
 
             <Route
@@ -462,24 +467,24 @@ function App() {
 
             <Route
               path="/subcontractor/assigned-projects"
-              element={<SubAssignedProjects state={userName} />}
+              element={<SubAssignedProjects state={AdminLoginData} />}
             />
 
             <Route
               path="/subcontractor/assigned-projects/detail"
-              element={<SubProjectAssignDetails state={userName} />}
+              element={<SubProjectAssignDetails state={AdminLoginData} />}
             />
             <Route
               path="/subcontractor/assigned-projects/task/gallery"
-              element={<SubGallery state={userName} />}
+              element={<SubGallery state={AdminLoginData} />}
             />
             <Route
               path="/subcontractor/assigned-projects/violation"
-              element={<Violation state={userName} />}
+              element={<Violation state={AdminLoginData} />}
             />
             <Route
               path="/subcontractor/assigned-projects/tasks"
-              element={<TaskSpliting state={userName} />}
+              element={<TaskSpliting state={AdminLoginData} />}
             />
 
 

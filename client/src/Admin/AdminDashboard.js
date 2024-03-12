@@ -17,23 +17,22 @@ import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { getAllCompany } from "../redux/slice/AllCompanySlice";
 const itemsPerPage = 8;
 
-const AdminDashboard = (props) => {
-  // const { state } = useLocation()
-  const { state } = useLocation()
-  // console.log(props.adminData, "props.adminData")
+const AdminDashboard = ({AdminLoginData}) => {
+
+const ADMIN_USERNAME = AdminLoginData[3]
+const ADMIN_ID = AdminLoginData[2]
   const navigate = useNavigate();
 
   //data from redux...
+  
+  
   const allcompanyData = useSelector(state => state?.allCompany?.company)
 
-  const tableRows = state;
-  console.log(tableRows, "tableRows")
   // const [RowsData, setRows] = useState("");
   // const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [displayType, setDisplayType] = useState(true);
   const [detail, setDetail] = useState();
-
 
   function reverseArray(arr) {
     let reversed = [];
@@ -114,7 +113,7 @@ const AdminDashboard = (props) => {
     const [edit, setEdit] = useState(true)
 
     const [values, setValues] = useState({
-      name: `${data.COMPANY_ID}&&${data.COMPANY_USERNAME}&&${tableRows?.ADMIN_ID}&&${tableRows?.ADMIN_USERNAME}&&company`,
+      name: `${data.COMPANY_ID}&&${data.COMPANY_USERNAME}&&${ADMIN_ID}&&${ADMIN_USERNAME}&&company`,
       email: data.COMPANY_USERNAME,
       pass: data.COMPANY_PHONE,
     });
@@ -279,26 +278,6 @@ const AdminDashboard = (props) => {
   }
 
 
-  // trying to execute the expiry data 
-
-  // const HandleMail = async (post) => {
-  //   let data = JSON.stringify({
-  //     "DOCUMENT_ADMIN_USERNAME": post?.COMPANY_USERNAME,
-  //     "DOCUMENT_REF_ID": post?.COMPANY_ID,
-  //     // "DOCUMENT_EXPIRY_DATE": 8976
-  //   });
-  //   try {
-  //     const mailResponse = await axios.put('/api/send-com-notification', data);
-  //     console.log("mailData", mailResponse);
-
-  //   }
-  //   catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-  // console.log(detail, "detail")
-
   return (
     <>
       <div className="container-fluid g-0">
@@ -311,7 +290,7 @@ const AdminDashboard = (props) => {
               <span style={{ border: "2px solid tan", borderRadius: "50%", padding: " 2px 5px" }}>
                 <FontAwesomeIcon icon={faUser} style={{ fontSize: "1.3rem", color: "tan" }} />
               </span>
-              <span style={{ margin: " 0 10px" }}>{tableRows?.ADMIN_USERNAME} <small style={{ fontSize: "10px", color: "tan", border: "1px solid tan", borderRadius: "50%", padding: "3px" }}> Admin</small></span>
+              <span style={{ margin: " 0 10px" }}>{ADMIN_USERNAME} <small style={{ fontSize: "10px", color: "tan", border: "1px solid tan", borderRadius: "50%", padding: "3px" }}> Admin</small></span>
             </a>
 
             <button
@@ -349,8 +328,8 @@ const AdminDashboard = (props) => {
                   style={{ display: "flex", justifyContent: "space-between", padding: "10px 5px" }}
                 >
                   <CompanyCreate
-                    ADMIN_ID={tableRows?.ADMIN_ID}
-                    ADMIN_USERNAME={tableRows?.ADMIN_USERNAME}
+                    ADMIN_ID={ADMIN_ID}
+                    ADMIN_USERNAME={ADMIN_USERNAME}
                     Update={getAllCompany}
                   />
                 </div>
