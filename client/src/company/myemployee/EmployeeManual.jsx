@@ -474,9 +474,6 @@ const EmployeeManual = () => {
     },
   ];
 
-  // console.log(resStatus, "Manual.length");
-
-  // console.log(Manual.length, "total")
 
   return (
     <Box

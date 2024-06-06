@@ -46,13 +46,7 @@ const EmployeeTimeSheet = () => {
   });
   const [resStatus, setResStatus] = useState(false);
 
-  useEffect(() => {
-    gettimesheet();
-  }, [
-    filterData?.EMPLOYEE_MEMBER_PARENT_USERNAME,
-    dateValue.ATTENDANCE_START_DATE,
-    dateValue.ATTENDANCE_END_DATE,
-  ]);
+
 
   const gettimesheet = async (e) => {
     try {
@@ -71,6 +65,14 @@ const EmployeeTimeSheet = () => {
       setResStatus("error");
     }
   };
+
+  useEffect(() => {
+    gettimesheet();
+  }, [
+    filterData?.EMPLOYEE_MEMBER_PARENT_USERNAME,
+    dateValue.ATTENDANCE_START_DATE,
+    dateValue.ATTENDANCE_END_DATE,gettimesheet
+  ]);
 
   // time calculation
   const timeValueHours = (x, y) => {
@@ -112,10 +114,10 @@ const EmployeeTimeSheet = () => {
 
   const allHours = workvalue?.map((e) => {
     return timeValueHours(
-      moment(e.ATTENDANCE_TYPE_OUT == "automatic" ? e.ATTENDANCE_OUT : "")
+      moment(e.ATTENDANCE_TYPE_OUT === "automatic" ? e.ATTENDANCE_OUT : "")
         .utcOffset(0)
         .format("LT"),
-      moment(e.ATTENDANCE_TYPE_IN == "automatic" ? e.ATTENDANCE_IN : "")
+      moment(e.ATTENDANCE_TYPE_IN === "automatic" ? e.ATTENDANCE_IN : "")
         .utcOffset(0)
         .format("LT")
     );
@@ -165,7 +167,7 @@ const EmployeeTimeSheet = () => {
       headerName: "In",
       width: 120,
       renderCell: (cellValues) => {
-        return cellValues?.row.ATTENDANCE_TYPE_IN == "automatic" &&
+        return cellValues?.row.ATTENDANCE_TYPE_IN === "automatic" &&
           cellValues?.row.ATTENDANCE_IN ? (
           <>
             {cellValues.row.ATTENDANCE_IN &&
@@ -176,7 +178,7 @@ const EmployeeTimeSheet = () => {
         );
       },
       cellClassName: (cellValues) => {
-        return cellValues?.row.ATTENDANCE_TYPE_IN == "automatic" &&
+        return cellValues?.row.ATTENDANCE_TYPE_IN === "automatic" &&
           cellValues?.row.ATTENDANCE_IN
           ? "bg-success text-white border"
           : "bg-danger text-white border";
@@ -188,7 +190,7 @@ const EmployeeTimeSheet = () => {
       headerName: "Out",
       width: 150,
       renderCell: (cellValues) => {
-        return cellValues?.row.ATTENDANCE_TYPE_OUT == "automatic" &&
+        return cellValues?.row.ATTENDANCE_TYPE_OUT === "automatic" &&
           cellValues?.row.ATTENDANCE_OUT ? (
           <>
             {cellValues?.row.ATTENDANCE_OUT &&
@@ -199,7 +201,7 @@ const EmployeeTimeSheet = () => {
         );
       },
       cellClassName: (cellValues) => {
-        return cellValues?.row.ATTENDANCE_TYPE_OUT == "automatic" &&
+        return cellValues?.row.ATTENDANCE_TYPE_OUT === "automatic" &&
           cellValues?.row.ATTENDANCE_OUT
           ? "bg-success text-white border"
           : "bg-danger text-white border";
@@ -212,18 +214,18 @@ const EmployeeTimeSheet = () => {
       width: 200,
       renderCell: (cellValues) => {
         return cellValues?.row.ATTENDANCE_OUT &&
-          cellValues?.row.ATTENDANCE_TYPE_OUT == "automatic" ? (
+          cellValues?.row.ATTENDANCE_TYPE_OUT === "automatic" ? (
           <>
             {timeValueHours(
               moment(
-                cellValues?.row.ATTENDANCE_TYPE_OUT == "automatic"
+                cellValues?.row.ATTENDANCE_TYPE_OUT === "automatic"
                   ? cellValues?.row.ATTENDANCE_OUT
                   : ""
               )
                 .utcOffset(0)
                 .format("LT"),
               moment(
-                cellValues?.row.ATTENDANCE_TYPE_IN == "automatic"
+                cellValues?.row.ATTENDANCE_TYPE_IN === "automatic"
                   ? cellValues?.row.ATTENDANCE_IN
                   : ""
               )
@@ -251,14 +253,14 @@ const EmployeeTimeSheet = () => {
             <>
               {Overtime(
                 moment(
-                  cellValues?.row.ATTENDANCE_TYPE_OUT == "automatic"
+                  cellValues?.row.ATTENDANCE_TYPE_OUT === "automatic"
                     ? cellValues?.row.ATTENDANCE_OUT
                     : ""
                 )
                   .utcOffset(0)
                   .format("LT"),
                 moment(
-                  cellValues?.row.ATTENDANCE_TYPE_OUT == "automatic"
+                  cellValues?.row.ATTENDANCE_TYPE_OUT === "automatic"
                     ? cellValues?.row.ATTENDANCE_IN
                     : ""
                 )
@@ -275,8 +277,8 @@ const EmployeeTimeSheet = () => {
       headerName: "Status",
       width: 150,
       renderCell: (cellValues) => {
-        return cellValues?.row.ATTENDANCE_TYPE_IN == "automatic" &&
-          cellValues?.row.ATTENDANCE_TYPE_OUT == "automatic" &&
+        return cellValues?.row.ATTENDANCE_TYPE_IN === "automatic" &&
+          cellValues?.row.ATTENDANCE_TYPE_OUT === "automatic" &&
           cellValues?.row.ATTENDANCE_IN &&
           cellValues?.row.ATTENDANCE_OUT ? (
           <>{"present"}</>
@@ -285,8 +287,8 @@ const EmployeeTimeSheet = () => {
         );
       },
       cellClassName: (cellValues) => {
-        return cellValues?.row.ATTENDANCE_TYPE_IN == "automatic" &&
-          cellValues?.row.ATTENDANCE_TYPE_OUT == "automatic" &&
+        return cellValues?.row.ATTENDANCE_TYPE_IN === "automatic" &&
+          cellValues?.row.ATTENDANCE_TYPE_OUT === "automatic" &&
           cellValues?.row.ATTENDANCE_IN &&
           cellValues?.row.ATTENDANCE_OUT
           ? "bg-success text-light border"
@@ -391,7 +393,7 @@ const EmployeeTimeSheet = () => {
           </div>
 
           {/* data gird */}
-          {resStatus == true ? (
+          {resStatus === true ? (
             <DataGrid
               className="display"
               style={{ height: "55vh" }}
@@ -425,7 +427,7 @@ const EmployeeTimeSheet = () => {
               // checkboxSelection
               disableRowSelectionOnClick
               localeText={{
-                noRowsLabel: workvalue.length == 0 && "No request available",
+                noRowsLabel: workvalue.length === 0 && "No request available",
               }}
             />
           ) : resStatus === "error" ? (

@@ -145,11 +145,7 @@ export default function CompanyCreate({ ADMIN_ID, ADMIN_USERNAME, Update }) {
       });
     // });
   };
-
-
-
-
-
+  
   return (
     <>
       <button

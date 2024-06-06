@@ -90,12 +90,15 @@ import ProjectTaskGallery from "./company/myproject/ProjectTaskGallery";
 
 
 function App() {
+  const [userName, setUserName] = useState("");
 
   const dispatch = useDispatch()
   const AdminLoginData = useSelector(state => state?.adminLogin?.user)
   console.log(AdminLoginData, "Admin")
-  const admin_id = AdminLoginData[2]
-  const admin_username = AdminLoginData[3]
+  // const admin_id = AdminLoginData[2]
+  // const admin_username = AdminLoginData[3]
+  const admin_id = userName && userName[2]
+  const admin_username = userName[3]
 
   console.log("admin_id", admin_id, "admin_username", admin_username)
 
@@ -112,7 +115,7 @@ function App() {
         const data = user?.displayName;
         const splitedData = data?.split("&&");
         console.log(user, "user");
-  
+        setUserName(splitedData);
         dispatch(setCompanyuser(splitedData))
         console.log(splitedData, "splitedData");
       }
