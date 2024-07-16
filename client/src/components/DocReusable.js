@@ -565,7 +565,7 @@ const DocReusable = (props) => {
                                                 <input {...getInputProps()} />
                                                 <p>
                                                     Drag 'n' drop some files here, or click to select
-                                                    files
+                                                    files<span style={{color:"red"}}>*</span>
                                                 </p>
                                             </div>
                                         </section>
@@ -580,7 +580,7 @@ const DocReusable = (props) => {
                                 <div className="row mb-2">
                                     <div className="form-group col-xl-12">
                                         <label className="pb-2 fs-6 rounded p-2">
-                                            Select Expiry Date
+                                            Select Expiry Date <span style={{color:"red"}}>*</span>
                                         </label>
                                         <input
                                             type="date"
@@ -597,7 +597,7 @@ const DocReusable = (props) => {
                                 <div className="row mb-2">
                                     <div className="form-group col-xl-12">
                                         <label className="pb-2 fs-6 rounded p-2">
-                                            Document Type
+                                            Document Type<span style={{color:"red"}}>*</span>
                                         </label>
                                         <input
                                             type="text"

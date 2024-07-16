@@ -181,7 +181,7 @@ export default function ProjectCreate() {
             <h5>Create project</h5>
             <div className="row py-2">
               <div className="form-group col-xl-4">
-                <label> Project Username</label>
+              <label> Project Username <span style={{color:"red"}}>*</span></label>
                 <input
                   type="text"
                   className={`form-control form-control-2 rounded-0 ${usernameErr ? "is-invalid" : ""
@@ -197,7 +197,7 @@ export default function ProjectCreate() {
                 )}
               </div>
               <div className="form-group col-xl-4">
-                <label>Project Name</label>
+                <label>Project Name <span style={{color:"red"}}>*</span></label>
                 <input
                   type="text"
                   className={`form-control form-control-2 rounded-0 ${nameError ? "is-invalid" : ""
@@ -214,7 +214,7 @@ export default function ProjectCreate() {
                 )}
               </div>
               <div className="form-group col-xl-4">
-                <label>Account</label>
+                <label>Account <span style={{color:"red"}}>*</span></label>
                 <input
                   type="number"
                   className={`form-control form-control-2 rounded-0 ${companyaccError ? "is-invalid" : ""
