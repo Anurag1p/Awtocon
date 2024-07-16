@@ -152,7 +152,7 @@ const ProjectNav = ({
           Subcontractor Assigned
         </Button>
 
-
+{/* 
         <Button
           onClick={(e) =>
             navigate("/company/projects/tasks", {
@@ -174,7 +174,7 @@ const ProjectNav = ({
           size="small"
         >
           Tasks
-        </Button>
+        </Button> */}
 
       </div>
     </>
