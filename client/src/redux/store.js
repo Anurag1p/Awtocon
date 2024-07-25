@@ -25,7 +25,7 @@ import setOneCompany from "./slices/getOneCompanySlice";
 // Redux setup Anuarag 
 
 import getallProjectSlice from "./slice/getallProjectSlice";
-import SingleCompData from "./slice/SingleCompSlice";
+import getAdminCompData from "./slice/AdminCompSlice";
 import EmployeeDataSlice from "./slice/EmployeeDataSlice";
 import companyDoc from "./slice/GetCompanyDocSlice";        //function for doc
 import AllSubcontractor from "./slice/SubContractorSlice"
@@ -43,7 +43,7 @@ const persistConfig = {
 };
 
 const persistedLoginReducer = persistReducer(persistConfig, CompanyLoginSlice);
-const persistedAdminReducer = persistReducer(persistConfig, AdminSlice)
+const persistedAdminReducer = persistReducer(persistConfig,AdminSlice)
 const persistedEmployeeReducer = persistReducer(persistConfig, EmployeeLogin)
 
 // const persistedCompanyReducer = persistReducer(persistConfig,setOneCompany)
@@ -63,7 +63,7 @@ const rootReducer = combineReducers({
   allAttendation: AllAttendanceDetail,
   allDocument: AllDocumentDetail,
   allProjectData: getallProjectSlice,
-  singleCompData: SingleCompData,
+  AdminCompanies: getAdminCompData,
   allEmployee: EmployeeDataSlice,
   companyDocuments: companyDoc,
   allsubcontractor: AllSubcontractor,

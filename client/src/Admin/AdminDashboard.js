@@ -17,10 +17,15 @@ import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { getAllCompany } from "../redux/slice/AllCompanySlice";
 const itemsPerPage = 8;
 
-const AdminDashboard = ({AdminLoginData}) => {
+const AdminDashboard = () => {
 
-const ADMIN_USERNAME = AdminLoginData[3]
-const ADMIN_ID = AdminLoginData[2]
+
+  const dataofredux = useSelector((state) => state.adminLogin?.user?.result || { user: null, error: null, loading: false });
+  console.log(dataofredux ,"userdetail")
+
+const ADMIN_USERNAME = dataofredux.ADMIN_USERNAME
+
+const ADMIN_ID = dataofredux.ADMIN_ID
   const navigate = useNavigate();
 
   //data from redux...
@@ -113,7 +118,7 @@ const ADMIN_ID = AdminLoginData[2]
     const [edit, setEdit] = useState(true)
 
     const [values, setValues] = useState({
-      name: `${data.COMPANY_ID}&&${data.COMPANY_USERNAME}&&${ADMIN_ID}&&${ADMIN_USERNAME}&&company`,
+      name: `${data?.COMPANY_ID}&&${data?.COMPANY_USERNAME}&&${ADMIN_ID}&&${ADMIN_USERNAME}&&company`,
       email: data.COMPANY_USERNAME,
       pass: data.COMPANY_PHONE,
     });

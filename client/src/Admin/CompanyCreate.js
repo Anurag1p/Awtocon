@@ -33,7 +33,7 @@ const style = {
 
 export default function CompanyCreate({ ADMIN_ID, ADMIN_USERNAME, Update }) {
 
-  console.log(ADMIN_ID, ADMIN_USERNAME, Update(), "anuragPal");
+  console.log(ADMIN_ID, ADMIN_USERNAME, "anuragPal");
 
   const [open, setOpen] = React.useState(false);
   const [loader, setLoader] = React.useState(false);
