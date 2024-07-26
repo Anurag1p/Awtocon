@@ -97,9 +97,9 @@ function App() {
   const [userName, setUserName] = useState("");
 
   const dispatch = useDispatch()
-  const AdminLoginData = useSelector(state =>state?.adminLogin?.user )
-  
-  console.log("Admin_anuragPal=============>>",AdminLoginData)
+  const AdminLoginData = useSelector(state => state?.adminLogin?.user)
+
+  console.log("Admin_anuragPal=============>>", AdminLoginData)
   // const admin_id = AdminLoginData[2]
   // const admin_username = AdminLoginData[3]
   // const admin_id = userName && userName[2]
@@ -108,9 +108,9 @@ function App() {
   const ADMIN_ID = AdminLoginData?.result?.ADMIN_ID;
   const ADMIN_USERNAME = AdminLoginData?.result?.ADMIN_USERNAME;
 
- 
 
-  console.log("admin_id", ADMIN_ID, "admin_username",ADMIN_USERNAME)
+
+  console.log("admin_id", ADMIN_ID, "admin_username", ADMIN_USERNAME)
 
   const companyData = useSelector(prev => prev?.companyLogin?.user)
 
@@ -168,14 +168,14 @@ function App() {
   // }, [dispatch, COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_ID, COMPANY_PARENT_USERNAME])
 
 
-  useEffect(() => {
-    dispatch(getAdminCompData({
-      COMPANY_ID: COMPANY_ID,
-      COMPANY_PARENT_ID: COMPANY_PARENT_ID,
-      COMPANY_PARENT_USERNAME: COMPANY_PARENT_USERNAME,
-      COMPANY_PARENT_ID: COMPANY_PARENT_ID
-    }))
-  }, [dispatch, COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_ID, COMPANY_PARENT_USERNAME])
+  // useEffect(() => {
+  //   // dispatch(getAdminCompData({
+  //   //   // COMPANY_ID: COMPANY_ID,
+  //   //   // COMPANY_PARENT_ID: COMPANY_PARENT_ID,
+  //   //   COMPANY_PARENT_USERNAME: COMPANY_PARENT_USERNAME,
+  //   //   COMPANY_PARENT_ID: COMPANY_PARENT_ID
+  //   // }))
+  // }, [dispatch, COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_ID, COMPANY_PARENT_USERNAME])
   // getting the Employee Data from store 
   useEffect(() => {
     dispatch(getEmployeeData({

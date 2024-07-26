@@ -16,8 +16,10 @@ import {
   validateEmail,
   validatePhoneNumber,
 } from "../components/Validation";
-import { getAllCompany, setCompanyData } from "../redux/slice/AllCompanySlice";
+import { setadminCompany } from "../redux/slice/AdminCompSlice";
+import { setCompanyData } from "../redux/slice/AllCompanySlice";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 const style = {
   position: "absolute",
   top: "50%",
@@ -31,9 +33,12 @@ const style = {
   overflow: "hidden",
 };
 
-export default function CompanyCreate({ ADMIN_ID, ADMIN_USERNAME, Update }) {
+export default function CompanyCreate({ Update }) {
 
-  console.log(ADMIN_ID, ADMIN_USERNAME, "anuragPal");
+  const AdminDetails = useSelector(state => state?.adminLogin?.user?.result)
+
+  const ADMIN_ID =AdminDetails?.ADMIN_ID;
+  const ADMIN_USERNAME = AdminDetails?.ADMIN_USERNAME;
 
   const [open, setOpen] = React.useState(false);
   const [loader, setLoader] = React.useState(false);
@@ -54,7 +59,12 @@ export default function CompanyCreate({ ADMIN_ID, ADMIN_USERNAME, Update }) {
     COMPANY_COUNTRY: "",
     COMPANY_SUBSCRIPTION: "",
     COMPANY_STATUS: "",
+    COMPANY_PARENT_ID: "",
+    COMPANY_PARENT_USERNAME: "",
+
+
   });
+  console.log("create_company", create_company)
 
   const [emailError, setEmailError] = useState("");
   const [companyphoneError, setCompanyPhoneError] = useState("");
@@ -63,6 +73,10 @@ export default function CompanyCreate({ ADMIN_ID, ADMIN_USERNAME, Update }) {
   const handleCreate = (e) => {
     setCreate_company({ ...create_company, [e.target.name]: e.target.value });
   };
+
+
+
+
 
   // Finding the states and cities of the individaul country
 
@@ -93,9 +107,9 @@ export default function CompanyCreate({ ADMIN_ID, ADMIN_USERNAME, Update }) {
     setErrorMsg("");
 
     // Validate phone number, username, and email fields
-    const isValidCompanyname = create_company.COMPANY_NAME !== "";
-    const isValidPhone = validatePhoneNumber(create_company.COMPANY_PHONE);
-    const isValidEmail = validateEmail(create_company.COMPANY_USERNAME);
+    const isValidCompanyname = create_company?.COMPANY_NAME !== "";
+    const isValidPhone = validatePhoneNumber(create_company?.COMPANY_PHONE);
+    const isValidEmail = validateEmail(create_company?.COMPANY_USERNAME);
 
     if (!isValidCompanyname) {
       setCompanynameError("Name should not be empty");
@@ -116,17 +130,17 @@ export default function CompanyCreate({ ADMIN_ID, ADMIN_USERNAME, Update }) {
     // Perform API validation and request
     axios
       .post(`/api/create_company`, {
+        ...create_company,
         COMPANY_PARENT_ID: ADMIN_ID,
         COMPANY_PARENT_USERNAME: ADMIN_USERNAME,
-        ...create_company
       })
       .then((response) => {
         if (response.data.operation === "failed") {
           setErrorMsg(response.data.errorMsg);
           setEmailError(response.data.errorMsg ? "Email already exist" : "")
         } else if (response.data.operation === "successfull") {
-
           dispatch(setCompanyData(response.data.result));
+          console.log('Dispatched data to Redux:', response.data.result); 
           toast.success("Company Created successfully!", {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 1000,
@@ -145,7 +159,7 @@ export default function CompanyCreate({ ADMIN_ID, ADMIN_USERNAME, Update }) {
       });
     // });
   };
-  
+
   return (
     <>
       <button

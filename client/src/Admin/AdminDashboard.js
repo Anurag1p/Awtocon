@@ -15,23 +15,24 @@ import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { getAllCompany } from "../redux/slice/AllCompanySlice";
+// import {getAllCompany} from "../redux/slice/AdminCompSlice";
+
 const itemsPerPage = 8;
 
 const AdminDashboard = () => {
 
+  const AdminDetails = useSelector(state => state?.adminLogin?.user)
+  const ADMIN_ID = AdminDetails?.user?.ADMIN_ID;
+  const ADMIN_USERNAME = AdminDetails?.user?.ADMIN_USERNAME;
 
-  const dataofredux = useSelector((state) => state.adminLogin?.user?.result || { user: null, error: null, loading: false });
-  console.log(dataofredux ,"userdetail")
 
-const ADMIN_USERNAME = dataofredux.ADMIN_USERNAME
-
-const ADMIN_ID = dataofredux.ADMIN_ID
   const navigate = useNavigate();
 
   //data from redux...
-  
-  
+
+
   const allcompanyData = useSelector(state => state?.allCompany?.company)
+  console.log("admincompanyData", allcompanyData)
 
   // const [RowsData, setRows] = useState("");
   // const [isLoading, setIsLoading] = useState(true);
@@ -47,8 +48,8 @@ const ADMIN_ID = dataofredux.ADMIN_ID
     return reversed;
   }
   let Rows = reverseArray(allcompanyData);
-  
-//function for logout
+
+  //function for logout
   const handleLogout = async () => {
     try {
       const response = await axios.get('/api/logout');
@@ -63,6 +64,7 @@ const ADMIN_ID = dataofredux.ADMIN_ID
 
 
   const displayData = [];
+  console.log("displayData_anurag", displayData)
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = Math.min(startIndex + itemsPerPage, Rows?.length);
 
@@ -209,7 +211,7 @@ const ADMIN_ID = dataofredux.ADMIN_ID
 
     return (
       <>
-       
+
         <div>
           <center>
             {errorMsg && (
@@ -445,9 +447,9 @@ const ADMIN_ID = dataofredux.ADMIN_ID
                                     }}
                                   >
                                     <CompanyEdit
-                                     companyEDit={post}
-                                     reFetchfun={getAllCompany}
-                                     reFetchDetail={HandleDetail}
+                                      companyEDit={post}
+                                      reFetchfun={getAllCompany}
+                                      reFetchDetail={HandleDetail}
                                     />
                                     <div className="buttons" onClick={(e) => HandleDetail(post)}>
                                       <input type="radio" id="a25" name="check-substitution-2" />
@@ -482,9 +484,9 @@ const ADMIN_ID = dataofredux.ADMIN_ID
                                 <div className="w-100">{post.COMPANY_EMAIL} </div>
                                 <div className="d-flex" style={{ gap: 2 }}>
                                   <CompanyEdit
-                                   companyEDit={post}
-                                   reFetchfun={getAllCompany}
-                                   reFetchDetail={HandleDetail}
+                                    companyEDit={post}
+                                    reFetchfun={getAllCompany}
+                                    reFetchDetail={HandleDetail}
                                   />
                                   {" "}
                                   <div className="buttons" onClick={(e) => HandleDetail(post)}>

@@ -4,9 +4,10 @@ import axios from "axios";
 // Thunk for fetching company data
 export const getAdminCompData = createAsyncThunk(
   "admin/companies",
-  async (compData, { rejectWithValue,dispatch }) => {
+  async (compData, { rejectWithValue, dispatch }) => {
     try {
-      const response = await axios.put("/api/get_company", compData);
+      const response = await axios.put("/api/get_all_company", compData);
+      console.log("/api/get_all_company : ",response)
       dispatch(setadminCompany(response.data.result))
       return response.data.result;
     } catch (error) {
@@ -19,13 +20,13 @@ export const getAdminCompData = createAsyncThunk(
 const AdminCompanyData = createSlice({
   name: "adminCompany",
   initialState: {
-    singleComp: null,
+    singleComp: [],
     error: null,
     loading: "Please wait while proceeding..."
   },
   reducers: {
     setadminCompany: (state, action) => {
-      state.singleComp = action.payload;
+      state.singleComp = state.singleComp.concat(action.payload);
     }
   },
   extraReducers: (builder) => {
