@@ -10,7 +10,8 @@ const firebaseConfig = {
   storageBucket: "constructionautomation.appspot.com",
   messagingSenderId: "803254119869",
   appId: "1:803254119869:web:f7fabf783eb0511c2976d4",
-  measurementId: "G-LLK8XZ64VQ"
+  measurementId: "G-LLK8XZ64VQ",
+  
 };
 
 const app = initializeApp(firebaseConfig);

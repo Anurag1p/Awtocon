@@ -34,6 +34,7 @@ const style = {
 };
 
 export default function CompanyEdit(props) {
+  console.log("props hi hai",props)
   const [open, setOpen] = React.useState(false);
   const companyData = props?.companyEDit;
   const [loader, setLoader] = useState(false);
