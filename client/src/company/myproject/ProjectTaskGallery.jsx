@@ -14,6 +14,7 @@ const ProjectTaskGallery = ({ filteredTasks, taskId, COMPANY_PARENT_USERNAME, se
         dialog_approve_btn: false,
         dialog_decline_btn: false
     });
+    
     // const [dialogOpen, setDialogOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
     console.log(selectedImage, "selecttedImage")
@@ -116,6 +117,7 @@ const ProjectTaskGallery = ({ filteredTasks, taskId, COMPANY_PARENT_USERNAME, se
         });
         // dispatch(setErrorMessage(""))
     };
+
     return (
         <div className="container-fluid mt-2">
             <Breadcrumbs aria-label="breadcrumb" separator="›" >
