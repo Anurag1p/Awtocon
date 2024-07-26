@@ -89,12 +89,7 @@ export default function CompanyCreate({ Update }) {
   });
 
   const list = companytype;
-  console.log("hbbbdf", create_company);
 
-
-
-
-  // Assuming you have initialized 'auth' properly.
 
   const handleSubmit = (e) => {
     // Prevent form submission
@@ -157,7 +152,6 @@ export default function CompanyCreate({ Update }) {
           autoClose: 2000,
         });
       });
-    // });
   };
 
   return (
