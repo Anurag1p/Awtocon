@@ -35,10 +35,14 @@ const style = {
 
 export default function CompanyCreate({ Update }) {
 
-  const AdminDetails = useSelector(state => state?.adminLogin?.user?.result)
+  const AdminDetails = useSelector(state => state?.adminLogin?.user?.user)
 
+console.log("AdminDetails", AdminDetails)
   const ADMIN_ID =AdminDetails?.ADMIN_ID;
   const ADMIN_USERNAME = AdminDetails?.ADMIN_USERNAME;
+
+  console.log("ADMIN_ID",ADMIN_ID);
+  console.log("ADMIN_USERNAME",ADMIN_USERNAME);
 
   const [open, setOpen] = React.useState(false);
   const [loader, setLoader] = React.useState(false);
@@ -59,8 +63,8 @@ export default function CompanyCreate({ Update }) {
     COMPANY_COUNTRY: "",
     COMPANY_SUBSCRIPTION: "",
     COMPANY_STATUS: "",
-    COMPANY_PARENT_ID: "",
-    COMPANY_PARENT_USERNAME: "",
+    COMPANY_PARENT_ID: ADMIN_ID,
+    COMPANY_PARENT_USERNAME: ADMIN_USERNAME,
 
 
   });
@@ -100,6 +104,7 @@ export default function CompanyCreate({ Update }) {
     setEmailError("");
     setCompanyPhoneError("");
     setErrorMsg("");
+    // setCreate_company("")
 
     // Validate phone number, username, and email fields
     const isValidCompanyname = create_company?.COMPANY_NAME !== "";
@@ -140,9 +145,11 @@ export default function CompanyCreate({ Update }) {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 1000,
           });
+          setCreate_company({ ...create_company, [e.target.name]: "" });
           Update();
 
           setOpen(false);
+
         }
       })
       .catch((error) => {
@@ -152,7 +159,75 @@ export default function CompanyCreate({ Update }) {
           autoClose: 2000,
         });
       });
+
+
+    
   };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  
+  //   // Clear previous validation errors
+  //   setCompanynameError("");
+  //   setEmailError("");
+  //   setCompanyPhoneError("");
+  //   setErrorMsg("");
+  
+  //   // Validate phone number, username, and email fields
+  //   const isValidCompanyname = create_company?.COMPANY_NAME !== "";
+  //   const isValidPhone = validatePhoneNumber(create_company?.COMPANY_PHONE);
+  //   const isValidEmail = validateEmail(create_company?.COMPANY_USERNAME);
+  
+  //   if (!isValidCompanyname) {
+  //     setCompanynameError("Name should not be empty");
+  //     return;
+  //   }
+  
+  //   if (!isValidEmail) {
+  //     setEmailError("Invalid email address");
+  //     return;
+  //   }
+  
+  //   if (!isValidPhone) {
+  //     setCompanyPhoneError("Invalid phone number or field should not be empty");
+  //     return;
+  //   }
+  
+  //   // Perform API validation and request
+  //   axios
+  //     .post(`/api/create_company`, {
+  //       ...create_company,
+  //       COMPANY_PARENT_ID: ADMIN_ID,
+  //       COMPANY_PARENT_USERNAME: ADMIN_USERNAME,
+  //     })
+  //     .then((response) => {
+  //       console.log("Mycoderesponse", response)
+  //       if (response.data.operation === "failed") {
+  //         // Handle specific errors based on the response data
+  //         if (response.data.errorType === "email_exists") {
+  //           setEmailError("Email already exists"); 
+  //         } else {
+  //           setErrorMsg(response.data.errorMsg); // Handle other general errors
+  //         }
+  //       } else if (response.data.operation === "successfull") {
+  //         dispatch(setCompanyData(response.data.result));
+  //         toast.success("Company Created successfully!", {
+  //           position: toast.POSITION.TOP_CENTER,
+  //           autoClose: 1000,
+  //         });
+  //         Update();
+  //         setOpen(false);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error(error, "ERR");
+  //       toast.error("An error occurred. Please try again later.", {
+  //         position: toast.POSITION.TOP_CENTER,
+  //         autoClose: 2000,
+  //       });
+  //     });
+  // };
+  
 
   return (
     <>
