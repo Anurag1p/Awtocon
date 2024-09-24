@@ -2,7 +2,7 @@
   "name": "newproject",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3001",
+  "proxy": "http://localhost:3009",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -56,7 +56,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-dotenv && react-scripts start",
+    "start": "set PORT=3007 react-dotenv && react-scripts --openssl-legacy-provider start",
+    "start_mac": "PORT=3007 react-scripts --openssl-legacy-provider start",
+    "start_win": "set PORT=3007 && react-scripts --openssl-legacy-provider start",
     "build": "react-dotenv && react-scripts build",
     "test": "react-dotenv && react-scripts test",
     "eject": "react-dotenv && react-scripts eject"
