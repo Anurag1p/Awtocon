@@ -22,9 +22,11 @@ const Employee = () => {
   const [display, setDisplay] = useState("unarchive");
   const [resStatus, setResStatus] = useState(true);
   const [openNav, setOpenNav] = useState(false);
-
+  const handleOpen = () => setOpen(true);
   const navigate = useNavigate();
-
+  const [open, setOpen] = React.useState(false);
+  // const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   // calling dispatch for caaling the fetchempData funciton 
   const dispatch = useDispatch();
 
@@ -44,7 +46,7 @@ const Employee = () => {
       EMPLOYEE_MEMBER_PARENT_ID: COMPANY_PARENT_ID,
       EMPLOYEE_MEMBER_PARENT_USERNAME: COMPANY_PARENT_USERNAME
     })).then(() => setResStatus("success"))
-    .catch(() => setResStatus("error")); 
+      .catch(() => setResStatus("error"));
   }, [dispatch, COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_USERNAME, COMPANY_PARENT_ID])
 
   const empdata = useSelector(state => state?.allEmployee?.employees);
@@ -259,9 +261,10 @@ const Employee = () => {
         toggle={openNav}
       />
       <Box className="box" style={{ background: "#277099" }}>
-        <Navbar toggle={() => setOpenNav((e) => !e)}  name={COMPANY_USERNAME}/>
+        <Navbar toggle={() => setOpenNav((e) => !e)} name={COMPANY_USERNAME} />
 
-        {empdata && empdata.length > 0 ? (<><button
+     
+        <button
           variant={"outlined"}
           className={
             display === "unarchive"
@@ -272,8 +275,17 @@ const Employee = () => {
         >
           My Employees
         </button>
+          {/* <button
+            onClick={handleOpen}
+            sx={{ color: "#277099" }}
+            className="btn btn-sm btn-primary rounded-0 border-0  rounded-0 text-light"
 
-          <button
+            size="small"
+          >
+            + Add New Employee
+          </button> */}
+
+          {/* <button
             size="small"
             variant={"outlined"}
             className={
@@ -284,7 +296,7 @@ const Employee = () => {
             onClick={() => setDisplay("archive")}
           >
             Archive
-          </button>
+          </button> */}
           <EmployeeCreate
             COMPANY_ID={COMPANY_ID}
             COMPANY_USERNAME={COMPANY_USERNAME}
@@ -292,7 +304,8 @@ const Employee = () => {
             COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
             name={"Employee"}
 
-          /></>) : <>
+          />
+          {/* </>) : <>
           <button
             size="small"
             disabled
@@ -308,15 +321,15 @@ const Employee = () => {
             Archive
           </button>
           <button
+            onClick={handleOpen}
+            sx={{ color: "#277099" }}
+            className="btn btn-sm btn-primary rounded-0 border-0  rounded-0 text-light"
 
-            style={{ color: "#277099" }}
-            className="btn rounded-0 border-0  rounded-0 text-light btn-primary btn-sm"
             size="small"
-            disabled
           >
             + Add New Employee
-          </button>
-        </>}
+          </button> */}
+        {/* </>} */}
 
         <div className="myscreen p-3">
           <Box style={{ height: "100%", padding: 0, paddingBottom: "0" }}>
@@ -366,7 +379,7 @@ const Employee = () => {
                   </div>
                 </Box>
               ) : (
-                 <Animations/>
+                <Animations />
               )}
             </>
           </Box>

@@ -4,9 +4,9 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-regular-svg-icons";
+// import { faUser } from "@fortawesome/free-regular-svg-icons";
 import EmployeeNav from "./EmployeeNav";
-
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 const EmployeeLoginHome = ({ state }) => {
   const navigate = useNavigate();
   const [project, setProject] = useState([]);

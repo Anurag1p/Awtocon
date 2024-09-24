@@ -9,6 +9,7 @@ import projectList from "../../jsonlist/typeOfProject.json";
 import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setAllproject } from "../../redux/slice/getallProjectSlice";
+import { styled } from "@mui/material/styles";
 
 
 
@@ -50,7 +51,8 @@ export default function ProjectCreate() {
   const [companyaccError, setCompanyAccError] = useState("");
   const [nameError, setNameError] = useState("");
 
-  console.log("project", createProject);
+
+
 
   useEffect(() => {
     setCreateProject((prevState) => ({
@@ -118,6 +120,7 @@ export default function ProjectCreate() {
       setCompanyAccError("Company Account should not be empty");
       return;
     }
+  
 
     // Perform API validation and request
     axios
@@ -181,7 +184,7 @@ export default function ProjectCreate() {
             <h5>Create project</h5>
             <div className="row py-2">
               <div className="form-group col-xl-4">
-              <label> Project Username <span style={{color:"red"}}>*</span></label>
+                <label> Project Username <span style={{ color: "red" }}>*</span></label>
                 <input
                   type="text"
                   className={`form-control form-control-2 rounded-0 ${usernameErr ? "is-invalid" : ""
@@ -197,7 +200,7 @@ export default function ProjectCreate() {
                 )}
               </div>
               <div className="form-group col-xl-4">
-                <label>Project Name <span style={{color:"red"}}>*</span></label>
+                <label>Project Name <span style={{ color: "red" }}>*</span></label>
                 <input
                   type="text"
                   className={`form-control form-control-2 rounded-0 ${nameError ? "is-invalid" : ""
@@ -214,7 +217,7 @@ export default function ProjectCreate() {
                 )}
               </div>
               <div className="form-group col-xl-4">
-                <label>Account <span style={{color:"red"}}>*</span></label>
+                <label>Account <span style={{ color: "red" }}>*</span></label>
                 <input
                   type="number"
                   className={`form-control form-control-2 rounded-0 ${companyaccError ? "is-invalid" : ""
@@ -416,6 +419,7 @@ export default function ProjectCreate() {
           </form>
         </Box>
       </Modal>
+
     </>
   );
 }
