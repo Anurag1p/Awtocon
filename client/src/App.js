@@ -326,7 +326,19 @@ function App() {
               }
             />
 
-            {/* document company */}
+            {/* company Vendors */}
+
+            <Route
+              path="/company/attendance"
+              element={
+                <AttendanceAcknowledge
+                  COMPANY_ID={COMPANY_ID}
+                  COMPANY_USERNAME={COMPANY_USERNAME}
+                  COMPANY_PARENT_ID={COMPANY_PARENT_ID}
+                  COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
+                />
+              }
+            />
 
             {/* My contractors */}
             <Route
