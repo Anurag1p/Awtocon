@@ -1,0 +1,133 @@
+* {
+  box-sizing: border-box;
+}
+
+p {
+  margin: 0;
+}
+
+.new-upload__box {
+  padding: 40px;
+}
+
+.new-upload__inputfile {
+  width: .1px;
+  height: .1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+/* .new-upload__btn {
+  display: inline-block;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  min-width: 116px;
+  padding: 5px;
+  transition: all .3s ease;
+  cursor: pointer;
+  border: 2px solid;
+  background-color: #d9d9df;
+  border-color: #1f5c9e;
+  border-radius: 10px;
+  line-height: 26px;
+  font-size: 14px;
+} */
+
+/* .new-upload__btn:hover {
+  background-color: unset;
+  color: #fbfbfb;
+  transition: all .3s ease;
+} */
+
+.new-upload__btn-box {
+  margin-bottom: 10px;
+  color: white !important;
+  display: flex;
+  flex-direction: row;
+
+}
+
+.new-upload__img-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -10px;
+}
+
+.new-upload__img-box {
+  width: 100px; 
+  height: 100px; 
+  margin: 5px 5px; 
+}
+
+.new-img-bg {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+}
+
+
+.new-upload__img-close {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  text-align: center;
+  line-height: 24px;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.new-upload__img-close:after {
+  content: '\2716';
+  font-size: 14px;
+  color: white;
+}
+
+
+.new-upload__status-bar {
+  height: 5px;
+  background-color: #4045ba;
+}
+
+ .progressincrease{
+  border-radius: 0; 
+  height: 20px; 
+}
+
+.new-upload__btn-box {
+  margin-top: 20px; /* Adjust margin as needed */
+  color: white !important;
+
+}
+
+.new-upload__btn {
+  display: inline-block;
+  background-color: #4CAF50; /* Green color, change to desired color */
+  color: white !important;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.new-upload__btn:hover {
+  background-color: #45a049; /* Darker green color on hover */
+}
+
+.custom-upload-btn {
+  /* Additional styles for customizing the button */
+}
+
+.custom-upload-text {
+  margin: 0;
+}
