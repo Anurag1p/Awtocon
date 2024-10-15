@@ -91,7 +91,7 @@ import Violation from "./subcontractorPanel/assignedProject/Violation";
 import TaskSpliting from "./subcontractorPanel/assignedProject/TaskSpliting";
 import Tasks from "./company/myproject/Tasks";
 import ProjectTaskGallery from "./company/myproject/ProjectTaskGallery";
-
+import CreateVendor from "./company/vendors/Vendors"
 
 function App() {
   const [userName, setUserName] = useState("");
@@ -301,7 +301,6 @@ function App() {
               }
             />
 
-
             <Route
               path="/company/employees/detail"
               element={<EmployeeDetails />}
@@ -318,6 +317,7 @@ function App() {
               path="/company/employees/documents"
               element={<EmployeeDocuments />}
             />
+
             {/* My employees */}
 
             {/* attendance */}
@@ -348,7 +348,19 @@ function App() {
               }
             />
 
-            {/* document company */}
+            {/* company Vendors */}
+
+            <Route
+              path="/company/vendors"
+              element={
+                <CreateVendor 
+                COMPANY_ID={COMPANY_ID}
+                COMPANY_USERNAME={COMPANY_USERNAME}
+                COMPANY_PARENT_ID={COMPANY_PARENT_ID}
+                COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
+              />
+              }
+            />
 
             {/* My contractors */}
             <Route
