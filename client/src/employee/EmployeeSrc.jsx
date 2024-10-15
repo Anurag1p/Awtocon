@@ -514,7 +514,7 @@ const EmployeeSrc = () => {
         COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
         active={2}
         toggle={openNav}
-        userType="company" 
+        userType="company"
       />
       <Box className="box" style={{ background: "#277099" }}>
         <Navbar toggle={() => setOpenNav((e) => !e)} name={COMPANY_USERNAME} />
@@ -534,7 +534,15 @@ const EmployeeSrc = () => {
         >
           Archive
         </Button>
+        {/* <button
+        onClick={handleOpen}
+        sx={{ color: "#277099" }}
+        className="btn btn-sm btn-primary rounded-0 border-0  rounded-0 text-light"
 
+        size="small"
+      >
+        + Add New Employee
+      </button> */}
 
         <EmployeeCreate
           COMPANY_ID={COMPANY_ID}

@@ -105,8 +105,8 @@ function App() {
   // const admin_id = userName && userName[2]
   // const admin_username = userName[3];
 
-  const ADMIN_ID = AdminLoginData?.result?.ADMIN_ID;
-  const ADMIN_USERNAME = AdminLoginData?.result?.ADMIN_USERNAME;
+  const ADMIN_ID = AdminLoginData?.user?.ADMIN_ID;
+  const ADMIN_USERNAME = AdminLoginData?.user?.ADMIN_USERNAME;
 
 
 

@@ -96,37 +96,37 @@ export default function CompanyDashboard() {
     {
       contractname: "Projects",
       counts: projectAllData?.length,
-      description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
+      // description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
       url: "/company/projects",
     },
     {
       contractname: "Employees",
       counts: empdata?.length,
-      description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
+      // description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
       url: "/company/employees",
     },
     {
       contractname: "Attandance",
       counts: allatendance?.length,
-      description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
+      // description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
       url: "/company/attendance",
     },
     {
       contractname: "Documents",
       counts: alldocuments?.length,
-      description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
+      // description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
       url: "/company/documents",
     },
     {
       contractname: "Sub-Contractors",
       counts: allsubContractor?.length,
-      description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
+      // description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
       url: "/company/subcontractors",
     },
     {
       contractname: "Payments",
       counts: "200",
-      description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
+      // description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
       url: "Learn More",
     },
 

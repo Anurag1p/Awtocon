@@ -42,6 +42,7 @@ const Project = () => {
   const [data, setData] = useState({ row: {} });
   const [resStatus, setResStatus] = useState(false);
   const [openNav, setOpenNav] = useState(false);
+  const handleOpen = () => setOpen(true);
 
   const navigate = useNavigate();
 
@@ -162,9 +163,33 @@ const Project = () => {
         toggle={openNav}
       />
 
-      <Box className="box" style={{ background: "#277099" }}>
+      {/* <Box className="box" style={{ background: "#277099" }}> */}
+      <Box
+        style={{
+          display: "block",
+          height: "100vh",
+        }}
+        className="box position-absolute"
+      >
         <Navbar toggle={() => setOpenNav((e) => !e)} name={COMPANY_USERNAME} />
-        {projectData && projectData.length > 0 && <ProjectCreate />}
+        {/* <button
+          size="small"
+          variant={"outlined"}
+          className={"btn button border-bottom-0 bg-white btn-sm"}
+        >
+          My Projects
+        </button>
+        <button
+          onClick={handleOpen}
+          sx={{ color: "#277099" }}
+          className="btn rounded-0 border-0  rounded-0 text-light btn-primary btn-sm"
+          // variant="contained"
+          size="small"
+        >
+          + Add New Project
+        </button> */}
+        {/* {projectData && projectData.length > 0 && <ProjectCreate />} */}
+        <ProjectCreate />
 
         <div className="myscreen p-3">
           <Box style={{ height: "100%", padding: 0, paddingBottom: "0" }}>
@@ -212,7 +237,7 @@ const Project = () => {
                 </Box>
               ) : (
                 <Box>
-                  <div
+                  {/* <div
                     className="p-3"
                     style={{
                       position: "absolute",
@@ -220,9 +245,9 @@ const Project = () => {
                       left: "50%",
                       transform: "translate(-50%,-50%)",
                     }}
-                  >
+                  > */}
                     <Animations />
-                  </div>
+                  {/* </div> */}
                 </Box>
               )}
             </>
