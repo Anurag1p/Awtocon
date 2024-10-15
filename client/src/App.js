@@ -17,6 +17,10 @@ import Firecreate from "./components/Firecreate";
 import UserLogin from "./auth/UserLogin";
 import Updates from "./auth/RestEmailLink";
 
+
+// admin company 
+
+import { getAdminCompData } from "./redux/slice/AdminCompSlice"
 // company employee 
 import EmployeeTimeSheet from "./company/myemployee/EmployeeTimeSheet";
 import Employee from "./company/myemployee/Employee";
@@ -54,7 +58,7 @@ import EmployeeHistory from "./employee/EmployeeHistory";
 
 // redux setup anurag 
 import { getProjectData } from "./redux/slice/getallProjectSlice";
-import { getSingleCompData } from "./redux/slice/SingleCompSlice";
+// import { getSingleCompData } from "./redux/slice/SingleCompSlice";
 import { getEmployeeData } from "./redux/slice/EmployeeDataSlice";
 // import { getAllSubcontractor } from "./redux/slice/SubContractorSlice";
 import { getAllttendance } from "./redux/slice/AttendanceSlice";
@@ -94,17 +98,25 @@ function App() {
 
   const dispatch = useDispatch()
   const AdminLoginData = useSelector(state => state?.adminLogin?.user)
-  console.log(AdminLoginData, "Admin")
+
+  console.log("Admin_anuragPal=============>>", AdminLoginData)
   // const admin_id = AdminLoginData[2]
   // const admin_username = AdminLoginData[3]
-  const admin_id = userName && userName[2]
-  const admin_username = userName[3]
+  // const admin_id = userName && userName[2]
+  // const admin_username = userName[3];
 
-  console.log("admin_id", admin_id, "admin_username", admin_username)
+  const ADMIN_ID = AdminLoginData?.result?.ADMIN_ID;
+  const ADMIN_USERNAME = AdminLoginData?.result?.ADMIN_USERNAME;
+
+
+
+  console.log("admin_id", ADMIN_ID, "admin_username", ADMIN_USERNAME)
 
   const companyData = useSelector(prev => prev?.companyLogin?.user)
-  
-  const singleCompany = useSelector(state => state?.singleCompData?.singleComp);
+
+  const singleCompany = useSelector(state => state?.admin?.singleComp);
+
+  console.log(singleCompany, "single company");
 
   const empdata = useSelector((state) => state?.allEmployee?.employees || []);
 
@@ -112,6 +124,7 @@ function App() {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
+        console.log("user", user);
         const data = user?.displayName;
         const splitedData = data?.split("&&");
         console.log(user, "user");
@@ -121,7 +134,7 @@ function App() {
       }
     });
   }, []);
-  
+
 
 
   // extract company
@@ -144,16 +157,25 @@ function App() {
 
   // gettingsingle company data from store
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    dispatch(getSingleCompData({
-      COMPANY_ID: COMPANY_ID,
-      COMPANY_USERNAME: COMPANY_USERNAME,
-      COMPANY_PARENT_ID: COMPANY_PARENT_ID,
-      COMPANY_PARENT_USERNAME: COMPANY_PARENT_USERNAME
-    }))
-  }, [dispatch, COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_ID, COMPANY_PARENT_USERNAME])
+  //   dispatch(getSingleCompData({
+  //     COMPANY_ID: COMPANY_ID,
+  //     COMPANY_USERNAME: COMPANY_USERNAME,
+  //     COMPANY_PARENT_ID: COMPANY_PARENT_ID,
+  //     COMPANY_PARENT_USERNAME: COMPANY_PARENT_USERNAME
+  //   }))
+  // }, [dispatch, COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_ID, COMPANY_PARENT_USERNAME])
 
+
+  // useEffect(() => {
+  //   // dispatch(getAdminCompData({
+  //   //   // COMPANY_ID: COMPANY_ID,
+  //   //   // COMPANY_PARENT_ID: COMPANY_PARENT_ID,
+  //   //   COMPANY_PARENT_USERNAME: COMPANY_PARENT_USERNAME,
+  //   //   COMPANY_PARENT_ID: COMPANY_PARENT_ID
+  //   // }))
+  // }, [dispatch, COMPANY_ID, COMPANY_USERNAME, COMPANY_PARENT_ID, COMPANY_PARENT_USERNAME])
   // getting the Employee Data from store 
   useEffect(() => {
     dispatch(getEmployeeData({
@@ -196,10 +218,10 @@ function App() {
   // getting the data of all company 
   useEffect(() => {
     dispatch(getAllCompany({
-      COMPANY_PARENT_ID: admin_id,
-      COMPANY_PARENT_USERNAME: admin_username,
+      COMPANY_PARENT_ID: ADMIN_ID,
+      COMPANY_PARENT_USERNAME: ADMIN_USERNAME,
     }))
-  }, [dispatch, admin_id, admin_username])
+  }, [dispatch, ADMIN_USERNAME, ADMIN_USERNAME])
 
   return (
     <div
@@ -213,10 +235,10 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/root" element={<AdminLogin />} />
             <Route path="/" element={<UserLogin />} />
-            <Route path="/admin" element={<AdminDashboard 
-            AdminLoginData={AdminLoginData}
+            <Route path="/admin" element={<AdminDashboard
+              AdminLoginData={AdminLoginData}
             />
-          } />
+            } />
             <Route path="/employee/history" element={<EmployeeHistory />} />
             {/* <Route path="/myadmin" element={<AdminDashboard />} /> */}
             <Route path="/test" element={<Updates />} />

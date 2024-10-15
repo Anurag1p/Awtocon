@@ -181,7 +181,7 @@ export default function AddEmployee({ Update }) {
               <h5>Create Employee</h5>
               <div className="row py-1">
                 <div className="form-group col-xl-6">
-                  <label for="inputqual">Employee Email</label>
+                  <label for="inputqual">Employee Email<span style={{color:"red"}}>*</span></label>
                   <input
                     type="text"
                     className={`form-control form-control-2 rounded-0 ${emailError ? "is-invalid" : ""
@@ -191,13 +191,14 @@ export default function AddEmployee({ Update }) {
                     name="EMPLOYEE_USERNAME"
                     onChange={handleCreate}
                     label="Employee Email"
+                    id="empMail"
                   />
                   {emailError && (
                     <div className="invalid-feedback">{emailError}</div>
                   )}
                 </div>
                 <div className="form-group col-xl-6">
-                  <label>Employee Name</label>
+                  <label>Employee Name<span style={{color:"red"}}>*</span></label>
                   <input
                     type="text"
                     className={`form-control form-control-2 rounded-0 ${nameError ? "is-invalid" : ""
@@ -216,7 +217,7 @@ export default function AddEmployee({ Update }) {
               <div className="row">
 
                 <div className="form-group col-xl-6 py-1">
-                  <label>Phone</label>
+                  <label>Phone<span style={{color:"red"}}>*</span></label>
                   <input
                     type="number"
                     className={`form-control form-control-2 rounded-0 ${phoneError ? "is-invalid" : ""
@@ -343,7 +344,7 @@ export default function AddEmployee({ Update }) {
                 <div className="form-group col-xl-4 py-1">
                   <label for="inputPassword4">Employee Role</label>
                   <select
-                    id="inputqual"
+                    id="inputEmprole"
                     className="form-control form-control-2 rounded-0 border"
                     value={createEmployee.EMPLOYEE_ROLE}
                     name="EMPLOYEE_ROLE"
