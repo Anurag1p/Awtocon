@@ -1,0 +1,71 @@
+import React from 'react'
+import Sidebar from "../../components/Sidebar";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
+
+const VendorNavbar = ({
+    filterData,
+    active,
+    COMPANY_ID,
+    COMPANY_USERNAME,
+    COMPANY_PARENT_ID,
+    COMPANY_PARENT_USERNAME,
+}) => {
+    const navigate = useNavigate();
+
+    return (
+        <>
+            <Sidebar
+                active={5}
+                COMPANY_ID={COMPANY_ID}
+                COMPANY_USERNAME={COMPANY_USERNAME}
+                COMPANY_PARENT_ID={COMPANY_PARENT_ID}
+                COMPANY_PARENT_USERNAME={COMPANY_PARENT_USERNAME}
+                userType="company"
+            />
+            <div
+                className="container-fluid pb-0 g-0"
+                style={{ background: "#277099" }}
+            >
+
+                <Button
+                    onClick={() => navigate("/company/vendor", { state: filterData })}
+                    variant="contained"
+                    className="btn rounded-0"
+                    size="small"
+                >
+                    <ArrowBackIcon style={{ fontSize: "20px" }} />
+                </Button>
+
+                <Button
+                    onClick={(e) =>
+                        navigate("/company/vendor/detail", {
+                            state: [
+                                filterData,
+                                COMPANY_ID,
+                                COMPANY_USERNAME,
+                                COMPANY_PARENT_ID,
+                                COMPANY_PARENT_USERNAME,
+                            ],
+                        })
+                    }
+                    variant={1 === active ? "outlined" : "outlined"}
+                    className={
+                        1 === active
+                            ? "btn button border-bottom-0 bg-white"
+                            : "btn rounded-0 border-bottom-0  rounded-0 text-light"
+                    }
+                    size="small"
+                >
+                    Detail
+                </Button>
+
+            </div>
+
+
+        </>
+    )
+}
+
+export default VendorNavbar
