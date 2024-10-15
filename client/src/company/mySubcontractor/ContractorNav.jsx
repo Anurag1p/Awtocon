@@ -9,7 +9,7 @@ const ContractorNav = ({ filterData, active, COMPANY_ID, COMPANY_USERNAME, COMPA
   return (
     <>
       <Sidebar
-        active={5}
+        active={6}
         COMPANY_ID={COMPANY_ID}
         COMPANY_USERNAME={COMPANY_USERNAME}
         COMPANY_PARENT_ID={COMPANY_PARENT_ID}

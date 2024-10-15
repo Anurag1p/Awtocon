@@ -25,8 +25,8 @@ const Sidebar = ({
   const companyData = useSelector(state => state?.setOneCompany?.user);
   const companyLogin = useSelector(state => state?.companyLogin?.user);
   const companyEmail = companyLogin[1];
-  const company = companyEmail.split('@')[0]; 
-  const companyName = company.charAt(0).toUpperCase() + company.slice(1); 
+  const company = companyEmail.split('@')[0];
+  const companyName = company.charAt(0).toUpperCase() + company.slice(1);
 
   const navigate = useNavigate();
 
@@ -39,7 +39,7 @@ const Sidebar = ({
     }
   };
 
-  const drawerWidth = 240; // Set a fixed width
+  const drawerWidth = 240;
   const filterData = companyData?.[0];
 
   const renderLinks = () => {
@@ -49,6 +49,7 @@ const Sidebar = ({
       { path: userType === 'company' ? '/company/employees' : '/subcontractor/employees', label: 'My Employees' },
       { path: userType === 'company' ? '/company/attendance' : '/subcontractor/attendance', label: 'Attendance' },
       { path: userType === 'company' ? '/company/documents' : '/subcontractor/documents', label: 'Documents' },
+      { path: userType === 'company' ? '/company/vendors' : '/subcontractor/vendors', label: 'vendors' },
       { path: userType === 'company' ? '/company/subcontractors' : '/subcontractor/assigned-projects', label: userType === 'company' ? 'My Subcontractors' : 'Assigned Project' },
     ];
 
