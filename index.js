@@ -330,14 +330,20 @@ app.post("/api/assign_project", (req, res) => {
   sendHttpRequest("POST", `${process.env.SERVERAPIREQUEST}/assign_project`, req, res)
 })
 
-app.put("/api/get_assigned_projects", (req, res) => {
-  sendHttpRequest("PUT", `${process.env.SERVERAPIREQUEST}/get_assigned_projects`, req, res)
+app.post("/api/assign_projects", (req, res) => {
+  sendHttpRequest("POST", `${process.env.SERVERAPIREQUEST}/assign_project`, req, res)
+})
+
+app.put("/api/create_permit_and_violation_document", (req, res) => {
+  sendHttpRequest("PUT", `${process.env.SERVERAPIREQUEST}/create_permit_and_violation_document`, req, res)
 });
 //get assigned subcontractor to projects
 app.put("/api/get_assigned_subcontractor_to_project", (req, res) => {
   sendHttpRequest("PUT", `${process.env.SERVERAPIREQUEST}/get_assigned_subcontractor_to_project`, req, res)
 });
-
+app.put("/api/get_assigned_projects", (req, res) => {
+  sendHttpRequest("PUT", `${process.env.SERVERAPIREQUEST}/get_assigned_project`, req, res)
+});
 
 //individual subcontractor data
 app.put("/api/get_subcontractor_indiviual_project", (req, res) => {

@@ -12,7 +12,9 @@ const EmployeeLoginHome = ({ state }) => {
   const [project, setProject] = useState([]);
   const [empdata, setEmpdata] = useState([]);
 
-  console.log(state[0], state[3], "hianu")
+  // console.log(state[0], state[3], "hianu")
+  console.log(state,"stateData");
+  
 
 
   useEffect(() => {
