@@ -38,13 +38,26 @@ import taskImgApprove from "./slice/TaskImageApproveSlice"
 
 const persistConfig = {
   key: 'root',
-  version: 1,
+  version: 0,
   storage: storageSession,
 };
 
-const persistedLoginReducer = persistReducer(persistConfig, CompanyLoginSlice);
+const loginPersistConfig = {
+  key: 'login',
+  version: 0,
+  storage: storageSession,
+};
+
+
+const employeePersistConfig = {
+  key: 'employee',
+  version: 0,
+  storage: storageSession,
+};
+
+const persistedLoginReducer = persistReducer(loginPersistConfig, CompanyLoginSlice);
 const persistedAdminReducer = persistReducer(persistConfig,AdminSlice)
-const persistedEmployeeReducer = persistReducer(persistConfig, EmployeeLogin)
+const persistedEmployeeReducer = persistReducer(employeePersistConfig, EmployeeLogin)
 // const persistedAdminCompanies = persistReducer(persistConfig, getAdminCompData)
 
 // const persistedCompanyReducer = persistReducer(persistConfig,setOneCompany)

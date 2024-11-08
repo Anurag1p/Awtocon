@@ -46,6 +46,8 @@ function Logincomp({ message }) {
         setSubmitButtonDisabled(false);
         setLoading(false);
         const data = res.user.displayName;
+        console.log(data,"data h---------------");
+        
         const param = data.split("&&");
         if (param[4] === "employee") {
           navigate(`/employee/home`)

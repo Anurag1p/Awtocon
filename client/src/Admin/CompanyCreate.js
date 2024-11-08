@@ -35,7 +35,7 @@ const style = {
 
 export default function CompanyCreate({ Update }) {
 
-  const AdminDetails = useSelector(state => state?.adminLogin?.user?.user)
+  const AdminDetails = useSelector(state => state?.adminLogin?.user.result)
 
 console.log("AdminDetails", AdminDetails)
   const ADMIN_ID =AdminDetails?.ADMIN_ID;

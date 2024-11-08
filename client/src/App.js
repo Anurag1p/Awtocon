@@ -99,14 +99,18 @@ function App() {
   const dispatch = useDispatch()
   const AdminLoginData = useSelector(state => state?.adminLogin?.user)
 
+  const userLogin = useSelector(state => state?.companyLogin?.user)
+
+  console.log(userLogin,"userlogin")
+
   console.log("Admin_anuragPal=============>>", AdminLoginData)
   // const admin_id = AdminLoginData[2]
   // const admin_username = AdminLoginData[3]
   // const admin_id = userName && userName[2]
   // const admin_username = userName[3];
 
-  const ADMIN_ID = AdminLoginData?.user?.ADMIN_ID;
-  const ADMIN_USERNAME = AdminLoginData?.user?.ADMIN_USERNAME;
+  const ADMIN_ID = AdminLoginData?.result?.ADMIN_ID;
+  const ADMIN_USERNAME = AdminLoginData?.result?.ADMIN_USERNAME;
 
 
 
@@ -119,7 +123,7 @@ function App() {
   console.log(singleCompany, "single company");
 
   const empdata = useSelector((state) => state?.allEmployee?.employees || []);
-
+  console.log( companyData,"companyData")
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -375,28 +379,28 @@ function App() {
             {/* for employee login ... */}
             <Route
               path="/employee/home"
-              element={<EmployeeLoginHome state={AdminLoginData} />}
+              element={<EmployeeLoginHome state={userLogin} />}
             />
 
             <Route
               path="/employee/mark-attendance"
-              element={<EmployeeAttendance state={AdminLoginData} />}
+              element={<EmployeeAttendance state={userLogin} />}
             />
 
 
             {/*...... for employee section  only ...... */}
             <Route
               path="/employee/project-assigned"
-              element={<EmployeeLoginHome state={AdminLoginData} />}
+              element={<EmployeeLoginHome state={userLogin} />}
             />
             <Route
               path="/employee/attendance-history"
-              element={<EmployeeTimeSheetUser state={AdminLoginData} />}
+              element={<EmployeeTimeSheetUser state={userLogin} />}
             />
 
             <Route
               path="/employee/attendance/:latt/:lngi/:areas/:loca/:employees/:projects/:projectids"
-              element={<EmployeeAttendance state={AdminLoginData} />}
+              element={<EmployeeAttendance state={userLogin} />}
             />
 
             {/* My contractos */}
@@ -406,13 +410,13 @@ function App() {
 
             <Route
               path="/subcontractor/dashboard"
-              element={<SubDashboard state={AdminLoginData} />}
+              element={<SubDashboard state={userLogin} />}
             />
 
             <Route
               path="/subcontractor/projects"
               element={
-                <SubProject requiredData={companyData} />
+                <SubProject requiredData={userLogin} />
               }
             />
 
@@ -492,24 +496,24 @@ function App() {
 
             <Route
               path="/subcontractor/assigned-projects"
-              element={<SubAssignedProjects state={AdminLoginData} />}
+              element={<SubAssignedProjects state={userLogin} />}
             />
 
             <Route
               path="/subcontractor/assigned-projects/detail"
-              element={<SubProjectAssignDetails state={AdminLoginData} />}
+              element={<SubProjectAssignDetails state={userLogin} />}
             />
             <Route
               path="/subcontractor/assigned-projects/task/gallery"
-              element={<SubGallery state={AdminLoginData} />}
+              element={<SubGallery state={userLogin} />}
             />
             <Route
               path="/subcontractor/assigned-projects/violation"
-              element={<Violation state={AdminLoginData} />}
+              element={<Violation state={userLogin} />}
             />
             <Route
               path="/subcontractor/assigned-projects/tasks"
-              element={<TaskSpliting state={AdminLoginData} />}
+              element={<TaskSpliting state={userLogin} />}
             />
 
 

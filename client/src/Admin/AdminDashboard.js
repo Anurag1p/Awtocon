@@ -11,7 +11,7 @@ import { createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail }
 import EmailIcon from '@mui/icons-material/Email';
 import InfoIcon from '@mui/icons-material/Info';
 import { Button } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { getAllCompany } from "../redux/slice/AllCompanySlice";
@@ -20,10 +20,23 @@ import { getAllCompany } from "../redux/slice/AllCompanySlice";
 const itemsPerPage = 8;
 
 const AdminDashboard = () => {
+  const dispatch = useDispatch()
 
-  const AdminDetails = useSelector(state => state?.adminLogin?.user)
-  const ADMIN_ID = AdminDetails?.user?.ADMIN_ID;
-  const ADMIN_USERNAME = AdminDetails?.user?.ADMIN_USERNAME;
+  const AdminDetails = useSelector(state => state?.adminLogin?.user.result)
+  const ADMIN_ID = AdminDetails?.ADMIN_ID;
+  const ADMIN_USERNAME = AdminDetails.ADMIN_USERNAME;
+
+  console.log(AdminDetails,"admindetails hai");
+  console.log(ADMIN_ID,ADMIN_USERNAME,"adminuser");
+
+  useEffect(() => {
+    dispatch(getAllCompany({
+      COMPANY_PARENT_ID: ADMIN_ID,
+      COMPANY_PARENT_USERNAME: ADMIN_USERNAME,
+    }))
+  }, [ADMIN_USERNAME, ADMIN_USERNAME])
+  
+  
 
 
   const navigate = useNavigate();
@@ -31,7 +44,7 @@ const AdminDashboard = () => {
   //data from redux...
 
 
-  const allcompanyData = useSelector(state => state?.allCompany?.company)
+  const allcompanyData = useSelector(state => state?.allCompany.company)
   console.log("admincompanyData", allcompanyData)
 
   // const [RowsData, setRows] = useState("");
